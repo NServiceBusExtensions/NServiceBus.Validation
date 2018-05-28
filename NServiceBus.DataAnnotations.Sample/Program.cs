@@ -6,11 +6,10 @@ class Program
 {
     static async Task Main()
     {
-        var configuration = new EndpointConfiguration("FluentValidationSample");
+        var configuration = new EndpointConfiguration("DataAnnotationsValidationSample");
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
-        var validation = configuration.UseFluentValidation();
-        validation.AddValidatorsFromAssemblyContaining<MyMessage>();
+        configuration.UseDataAnnotationsValidation();
 
         var endpoint = await Endpoint.Start(configuration);
 

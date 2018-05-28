@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 using NServiceBus;
 using NServiceBus.Features;
 using Xunit;
@@ -33,26 +33,10 @@ public class Tests
         Assert.NotNull(await Send(message));
     }
 
-    [Fact]
-    public async Task With_async_validator_valid()
-    {
-        var message = new MessageWithAsyncValidator
-        {
-            Content = "content"
-        };
-        Assert.Null(await Send(message));
-    }
-
-    [Fact]
-    public async Task With_async_validator_invalid()
-    {
-        var message = new MessageWithAsyncValidator();
-        Assert.NotNull(await Send(message));
-    }
 
     static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null)
     {
-        var configuration = new EndpointConfiguration("FluentValidation"+key);
+        var configuration = new EndpointConfiguration("DataAnnotations"+key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
@@ -68,8 +52,7 @@ public class Tests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        var validation = configuration.UseFluentValidation();
-        validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
+        configuration.UseDataAnnotationsValidation();
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
