@@ -1,4 +1,4 @@
-![Icon](https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.FluentValidation/master/icon.png)
+![Icon](https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/icon.png)
 
 NServiceBus.FluentValidation
 ===========================
