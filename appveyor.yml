@@ -9,8 +9,8 @@ build:
   verbosity: minimal
 test_script:
 - cmd: >-
-    %xunit20%\xunit.console Tests\bin\Release\net47\Tests.dll
+    %xunit20%\xunit.console NServiceBus.FluentValidation.Tests\bin\Release\net471\NServiceBus.FluentValidation.Tests.dll
 
-    dotnet test "Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 artifacts:
 - path: nugets\**\*.nupkg
