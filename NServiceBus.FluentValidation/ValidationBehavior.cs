@@ -8,36 +8,37 @@ using NServiceBus.Pipeline;
 
 class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
 {
+    ValidatorTypeCache validatorTypeCache;
+
+    public ValidationBehavior(ValidatorTypeCache validatorTypeCache)
+    {
+        this.validatorTypeCache = validatorTypeCache;
+    }
+
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        await Validate(context).ConfigureAwait(false);
+        if (validatorTypeCache.TryGetValidators(context, out var buildAll))
+        {
+            await Validate(context, buildAll).ConfigureAwait(false);
+        }
         await next().ConfigureAwait(false);
     }
 
-    static async Task Validate(IIncomingLogicalMessageContext context)
+    static async Task Validate(IIncomingLogicalMessageContext context, IEnumerable<IValidator> buildAll)
     {
-        var logicalMessage = context.Message;
-        var validatorType = ValidatorTypeCache.Find(logicalMessage.MessageType);
-        var contextBuilder = context.Builder;
-        var buildAll = contextBuilder.BuildAll(validatorType).Cast<IValidator>().ToList();
-
-        if (!buildAll.Any())
-        {
-            return;
-        }
-
+        var instance = context.Message.Instance;
         var results = new List<ValidationFailure>();
         foreach (var validator in buildAll)
         {
             if (AsyncValidatorCache.IsAsync(validator))
             {
-                var result = await validator.ValidateAsync(logicalMessage.Instance)
+                var result = await validator.ValidateAsync(instance)
                     .ConfigureAwait(false);
                 results.AddRange(result.Errors);
             }
             else
             {
-                var result = validator.Validate(logicalMessage.Instance);
+                var result = validator.Validate(instance);
                 results.AddRange(result.Errors);
             }
         }

@@ -7,7 +7,7 @@ class ValidationStep : RegisterStep
 
     public ValidationStep(FluentValidationConfig config) :
         base("FluentValidation", typeof(ValidationBehavior), "Validates message using FluentValidation",
-            builder => { return new ValidationBehavior(); })
+            builder => new ValidationBehavior(new ValidatorTypeCache()))
     {
         this.config = config;
     }

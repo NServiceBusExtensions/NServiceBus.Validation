@@ -1,6 +1,6 @@
 ﻿using NServiceBus;
 
-public class SimpleMessage : IMessage
+public class MessageWithNoValidator : IMessage
 {
     public string Content { get; set; }
 }

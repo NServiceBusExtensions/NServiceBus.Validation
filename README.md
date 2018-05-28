@@ -1,22 +1,23 @@
-![Icon](https://raw.githubusercontent.com/SimonCropp/NServiceBus.AuditFilter/master/package_icon.png)
+![Icon](https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.FluentValidation/master/icon.png)
 
-NServiceBus.AuditFilter
+NServiceBus.FluentValidation
 ===========================
 
-Add message auditing filtering functionality to [NServiceBus](https://docs.particular.net/nservicebus/).
+Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using [FluentValidation](https://github.com/JeremySkinner/FluentValidation).
 
 
-## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.AuditFilter.svg?style=flat)](https://www.nuget.org/packages/NServiceBus.AuditFilter/)
+## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.FluentValidation.svg?style=flat)](https://www.nuget.org/packages/NServiceBus.FluentValidation/)
 
-https://nuget.org/packages/NServiceBus.AuditFilter/
+https://nuget.org/packages/NServiceBus.FluentValidation/
 
-    PM> Install-Package NServiceBus.AuditFilter
+    PM> Install-Package NServiceBus.FluentValidation
 
 
 ## Documentation
 
-https://docs.particular.net/nservicebus/audit-filter/
+https://docs.particular.net/nuget/NServiceBus.FluentValidation
+
 
 ## Icon
 
-<a href="http://thenounproject.com/term/audit/618766/" target="_blank">Audit</a> designed by Delwar Hossain from <a href="http://thenounproject.com/" target="_blank">The Noun Project</a>
+<a href="http://thenounproject.com/term/validation/1680887/" target="_blank">Validation</a> designed by Becrisp from <a href="http://thenounproject.com/" target="_blank">The Noun Project</a>

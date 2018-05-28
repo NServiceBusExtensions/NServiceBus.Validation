@@ -1,86 +1,83 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using NServiceBus;
-using NServiceBus.AuditFilter;
+using NServiceBus.Features;
 using Xunit;
 
 public class Tests
 {
     [Fact]
-    public async Task Skip_with_attribute_and_default_to_include()
+    public async Task With_no_validator()
     {
-        var message = new MessageWithExcludeFromAudit();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.IncludeInAudit));
-        Assert.Empty(result);
-    }
-    [Fact]
-    public async Task Skip_with_attribute_and_default_to_exclude()
-    {
-        var message = new MessageWithExcludeFromAudit();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.ExcludeFromAudit));
-        Assert.Empty(result);
+        var message = new MessageWithNoValidator();
+        Assert.Null(await Send(message));
     }
 
     [Fact]
-    public async Task Audit_with_attribute_and_default_to_include()
+    public async Task With_validator_valid()
     {
-        var message = new MessageWithIncludeInAudit();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.IncludeInAudit));
-        Assert.True(result.Count == 1);
+        var message = new MessageWithValidator
+        {
+            Content = "content"
+        };
+        Assert.Null(await Send(message));
     }
 
     [Fact]
-    public async Task Audit_with_attribute_and_default_to_exclude()
+    public async Task With_validator_invalid()
     {
-        var message = new MessageWithIncludeInAudit();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.ExcludeFromAudit));
-        Assert.True(result.Count == 1);
-    }
-    [Fact]
-    public async Task Simple_message_and_default_to_include()
-    {
-        var message = new SimpleMessage();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.IncludeInAudit));
-        Assert.True(result.Count == 1);
+        var message = new MessageWithValidator();
+        Assert.NotNull(await Send(message));
     }
 
     [Fact]
-    public async Task Simple_message_and_default_to_exclude()
+    public async Task With_async_validator_valid()
     {
-        var message = new SimpleMessage();
-        var result = await Send(message, _ => _.FilterAuditQueue(FilterResult.ExcludeFromAudit));
-        Assert.True(result.Count == 0);
-    }
-    [Fact]
-    public async Task Simple_message_and_delegate_to_include()
-    {
-        var message = new SimpleMessage();
-        var result = await Send(message, _ => _.FilterAuditQueue(
-            (instance, headers) => FilterResult.IncludeInAudit));
-        Assert.True(result.Count == 1);
+        var message = new MessageWithAsyncValidator
+        {
+            Content = "content"
+        };
+        Assert.Null(await Send(message));
     }
 
     [Fact]
-    public async Task Simple_message_and_delegate_to_exclude()
+    public async Task With_async_validator_invalid()
     {
-        var message = new SimpleMessage();
-        var result = await Send(message, _ => _.FilterAuditQueue(
-            (instance, headers) => FilterResult.ExcludeFromAudit));
-        Assert.True(result.Count == 0);
+        var message = new MessageWithAsyncValidator();
+        Assert.NotNull(await Send(message));
     }
 
-    static async Task<List<AuditedMessageData>> Send(object message, Action<EndpointConfiguration> addAuditFilter, [CallerMemberName] string key = null)
+    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null)
     {
-        var testingTransport = new TestingTransport(key);
-        var configuration = new EndpointConfiguration("AuditFilterSample");
-        configuration.UsePersistence<LearningPersistence>();
-        testingTransport.ApplyToEndpoint(configuration);
-        addAuditFilter(configuration);
+        var configuration = new EndpointConfiguration(key);
+        configuration.UseTransport<LearningTransport>();
+        configuration.PurgeOnStartup(true);
+        configuration.DisableFeature<TimeoutManager>();
+
+        var resetEvent = new ManualResetEvent(false);
+        configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
+        ValidationException exception = null;
+        var recoverability = configuration.Recoverability();
+        recoverability.CustomPolicy(
+            (config, context) =>
+            {
+                exception = (ValidationException) context.Exception;
+                resetEvent.Set();
+                return RecoverabilityAction.MoveToError("error");
+            });
+        var validation = configuration.UseFluentValidation();
+        validation.RegisterValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
-        return await testingTransport.GetProcessedMessages(endpoint);
+        if (!resetEvent.WaitOne(TimeSpan.FromSeconds(5)))
+        {
+            throw new Exception("No Set received.");
+        }
+
+        return exception;
     }
 }

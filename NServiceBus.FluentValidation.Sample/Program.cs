@@ -14,6 +14,7 @@ class Program
 
         var endpoint = await Endpoint.Start(configuration);
 
+        await endpoint.SendLocal(new MyMessage(){Content = "sd"});
         await endpoint.SendLocal(new MyMessage());
 
         Console.WriteLine("Press any key to stop program");
