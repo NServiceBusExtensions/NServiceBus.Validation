@@ -30,15 +30,17 @@ class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
         var results = new List<ValidationFailure>();
         foreach (var validator in buildAll)
         {
+            var validationContext = new ValidationContext(instance);
+            validationContext.RootContextData.Add("MessageContext", context);
             if (AsyncValidatorCache.IsAsync(validator))
             {
-                var result = await validator.ValidateAsync(instance)
+                var result = await validator.ValidateAsync(validationContext)
                     .ConfigureAwait(false);
                 results.AddRange(result.Errors);
             }
             else
             {
-                var result = validator.Validate(instance);
+                var result = validator.Validate(validationContext);
                 results.AddRange(result.Errors);
             }
         }

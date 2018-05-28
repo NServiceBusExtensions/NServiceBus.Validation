@@ -13,17 +13,17 @@ namespace NServiceBus
             this.endpointConfiguration = endpointConfiguration;
         }
 
-        public void RegisterValidatorsFromAssemblyContaining<T>()
+        public void AddValidatorsFromAssemblyContaining<T>()
         {
-            RegisterValidatorsFromAssemblyContaining(typeof(T));
+            AddValidatorsFromAssemblyContaining(typeof(T));
         }
 
-        public void RegisterValidatorsFromAssemblyContaining(Type type)
+        public void AddValidatorsFromAssemblyContaining(Type type)
         {
-            RegisterValidatorsFromAssembly(type.GetTypeInfo().Assembly);
+            AddValidatorsFromAssembly(type.GetTypeInfo().Assembly);
         }
 
-        public void RegisterValidatorsFromAssembly(Assembly assembly)
+        public void AddValidatorsFromAssembly(Assembly assembly)
         {
             endpointConfiguration.RegisterComponents(components =>
             {

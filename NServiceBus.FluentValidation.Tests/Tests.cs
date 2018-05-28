@@ -69,7 +69,7 @@ public class Tests
                 return RecoverabilityAction.MoveToError("error");
             });
         var validation = configuration.UseFluentValidation();
-        validation.RegisterValidatorsFromAssemblyContaining<MessageWithNoValidator>();
+        validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);

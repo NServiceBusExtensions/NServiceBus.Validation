@@ -10,7 +10,7 @@ class Program
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
         var validation = configuration.UseFluentValidation();
-        validation.RegisterValidatorsFromAssemblyContaining<MyMessage>();
+        validation.AddValidatorsFromAssemblyContaining<MyMessage>();
 
         var endpoint = await Endpoint.Start(configuration);
 
