@@ -14,12 +14,9 @@ class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
     public bool TryGetValidators(IIncomingLogicalMessageContext context, out IEnumerable<IValidator> buildAll)
     {
         var validatorInfo = typeCache.GetOrAdd(context.Message.MessageType,
-            type =>
+            type => new ValidatorInfo
             {
-                return new ValidatorInfo
-                {
-                    ValidatorType = validatorType.MakeGenericType(type)
-                };
+                ValidatorType = validatorType.MakeGenericType(type)
             });
 
         if (validatorInfo.HasValidators.HasValue)
@@ -40,6 +37,7 @@ class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
         validatorInfo.HasValidators = any;
         return any;
     }
+
     class ValidatorInfo
     {
         public Type ValidatorType;

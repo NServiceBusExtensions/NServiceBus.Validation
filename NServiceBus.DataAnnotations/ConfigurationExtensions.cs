@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace NServiceBus
+﻿namespace NServiceBus
 {
     /// <summary>
     /// Extensions to control message validation with DataAnnotations.
