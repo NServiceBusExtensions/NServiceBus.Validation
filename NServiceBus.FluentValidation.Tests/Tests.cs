@@ -27,6 +27,13 @@ public class Tests
     }
 
     [Fact]
+    public async Task With_uow_validator()
+    {
+        var message = new MessageWithValidator();
+        Assert.NotNull(await Send(message,ValidatorLifecycle.UnitOfWork));
+    }
+
+    [Fact]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
@@ -50,9 +57,9 @@ public class Tests
         Assert.NotNull(await Send(message));
     }
 
-    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null)
+    static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)
     {
-        var configuration = new EndpointConfiguration("FluentValidation"+key);
+        var configuration = new EndpointConfiguration("FluentValidation" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
@@ -68,7 +75,7 @@ public class Tests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        var validation = configuration.UseFluentValidation();
+        var validation = configuration.UseFluentValidation(lifecycle);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 
         var endpoint = await Endpoint.Start(configuration);

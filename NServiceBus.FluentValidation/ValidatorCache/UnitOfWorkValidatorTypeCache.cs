@@ -5,7 +5,7 @@ using System.Linq;
 using FluentValidation;
 using NServiceBus.Pipeline;
 
-class ValidatorTypeCache
+class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
 {
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new ConcurrentDictionary<Type, ValidatorInfo>();
 
@@ -14,9 +14,12 @@ class ValidatorTypeCache
     public bool TryGetValidators(IIncomingLogicalMessageContext context, out IEnumerable<IValidator> buildAll)
     {
         var validatorInfo = typeCache.GetOrAdd(context.Message.MessageType,
-            type => new ValidatorInfo
+            type =>
             {
-                ValidatorType = validatorType.MakeGenericType(type)
+                return new ValidatorInfo
+                {
+                    ValidatorType = validatorType.MakeGenericType(type)
+                };
             });
 
         if (validatorInfo.HasValidators.HasValue)
@@ -36,5 +39,10 @@ class ValidatorTypeCache
         var any = buildAll.Any();
         validatorInfo.HasValidators = any;
         return any;
+    }
+    class ValidatorInfo
+    {
+        public Type ValidatorType;
+        public bool? HasValidators;
     }
 }

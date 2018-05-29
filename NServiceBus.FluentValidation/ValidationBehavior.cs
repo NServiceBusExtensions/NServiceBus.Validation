@@ -8,9 +8,9 @@ using NServiceBus.Pipeline;
 
 class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
 {
-    ValidatorTypeCache validatorTypeCache;
+    IValidatorTypeCache validatorTypeCache;
 
-    public ValidationBehavior(ValidatorTypeCache validatorTypeCache)
+    public ValidationBehavior(IValidatorTypeCache validatorTypeCache)
     {
         this.validatorTypeCache = validatorTypeCache;
     }
@@ -24,11 +24,11 @@ class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
         await next().ConfigureAwait(false);
     }
 
-    static async Task Validate(IIncomingLogicalMessageContext context, IEnumerable<IValidator> buildAll)
+    static async Task Validate(IIncomingLogicalMessageContext context, IEnumerable<IValidator> validators)
     {
         var instance = context.Message.Instance;
         var results = new List<ValidationFailure>();
-        foreach (var validator in buildAll)
+        foreach (var validator in validators)
         {
             var validationContext = new ValidationContext(instance);
             validationContext.RootContextData.Add("MessageContext", context);
