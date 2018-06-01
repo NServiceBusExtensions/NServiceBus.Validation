@@ -11,7 +11,7 @@
             var recoverability = endpointConfiguration.Recoverability();
             recoverability.AddUnrecoverableException<ValidationException>();
             var pipeline = endpointConfiguration.Pipeline;
-            pipeline.Register(new ValidationStep());
+            pipeline.Register(new IncomingValidationStep());
         }
     }
 }

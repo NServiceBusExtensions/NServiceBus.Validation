@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using NServiceBus.Pipeline;
 
-class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
+class IncomingValidationBehavior : Behavior<IIncomingLogicalMessageContext>
 {
     MessageValidator validator;
 
-    public ValidationBehavior(MessageValidator validator)
+    public IncomingValidationBehavior(MessageValidator validator)
     {
         this.validator = validator;
     }

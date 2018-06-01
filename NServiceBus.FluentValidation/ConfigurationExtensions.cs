@@ -14,7 +14,7 @@ namespace NServiceBus
             recoverability.AddUnrecoverableException<ValidationException>();
             var config = new FluentValidationConfig(endpointConfiguration, validatorLifecycle);
             var pipeline = endpointConfiguration.Pipeline;
-            pipeline.Register(new ValidationStep(config));
+            pipeline.Register(new IncomingValidationStep(config));
             return config;
         }
     }
