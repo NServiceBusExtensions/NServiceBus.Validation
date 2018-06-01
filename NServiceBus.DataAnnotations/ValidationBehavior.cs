@@ -26,20 +26,18 @@ class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
 
         var results = new List<ValidationResult>();
 
-        var isValid = Validator.TryValidateObject(message, validationContext, results, true);
-
-        if (isValid)
+        if (Validator.TryValidateObject(message, validationContext, results, true))
         {
             return;
         }
 
         var errorMessage = new StringBuilder();
-        var error = $"Validation failed for message {message}, with the following error/s:";
+        var error = $"Validation failed for message '{message}', with the following error/s:";
         errorMessage.AppendLine(error);
 
-        foreach (var validationResult in results)
+        foreach (var result in results)
         {
-            errorMessage.AppendLine(validationResult.ErrorMessage);
+            errorMessage.AppendLine(result.ErrorMessage);
         }
 
         throw new ValidationException(errorMessage.ToString());
