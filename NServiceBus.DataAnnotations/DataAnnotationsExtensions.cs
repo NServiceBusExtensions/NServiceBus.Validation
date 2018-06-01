@@ -1,5 +1,6 @@
-﻿using NServiceBus.Pipeline;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NServiceBus.Extensibility;
 
 namespace NServiceBus
 {
@@ -8,10 +9,16 @@ namespace NServiceBus
     /// </summary>
     public static class DataAnnotationsExtensions
     {
-        public static IIncomingLogicalMessageContext MessageContext(this ValidationContext validationContext)
+        public static IReadOnlyDictionary<string,string> Headers(this ValidationContext validationContext)
         {
             Guard.AgainstNull(validationContext, nameof(validationContext));
-            return (IIncomingLogicalMessageContext) validationContext.Items["MessageContext"];
+            return (IReadOnlyDictionary<string, string>) validationContext.Items["Headers"];
+        }
+
+        public static ContextBag ContextBag(this ValidationContext validationContext)
+        {
+            Guard.AgainstNull(validationContext, nameof(validationContext));
+            return (ContextBag) validationContext.Items["ContextBag"];
         }
     }
 }

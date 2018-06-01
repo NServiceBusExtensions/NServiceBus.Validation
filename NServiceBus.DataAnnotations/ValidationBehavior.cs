@@ -21,7 +21,8 @@ class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
             new BuilderWrapper(context.Builder),
             items: new Dictionary<object, object>
             {
-                {"MessageContext", context}
+                {"Headers", context.Headers},
+                {"ContextBag", context.Extensions},
             });
 
         var results = new List<ValidationResult>();

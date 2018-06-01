@@ -1,5 +1,6 @@
-﻿using FluentValidation;
-using NServiceBus.Pipeline;
+﻿using System.Collections.Generic;
+using FluentValidation;
+using NServiceBus.Extensibility;
 
 namespace NServiceBus
 {
@@ -8,10 +9,16 @@ namespace NServiceBus
     /// </summary>
     public static class FluentValidationExtensions
     {
-        public static IIncomingLogicalMessageContext MessageContext(this ValidationContext validationContext)
+        public static IReadOnlyDictionary<string, string> Headers(this ValidationContext validationContext)
         {
             Guard.AgainstNull(validationContext, nameof(validationContext));
-            return (IIncomingLogicalMessageContext) validationContext.RootContextData["MessageContext"];
+            return (IReadOnlyDictionary<string, string>)validationContext.RootContextData["Headers"];
+        }
+
+        public static ContextBag ContextBag(this ValidationContext validationContext)
+        {
+            Guard.AgainstNull(validationContext, nameof(validationContext));
+            return (ContextBag)validationContext.RootContextData["ContextBag"];
         }
     }
 }

@@ -12,8 +12,8 @@ public class MessageValidator : AbstractValidator<MessageWithValidator>
 
     public override ValidationResult Validate(ValidationContext<MessageWithValidator> context)
     {
-        var messageContext = context.MessageContext();
-        Assert.NotNull(messageContext);
+        Assert.NotNull(context.Headers());
+        Assert.NotNull(context.ContextBag());
         return base.Validate(context);
     }
 }

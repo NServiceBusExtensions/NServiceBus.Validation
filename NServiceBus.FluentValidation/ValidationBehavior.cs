@@ -31,7 +31,8 @@ class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
         foreach (var validator in validators)
         {
             var validationContext = new ValidationContext(instance);
-            validationContext.RootContextData.Add("MessageContext", context);
+            validationContext.RootContextData.Add("Headers", context.Headers);
+            validationContext.RootContextData.Add("ContextBag", context.Extensions);
             if (AsyncValidatorCache.IsAsync(validator))
             {
                 var result = await validator.ValidateAsync(validationContext)
