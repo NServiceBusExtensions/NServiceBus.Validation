@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentValidation;
-using NServiceBus.Pipeline;
+using NServiceBus.ObjectBuilder;
 
 internal interface IValidatorTypeCache
 {
-    bool TryGetValidators(IIncomingLogicalMessageContext context, out IEnumerable<IValidator> buildAll);
+    bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators);
 }

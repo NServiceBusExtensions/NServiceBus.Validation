@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
-using NServiceBus.Pipeline;
+using NServiceBus.ObjectBuilder;
 
 class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
 {
@@ -11,9 +11,9 @@ class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
 
     static Type validatorType = typeof(IValidator<>);
 
-    public bool TryGetValidators(IIncomingLogicalMessageContext context, out IEnumerable<IValidator> buildAll)
+    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
-        var validatorInfo = typeCache.GetOrAdd(context.Message.MessageType,
+        var validatorInfo = typeCache.GetOrAdd(messageType,
             type => new ValidatorInfo
             {
                 ValidatorType = validatorType.MakeGenericType(type)
@@ -23,17 +23,17 @@ class UnitOfWorkValidatorTypeCache : IValidatorTypeCache
         {
             if (!validatorInfo.HasValidators.Value)
             {
-                buildAll = Enumerable.Empty<IValidator>();
+                validators = Enumerable.Empty<IValidator>();
                 return false;
             }
         }
 
-        buildAll = context.Builder
+        validators = builder
             .BuildAll(validatorInfo.ValidatorType)
             .Cast<IValidator>()
             .ToList();
 
-        var any = buildAll.Any();
+        var any = validators.Any();
         validatorInfo.HasValidators = any;
         return any;
     }

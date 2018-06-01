@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
-using NServiceBus.Pipeline;
+using NServiceBus.ObjectBuilder;
 
 class EndpointValidatorTypeCache : IValidatorTypeCache
 {
@@ -11,13 +11,13 @@ class EndpointValidatorTypeCache : IValidatorTypeCache
 
     static Type validatorType = typeof(IValidator<>);
 
-    public bool TryGetValidators(IIncomingLogicalMessageContext context, out IEnumerable<IValidator> buildAll)
+    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
-        var validatorInfo = typeCache.GetOrAdd(context.Message.MessageType,
+        var validatorInfo = typeCache.GetOrAdd(messageType,
             type =>
             {
                 var makeGenericType = validatorType.MakeGenericType(type);
-                var all = context.Builder.BuildAll(makeGenericType)
+                var all = builder.BuildAll(makeGenericType)
                     .Cast<IValidator>()
                     .ToList();
                 return new ValidatorInfo
@@ -28,7 +28,7 @@ class EndpointValidatorTypeCache : IValidatorTypeCache
             });
 
 
-        buildAll = validatorInfo.Validators;
+        validators = validatorInfo.Validators;
         return validatorInfo.HasValidators;
     }
 

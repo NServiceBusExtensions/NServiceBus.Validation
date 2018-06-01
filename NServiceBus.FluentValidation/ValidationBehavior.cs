@@ -1,54 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.Results;
 using NServiceBus.Pipeline;
 
 class ValidationBehavior : Behavior<IIncomingLogicalMessageContext>
 {
-    IValidatorTypeCache validatorTypeCache;
+    MessageValidator validator;
 
-    public ValidationBehavior(IValidatorTypeCache validatorTypeCache)
+    public ValidationBehavior(MessageValidator validator)
     {
-        this.validatorTypeCache = validatorTypeCache;
+        this.validator = validator;
     }
 
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        if (validatorTypeCache.TryGetValidators(context, out var buildAll))
-        {
-            await Validate(context, buildAll).ConfigureAwait(false);
-        }
+        var message = context.Message;
+        await validator.Validate(message.MessageType, context.Builder, message.Instance, context.Headers, context.Extensions);
         await next().ConfigureAwait(false);
-    }
-
-    static async Task Validate(IIncomingLogicalMessageContext context, IEnumerable<IValidator> validators)
-    {
-        var instance = context.Message.Instance;
-        var results = new List<ValidationFailure>();
-        foreach (var validator in validators)
-        {
-            var validationContext = new ValidationContext(instance);
-            validationContext.RootContextData.Add("Headers", context.Headers);
-            validationContext.RootContextData.Add("ContextBag", context.Extensions);
-            if (AsyncValidatorCache.IsAsync(validator))
-            {
-                var result = await validator.ValidateAsync(validationContext)
-                    .ConfigureAwait(false);
-                results.AddRange(result.Errors);
-            }
-            else
-            {
-                var result = validator.Validate(validationContext);
-                results.AddRange(result.Errors);
-            }
-        }
-
-        if (results.Any())
-        {
-            throw new ValidationException(results);
-        }
     }
 }
