@@ -7,14 +7,18 @@ namespace NServiceBus
     /// </summary>
     public static class FluentValidationConfigurationExtensions
     {
-        public static FluentValidationConfig UseFluentValidation(this EndpointConfiguration endpointConfiguration, ValidatorLifecycle validatorLifecycle = ValidatorLifecycle.Endpoint)
+        public static FluentValidationConfig UseFluentValidation(this EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle = ValidatorLifecycle.Endpoint, bool validateOutgoingMessages = false)
         {
-            Guard.AgainstNull(endpointConfiguration, nameof(endpointConfiguration));
-            var recoverability = endpointConfiguration.Recoverability();
+            Guard.AgainstNull(endpoint, nameof(endpoint));
+            var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<ValidationException>();
-            var config = new FluentValidationConfig(endpointConfiguration, validatorLifecycle);
-            var pipeline = endpointConfiguration.Pipeline;
+            var config = new FluentValidationConfig(endpoint, validatorLifecycle);
+            var pipeline = endpoint.Pipeline;
             pipeline.Register(new IncomingValidationStep(config));
+            if (validateOutgoingMessages)
+            {
+                pipeline.Register(new OutgoingValidationStep(config));
+            }
             return config;
         }
     }

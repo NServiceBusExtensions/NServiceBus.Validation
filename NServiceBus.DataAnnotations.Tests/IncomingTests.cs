@@ -2,12 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
 using NServiceBus;
 using NServiceBus.Features;
 using Xunit;
 
-public class Tests
+public class IncomingTests
 {
     [Fact]
     public async Task With_no_validator()
@@ -27,39 +26,15 @@ public class Tests
     }
 
     [Fact]
-    public async Task With_uow_validator()
-    {
-        var message = new MessageWithValidator();
-        Assert.NotNull(await Send(message,ValidatorLifecycle.UnitOfWork));
-    }
-
-    [Fact]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
         Assert.NotNull(await Send(message));
     }
 
-    [Fact]
-    public async Task With_async_validator_valid()
+    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null)
     {
-        var message = new MessageWithAsyncValidator
-        {
-            Content = "content"
-        };
-        Assert.Null(await Send(message));
-    }
-
-    [Fact]
-    public async Task With_async_validator_invalid()
-    {
-        var message = new MessageWithAsyncValidator();
-        Assert.NotNull(await Send(message));
-    }
-
-    static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)
-    {
-        var configuration = new EndpointConfiguration("FluentValidation" + key);
+        var configuration = new EndpointConfiguration("DataAnnotationsIncoming"+key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
@@ -75,12 +50,11 @@ public class Tests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        var validation = configuration.UseFluentValidation(lifecycle);
-        validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
+        configuration.UseDataAnnotationsValidation();
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
-        if (!resetEvent.WaitOne(TimeSpan.FromSeconds(1)))
+        if (!resetEvent.WaitOne(TimeSpan.FromSeconds(2)))
         {
             throw new Exception("No Set received.");
         }

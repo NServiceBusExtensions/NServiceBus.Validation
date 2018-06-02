@@ -6,13 +6,13 @@ namespace NServiceBus
 {
     public class FluentValidationConfig
     {
-        EndpointConfiguration endpointConfiguration;
+        EndpointConfiguration endpoint;
         internal ValidatorLifecycle validatorLifecycle;
         DependencyLifecycle dependencyLifecycle;
 
-        internal FluentValidationConfig(EndpointConfiguration endpointConfiguration, ValidatorLifecycle validatorLifecycle)
+        internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle)
         {
-            this.endpointConfiguration = endpointConfiguration;
+            this.endpoint = endpoint;
             this.validatorLifecycle = validatorLifecycle;
 
             if (validatorLifecycle == ValidatorLifecycle.Endpoint)
@@ -37,7 +37,7 @@ namespace NServiceBus
 
         public void AddValidatorsFromAssembly(Assembly assembly)
         {
-            endpointConfiguration.RegisterComponents(components =>
+            endpoint.RegisterComponents(components =>
             {
                 foreach (var result in AssemblyScanner.FindValidatorsInAssembly(assembly))
                 {

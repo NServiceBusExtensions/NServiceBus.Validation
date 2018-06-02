@@ -5,13 +5,17 @@
     /// </summary>
     public static class DataAnnotationsConfigurationExtensions
     {
-        public static void UseDataAnnotationsValidation(this EndpointConfiguration endpointConfiguration)
+        public static void UseDataAnnotationsValidation(this EndpointConfiguration endpoint, bool validateOutgoingMessages = false)
         {
-            Guard.AgainstNull(endpointConfiguration, nameof(endpointConfiguration));
-            var recoverability = endpointConfiguration.Recoverability();
+            Guard.AgainstNull(endpoint, nameof(endpoint));
+            var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<ValidationException>();
-            var pipeline = endpointConfiguration.Pipeline;
+            var pipeline = endpoint.Pipeline;
             pipeline.Register(new IncomingValidationStep());
+            if (validateOutgoingMessages)
+            {
+                pipeline.Register(new OutgoingValidationStep());
+            }
         }
     }
 }

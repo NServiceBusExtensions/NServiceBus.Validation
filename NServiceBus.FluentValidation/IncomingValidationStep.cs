@@ -4,7 +4,7 @@ using NServiceBus.Pipeline;
 class IncomingValidationStep : RegisterStep
 {
     public IncomingValidationStep(FluentValidationConfig config) :
-        base("IncomingFluentValidation", typeof(IncomingValidationBehavior), "Validates message using FluentValidation",
+        base("IncomingFluentValidation", typeof(IncomingValidationBehavior), "Validates incoming messages using FluentValidation",
             builder =>
             {
                 if (config.validatorLifecycle == ValidatorLifecycle.Endpoint)
