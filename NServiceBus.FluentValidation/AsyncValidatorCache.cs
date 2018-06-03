@@ -17,10 +17,15 @@ static class AsyncValidatorCache
     {
         if (validator is IEnumerable<IValidationRule> rules)
         {
-            return rules.Any(validationRule => validationRule.Validators
-                .Any(propertyValidator => propertyValidator.IsAsync));
+            return rules.Any(IsAsync);
         }
 
         return false;
+    }
+
+    static bool IsAsync(IValidationRule validationRule)
+    {
+        return validationRule.Validators
+            .Any(propertyValidator => propertyValidator.IsAsync);
     }
 }

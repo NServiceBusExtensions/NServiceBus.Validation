@@ -25,6 +25,22 @@ namespace NServiceBus
             }
         }
 
+        IValidatorTypeCache GetValidatorTypeCache()
+        {
+            if (validatorLifecycle == ValidatorLifecycle.Endpoint)
+            {
+                return new EndpointValidatorTypeCache();
+            }
+
+            return new UnitOfWorkValidatorTypeCache();
+        }
+
+        internal MessageValidator BuildMessageValidator()
+        {
+            var validatorTypeCache = GetValidatorTypeCache();
+            return new MessageValidator(validatorTypeCache);
+        }
+
         public void AddValidatorsFromAssemblyContaining<T>()
         {
             AddValidatorsFromAssemblyContaining(typeof(T));
