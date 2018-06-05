@@ -5,14 +5,18 @@
     /// </summary>
     public static class DataAnnotationsConfigurationExtensions
     {
-        public static void UseDataAnnotationsValidation(this EndpointConfiguration endpoint, bool validateOutgoingMessages = false)
+        public static void UseDataAnnotationsValidation(this EndpointConfiguration endpoint, bool incoming = true, bool outgoing = true)
         {
             Guard.AgainstNull(endpoint, nameof(endpoint));
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<ValidationException>();
             var pipeline = endpoint.Pipeline;
-            pipeline.Register(new IncomingValidationStep());
-            if (validateOutgoingMessages)
+            if (incoming)
+            {
+                pipeline.Register(new IncomingValidationStep());
+            }
+
+            if (outgoing)
             {
                 pipeline.Register(new OutgoingValidationStep());
             }

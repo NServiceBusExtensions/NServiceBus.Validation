@@ -37,7 +37,7 @@ public class OutgoingTests
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
 
-        configuration.UseDataAnnotationsValidation(true);
+        configuration.UseDataAnnotationsValidation(incoming: false);
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);

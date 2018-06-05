@@ -62,7 +62,7 @@ public class OutgoingTests
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
 
-        var validation = configuration.UseFluentValidation(lifecycle, true);
+        var validation = configuration.UseFluentValidation(lifecycle, incoming: false);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 
         var endpoint = await Endpoint.Start(configuration);

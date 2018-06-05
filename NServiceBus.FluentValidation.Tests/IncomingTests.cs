@@ -30,7 +30,7 @@ public class IncomingTests
     public async Task With_uow_validator()
     {
         var message = new MessageWithValidator();
-        Assert.NotNull(await Send(message,ValidatorLifecycle.UnitOfWork));
+        Assert.NotNull(await Send(message, ValidatorLifecycle.UnitOfWork));
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class IncomingTests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        var validation = configuration.UseFluentValidation(lifecycle);
+        var validation = configuration.UseFluentValidation(lifecycle, outgoing: false);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 
         var endpoint = await Endpoint.Start(configuration);

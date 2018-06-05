@@ -9,7 +9,7 @@ class Program
         var configuration = new EndpointConfiguration("DataAnnotationsValidationSample");
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
-        configuration.UseDataAnnotationsValidation();
+        configuration.UseDataAnnotationsValidation(outgoing:false);
 
         var endpoint = await Endpoint.Start(configuration);
 

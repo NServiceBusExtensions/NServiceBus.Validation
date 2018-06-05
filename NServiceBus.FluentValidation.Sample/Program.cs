@@ -9,12 +9,12 @@ class Program
         var configuration = new EndpointConfiguration("FluentValidationSample");
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
-        var validation = configuration.UseFluentValidation();
+        var validation = configuration.UseFluentValidation(outgoing: false);
         validation.AddValidatorsFromAssemblyContaining<MyMessage>();
 
         var endpoint = await Endpoint.Start(configuration);
 
-        await endpoint.SendLocal(new MyMessage{Content = "sd"});
+        await endpoint.SendLocal(new MyMessage {Content = "sd"});
         await endpoint.SendLocal(new MyMessage());
 
         Console.WriteLine("Press any key to stop program");

@@ -34,7 +34,7 @@ public class IncomingTests
 
     static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null)
     {
-        var configuration = new EndpointConfiguration("DataAnnotationsIncoming"+key);
+        var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
@@ -50,7 +50,7 @@ public class IncomingTests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        configuration.UseDataAnnotationsValidation();
+        configuration.UseDataAnnotationsValidation(outgoing: false);
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
