@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.6.0" />
+    <PackageReference Include="FluentValidation" Version="7.6.103" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable AsyncFixer02
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ class MessageValidator
         validationContext.RootContextData.Add("ContextBag", contextBag);
         foreach (var validator in buildAll)
         {
-            if (AsyncValidatorCache.IsAsync(validator))
+            if (AsyncValidatorChecker.IsAsync(validator, validationContext))
             {
                 var result = await validator.ValidateAsync(validationContext)
                     .ConfigureAwait(false);
