@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
-using FluentValidation.Validators;
 
 static class AsyncValidatorChecker
 {
@@ -17,7 +16,6 @@ static class AsyncValidatorChecker
 
     static bool IsAsync(IValidationRule validationRule, ValidationContext context)
     {
-        return validationRule.Validators.OfType<IShouldValidateAsync>()
-            .Any(propertyValidator => propertyValidator.ShouldValidateAsync(context));
+        return validationRule.Validators.Any(validator => validator.ShouldValidateAsync(context));
     }
 }
