@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using FluentValidation;
 
@@ -41,18 +42,37 @@ namespace NServiceBus
             return new MessageValidator(validatorTypeCache);
         }
 
-        public void AddValidatorsFromAssemblyContaining<T>()
+        public void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true)
         {
-            AddValidatorsFromAssemblyContaining(typeof(T));
+            AddValidatorsFromAssemblyContaining(typeof(T), throwForNonPublicValidators);
         }
 
-        public void AddValidatorsFromAssemblyContaining(Type type)
+        public void AddValidatorsFromAssemblyContaining(Type type, bool throwForNonPublicValidators = true)
         {
-            AddValidatorsFromAssembly(type.GetTypeInfo().Assembly);
+            AddValidatorsFromAssembly(type.GetTypeInfo().Assembly, throwForNonPublicValidators);
         }
 
-        public void AddValidatorsFromAssembly(Assembly assembly)
+        public void AddValidatorsFromAssembly(Assembly assembly, bool throwForNonPublicValidators = true)
         {
+            if (throwForNonPublicValidators)
+            {
+                var openGenericType = typeof(IValidator<>);
+                var nonPublicValidators = assembly
+                    .GetTypes()
+                    .Where(type => !type.IsPublic &&
+                                   !type.IsNestedPublic &&
+                                   !type.IsAbstract &&
+                                   !type.IsGenericTypeDefinition &&
+                                   type.GetInterfaces()
+                                       .Any(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
+                    )
+                    .ToList();
+                if (nonPublicValidators.Any())
+                {
+                    throw new Exception($"Found some non public validators were found:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(x => x.FullName))}");
+                }
+            }
+
             endpoint.RegisterComponents(components =>
             {
                 foreach (var result in AssemblyScanner.FindValidatorsInAssembly(assembly))
