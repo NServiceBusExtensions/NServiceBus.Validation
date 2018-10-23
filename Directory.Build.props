@@ -9,10 +9,10 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <Authors>Simon Cropp, Indu Alagarsamy</Authors>
+    <Authors>https://github.com/NServiceBusExtensions/NServiceBus.Validation/graphs/contributors</Authors>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) Simon Cropp, Indu Alagarsamy. All rights reserved.</Copyright>
+    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) Contributors.</Copyright>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/icon.png</PackageIconUrl>
     <PackageOutputPath>..\nugets</PackageOutputPath>
