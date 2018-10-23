@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using NServiceBus;
 using NServiceBus.Features;
+using NServiceBus.FluentValidation;
 using Xunit;
 
 public class IncomingTests

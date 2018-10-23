@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentValidation;
+using NServiceBus.FluentValidation;
 
 namespace NServiceBus
 {
