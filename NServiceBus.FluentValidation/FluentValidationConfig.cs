@@ -9,7 +9,7 @@ namespace NServiceBus
     public class FluentValidationConfig
     {
         EndpointConfiguration endpoint;
-        internal ValidatorLifecycle validatorLifecycle;
+        ValidatorLifecycle validatorLifecycle;
         DependencyLifecycle dependencyLifecycle;
 
         internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle)
