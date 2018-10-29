@@ -5,25 +5,18 @@
     <AssemblyVersion>2.0</AssemblyVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
-    <NoWarn>CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
-    <Authors>https://github.com/NServiceBusExtensions/NServiceBus.Validation/graphs/contributors</Authors>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) Contributors.</Copyright>
+    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/icon.png</PackageIconUrl>
     <PackageOutputPath>..\nugets</PackageOutputPath>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePDBsInPackage</TargetsForTfmSpecificContentInPackage>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/NServiceBusExtensions/NServiceBus.Validation</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <Target Name="IncludePDBsInPackage">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\$(AssemblyName).pdb" PackagePath="lib/$(TargetFramework)" />
-    </ItemGroup>
-  </Target>
 </Project>

@@ -6,10 +6,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.0.100" />
     <PackageReference Include="Xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
   </ItemGroup>
 </Project>

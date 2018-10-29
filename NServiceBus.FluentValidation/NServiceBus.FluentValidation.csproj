@@ -9,6 +9,9 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.0.100" />
     <PackageReference Include="NServiceBus" Version="7.1.4" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
