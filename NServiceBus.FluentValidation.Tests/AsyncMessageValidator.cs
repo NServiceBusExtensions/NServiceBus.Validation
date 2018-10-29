@@ -6,6 +6,6 @@ public class AsyncMessageValidator : AbstractValidator<MessageWithAsyncValidator
     public AsyncMessageValidator()
     {
         RuleFor(_ => _.Content)
-            .MustAsync((s, token) => Task.FromResult(s!=null));
+            .MustAsync((s, token) => Task.FromResult(s != null));
     }
 }
