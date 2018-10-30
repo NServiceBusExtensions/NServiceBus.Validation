@@ -9,13 +9,12 @@ namespace NServiceBus
     public class FluentValidationConfig
     {
         EndpointConfiguration endpoint;
-        ValidatorLifecycle validatorLifecycle;
         DependencyLifecycle dependencyLifecycle;
+        internal MessageValidator MessageValidator;
 
         internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle)
         {
             this.endpoint = endpoint;
-            this.validatorLifecycle = validatorLifecycle;
 
             if (validatorLifecycle == ValidatorLifecycle.Endpoint)
             {
@@ -25,22 +24,18 @@ namespace NServiceBus
             {
                 dependencyLifecycle = DependencyLifecycle.InstancePerCall;
             }
+            var validatorTypeCache = GetValidatorTypeCache();
+            MessageValidator = new MessageValidator(validatorTypeCache);
         }
 
         IValidatorTypeCache GetValidatorTypeCache()
         {
-            if (validatorLifecycle == ValidatorLifecycle.Endpoint)
+            if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
             {
                 return new EndpointValidatorTypeCache();
             }
 
             return new UnitOfWorkValidatorTypeCache();
-        }
-
-        internal MessageValidator BuildMessageValidator()
-        {
-            var validatorTypeCache = GetValidatorTypeCache();
-            return new MessageValidator(validatorTypeCache);
         }
 
         public void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)

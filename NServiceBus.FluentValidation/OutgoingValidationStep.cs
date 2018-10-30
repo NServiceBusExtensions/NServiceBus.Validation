@@ -14,6 +14,6 @@ class OutgoingValidationStep : RegisterStep
 
     static IBehavior BuildBehavior(FluentValidationConfig config)
     {
-        return new OutgoingValidationBehavior(config.BuildMessageValidator());
+        return new OutgoingValidationBehavior(config.MessageValidator);
     }
 }

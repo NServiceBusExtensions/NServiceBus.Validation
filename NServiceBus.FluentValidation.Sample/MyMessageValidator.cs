@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using NServiceBus;
+// ReSharper disable UnusedVariable
 
 public class MyMessageValidator : AbstractValidator<MyMessage>
 {
