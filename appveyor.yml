@@ -1,20 +1,9 @@
 image: Visual Studio 2017
-configuration: Release
-platform: Any CPU
-install:
-- cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-before_build:
-- ps: nuget restore
-build:
-  verbosity: minimal
+build_script:
+- cmd: dotnet build --configuration Release
 test_script:
 - cmd: >-
-    %xunit20%\xunit.console NServiceBus.FluentValidation.Tests\bin\Release\net471\NServiceBus.FluentValidation.Tests.dll
-
-    dotnet test "NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
-    
-    %xunit20%\xunit.console NServiceBus.DataAnnotations.Tests\bin\Release\net471\NServiceBus.DataAnnotations.Tests.dll
-
-    dotnet test "NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj" --configuration Release --no-build
+    dotnet test "NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --configuration Release --no-build
 artifacts:
 - path: nugets\**\*.nupkg
