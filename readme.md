@@ -1,5 +1,4 @@
-![Icon](https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/icon.png)
-
+<img src="https://raw.github.com/NServiceBusExtensions/NServiceBus.Validation/master/src/icon.png" height="25px"> Message validation using [DataAnnotations](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.aspx) and [FluentValidation](https://github.com/JeremySkinner/FluentValidation).
 
 <!--- StartOpenCollectiveBackers -->
 
