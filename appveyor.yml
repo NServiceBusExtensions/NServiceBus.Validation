@@ -1,9 +1,0 @@
-image: Visual Studio 2017
-build_script:
-- cmd: dotnet build --configuration Release
-test_script:
-- cmd: >-
-    dotnet test "NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj" --configuration Release --no-build
-    dotnet test "NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --configuration Release --no-build
-artifacts:
-- path: nugets\**\*.nupkg

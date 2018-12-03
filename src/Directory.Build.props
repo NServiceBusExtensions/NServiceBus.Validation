@@ -7,12 +7,12 @@
     <LangVersion>latest</LangVersion>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/icon.png</PackageIconUrl>
-    <PackageOutputPath>..\nugets</PackageOutputPath>
+    <PackageIconUrl>https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/src/icon.png</PackageIconUrl>
+    <PackageOutputPath>..\..\nugets</PackageOutputPath>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/NServiceBusExtensions/NServiceBus.Validation</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
