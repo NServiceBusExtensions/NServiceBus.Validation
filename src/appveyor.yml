@@ -4,6 +4,7 @@ build_script:
 test_script:
 - cmd: >-
     dotnet test "src\NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj" --configuration Release --no-build
+
     dotnet test "src\NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --configuration Release --no-build
 artifacts:
 - path: nugets\**\*.nupkg
