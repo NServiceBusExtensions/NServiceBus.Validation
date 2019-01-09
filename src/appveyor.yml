@@ -1,10 +1,5 @@
 image: Visual Studio 2017
 build_script:
-- cmd: dotnet build src --configuration Release
-test_script:
-- cmd: >-
-    dotnet test "src\NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj" --configuration Release --no-build
-
-    dotnet test "src\NServiceBus.FluentValidation.Tests\NServiceBus.FluentValidation.Tests.csproj" --configuration Release --no-build
+- cmd: dotnet test src --configuration Release
 artifacts:
 - path: nugets\**\*.nupkg
