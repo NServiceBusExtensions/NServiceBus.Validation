@@ -6,6 +6,7 @@ using FluentValidation;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
+using ObjectApproval;
 using Xunit;
 
 public class IncomingTests
@@ -56,6 +57,14 @@ public class IncomingTests
     {
         var message = new MessageWithAsyncValidator();
         Assert.NotNull(await Send(message));
+    }
+
+    [Fact]
+    public async Task Exception_properties()
+    {
+        var message = new MessageWithValidator();
+        var exception = await Send(message);
+        ObjectApprover.VerifyWithJson(exception);
     }
 
     static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)
