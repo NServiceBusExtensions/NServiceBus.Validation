@@ -64,9 +64,6 @@ public class OutgoingTests
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
 
-        var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
-
         var validation = configuration.UseFluentValidation(lifecycle, incoming: false);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
 

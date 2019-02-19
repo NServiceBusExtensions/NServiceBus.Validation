@@ -1,0 +1,15 @@
+﻿{
+  Message: 'Validation failed for message \'MessageWithValidator\', with the following error/s:',
+  Errors: [
+    {
+      PropertyName: 'Content',
+      ErrorMessage: '\'Content\' must not be empty.',
+      ErrorCode: 'NotEmptyValidator',
+      FormattedMessagePlaceholderValues: {
+        PropertyName: 'Content',
+        PropertyValue: null
+      },
+      ResourceName: 'NotEmptyValidator'
+    }
+  ]
+}
