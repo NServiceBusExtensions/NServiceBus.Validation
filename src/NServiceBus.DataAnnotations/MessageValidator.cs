@@ -25,7 +25,7 @@ static class MessageValidator
         }
 
         var errorMessage = new StringBuilder();
-        var error = $"Validation failed for message '{message}', with the following error/s:";
+        var error = $"Validation failed for message '{message.GetType()}'.";
         errorMessage.AppendLine(error);
 
         foreach (var result in results)

@@ -1,5 +1,5 @@
 ﻿{
-  Message: 'Validation failed for message \'MessageWithValidator\', with the following error/s:',
+  Message: 'Validation failed for message \'MessageWithValidator\'.',
   Errors: [
     {
       PropertyName: 'Content',
