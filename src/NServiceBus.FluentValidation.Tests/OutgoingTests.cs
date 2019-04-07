@@ -29,14 +29,14 @@ public class OutgoingTests
     public Task With_uow_validator()
     {
         var message = new MessageWithValidator();
-        return Assert.ThrowsAsync<ValidationException>(() => Send(message, ValidatorLifecycle.UnitOfWork));
+        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message, ValidatorLifecycle.UnitOfWork));
     }
 
     [Fact]
     public Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        return Assert.ThrowsAsync<ValidationException>(() => Send(message));
+        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     [Fact]
