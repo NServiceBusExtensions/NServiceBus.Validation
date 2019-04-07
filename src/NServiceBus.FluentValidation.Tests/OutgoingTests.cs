@@ -53,7 +53,7 @@ public class OutgoingTests
     public Task With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
-        return Assert.ThrowsAsync<ValidationException>(() => Send(message));
+        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)
