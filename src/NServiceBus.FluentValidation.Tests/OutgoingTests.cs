@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using FluentValidation;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
