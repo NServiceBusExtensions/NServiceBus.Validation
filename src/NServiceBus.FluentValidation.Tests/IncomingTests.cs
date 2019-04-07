@@ -64,7 +64,7 @@ public class IncomingTests
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        ObjectApprover.VerifyWithJson(new {exception.Message, exception.Errors});
+        ObjectApprover.VerifyWithJson(exception);
     }
 
     static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)

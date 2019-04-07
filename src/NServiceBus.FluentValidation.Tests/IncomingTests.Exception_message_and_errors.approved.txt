@@ -1,5 +1,5 @@
 ﻿{
-  Message: 'Validation failed for message \'MessageWithValidator\'.',
+  MessageType: 'MessageWithValidator, NServiceBus.FluentValidation.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=59ef55776b573da9',
   Errors: [
     {
       PropertyName: 'Content',
@@ -11,5 +11,8 @@
       },
       ResourceName: 'NotEmptyValidator'
     }
-  ]
+  ],
+  Message: 'Validation failed: \r\n -- Content: \'Content\' must not be empty.',
+  Data: {},
+  Source: 'NServiceBus.FluentValidation'
 }

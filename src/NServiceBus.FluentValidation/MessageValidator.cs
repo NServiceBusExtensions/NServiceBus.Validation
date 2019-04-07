@@ -44,7 +44,7 @@ class MessageValidator
 
         if (results.Any())
         {
-            throw new ValidationException($"Validation failed for message '{messageType}'.", results);
+            throw new MessageValidationException(messageType, results);
         }
     }
 }
