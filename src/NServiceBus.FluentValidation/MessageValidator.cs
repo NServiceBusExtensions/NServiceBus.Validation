@@ -32,8 +32,7 @@ class MessageValidator
         {
             if (AsyncValidatorChecker.IsAsync(validator, validationContext))
             {
-                var result = await validator.ValidateAsync(validationContext)
-                    .ConfigureAwait(false);
+                var result = await validator.ValidateAsync(validationContext);
                 results.AddRange(result.Errors);
             }
             else

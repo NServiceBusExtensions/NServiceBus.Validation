@@ -14,7 +14,7 @@ class IncomingValidationBehavior : Behavior<IIncomingLogicalMessageContext>
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
         var message = context.Message;
-        await validator.Validate(message.MessageType, context.Builder, message.Instance, context.Headers, context.Extensions).ConfigureAwait(false);
-        await next().ConfigureAwait(false);
+        await validator.Validate(message.MessageType, context.Builder, message.Instance, context.Headers, context.Extensions);
+        await next();
     }
 }
