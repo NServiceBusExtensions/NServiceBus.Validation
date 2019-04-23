@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using FluentValidation;
@@ -83,6 +84,24 @@ namespace NServiceBus
                     components.ConfigureComponent(result.ValidatorType, dependencyLifecycle);
                 }
             });
+        }
+
+        /// <summary>
+        /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
+        /// </summary>
+        public void AddValidatorsFromMessagesSuffixedAssemblies()
+        {
+            var directory = AppDomain.CurrentDomain.BaseDirectory;
+            var messageAssemblies = Directory.EnumerateFiles(directory, "*.Messages.dll").ToList();
+            if (!messageAssemblies.Any())
+            {
+                throw new Exception($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
+            }
+
+            foreach (var assemblyFile in messageAssemblies)
+            {
+                AddValidatorsFromAssembly(Assembly.LoadFrom(assemblyFile));
+            }
         }
     }
 }
