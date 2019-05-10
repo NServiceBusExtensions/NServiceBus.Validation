@@ -21,9 +21,17 @@ public class HandlerTests :
     public async Task Validate_ValidatingHandlerContext()
     {
         var message = new MyMessage();
-        var handlerContext = new ValidatingContext<MyMessage>(message);
+        var handlerContext = ValidatingContext.Build(message);
         var handler = new MyHandler();
         await Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
+    }
+
+    [Fact]
+    public async Task Validate_ValidatingHandlerContext_Static_Run()
+    {
+        var message = new MyMessage();
+        var handler = new MyHandler();
+        await Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message));
     }
 }
 
