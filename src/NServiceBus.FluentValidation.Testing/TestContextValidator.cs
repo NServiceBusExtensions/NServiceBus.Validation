@@ -12,12 +12,13 @@ namespace NServiceBus.Testing
     public static class TestContextValidator
     {
         static List<Result> validatorScanResults;
-        static TestingValidatorTypeCache validatorTypeCache;
+        static MessageValidator validator;
 
         static TestContextValidator()
         {
             validatorScanResults = new List<Result>();
-            validatorTypeCache = new TestingValidatorTypeCache(validatorScanResults);
+            var typeCache = new TestingValidatorTypeCache(validatorScanResults);
+            validator = new MessageValidator(typeCache);
         }
 
         public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
@@ -50,28 +51,38 @@ namespace NServiceBus.Testing
             AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
         }
 
-        public static Task RunValidators<TMessage>(this TestableMessageHandlerContext context, TMessage message)
+        public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message)
         {
             var builder = context.Builder;
-            var validator = new MessageValidator(validatorTypeCache);
             var tasks = new List<Task>
             {
                 validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
             };
 
-            var published = context.PublishedMessages
-                .Select(x => validator.Validate(x.Message.GetType(), builder, x.Message, x.Options.GetHeaders(), x.Options.GetExtensions()));
-            tasks.AddRange(published);
-
-            var sent = context.SentMessages
-                .Select(x => validator.Validate(x.Message.GetType(), builder, x.Message, x.Options.GetHeaders(), x.Options.GetExtensions()));
-            tasks.AddRange(sent);
-
-            var replied = context.RepliedMessages
-                .Select(x => validator.Validate(x.Message.GetType(), builder, x.Message, x.Options.GetHeaders(), x.Options.GetExtensions()));
-            tasks.AddRange(replied);
+            tasks.AddRange(context.PublishedMessages.Select(Validate));
+            tasks.AddRange(context.SentMessages.Select(Validate));
+            tasks.AddRange(context.RepliedMessages.Select(Validate));
 
             return Task.WhenAll(tasks);
+        }
+
+        internal static Task Validate<T>(OutgoingMessage<object, T> message)
+            where T : ExtendableOptions
+        {
+            var instance = message.Message;
+            var options = message.Options;
+            return Validate(instance, options);
+        }
+
+        internal static Task Validate<T>(object instance, T options)
+            where T : ExtendableOptions
+        {
+            return validator.Validate(instance.GetType(), null, instance, options.GetHeaders(), options.GetExtensions());
+        }
+
+        internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+        {
+            return validator.Validate(instance.GetType(), null, instance, headers, contextBag);
         }
     }
 }
