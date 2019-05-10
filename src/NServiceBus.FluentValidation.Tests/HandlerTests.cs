@@ -3,7 +3,7 @@ using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 using Xunit;
 
-public class HandlerTests
+public class HandlerTests: TestBase
 {
     [Fact]
     public async Task With_no_validator()
@@ -12,8 +12,15 @@ public class HandlerTests
 
         var handler = new MyHandler();
         var message = new MyMessage();
-        var results = ValidationFinder.FindValidatorsInAssemblyContaining<MyMessage>();
-
         await handler.Handle(message, handlerContext);
+        await Assert.ThrowsAsync<MessageValidationException>(()=> handlerContext.RunValidators(message));
+    }
+}
+
+public class TestBase
+{
+    static TestBase()
+    {
+        TestContextValidator.AddValidatorsFromAssemblyContaining<MyMessage>();
     }
 }
