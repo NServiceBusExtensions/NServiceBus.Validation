@@ -13,7 +13,8 @@ class EndpointValidatorTypeCache : IValidatorTypeCache
 
     public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
-        var validatorInfo = typeCache.GetOrAdd(messageType,
+        var validatorInfo = typeCache.GetOrAdd(
+            messageType,
             type =>
             {
                 var makeGenericType = validatorType.MakeGenericType(type);
@@ -26,7 +27,6 @@ class EndpointValidatorTypeCache : IValidatorTypeCache
                     HasValidators = all.Any()
                 };
             });
-
 
         validators = validatorInfo.Validators;
         return validatorInfo.HasValidators;

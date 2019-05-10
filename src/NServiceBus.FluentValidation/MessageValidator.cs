@@ -7,6 +7,7 @@ using FluentValidation.Results;
 using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
 using NServiceBus.ObjectBuilder;
+using NServiceBus.Pipeline;
 
 class MessageValidator
 {
@@ -15,6 +16,11 @@ class MessageValidator
     public MessageValidator(IValidatorTypeCache validatorTypeCache)
     {
         this.validatorTypeCache = validatorTypeCache;
+    }
+
+    public Task Validate(IInvokeHandlerContext handlerContext)
+    {
+        return Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
     }
 
     public async Task Validate(Type messageType, IBuilder contextBuilder, object instance, Dictionary<string, string> headers, ContextBag contextBag)

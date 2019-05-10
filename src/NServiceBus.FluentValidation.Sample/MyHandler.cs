@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NServiceBus;
 
-class MyHandler :
+public class MyHandler :
     IHandleMessages<MyMessage>
 {
     public Task Handle(MyMessage message, IMessageHandlerContext context)

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentValidation;
 using NServiceBus.FluentValidation;
@@ -51,32 +50,13 @@ namespace NServiceBus
 
         public void AddValidatorsFromAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
         {
-            var assemblyName = assembly.GetName().Name;
-            if (throwForNonPublicValidators)
-            {
-                var openGenericType = typeof(IValidator<>);
-                var nonPublicValidators = assembly
-                    .GetTypes()
-                    .Where(type => !type.IsPublic &&
-                                   !type.IsNestedPublic &&
-                                   !type.IsAbstract &&
-                                   !type.IsGenericTypeDefinition &&
-                                   type.GetInterfaces()
-                                       .Any(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
-                    )
-                    .ToList();
-                if (nonPublicValidators.Any())
-                {
-                    throw new Exception($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(x => x.FullName))}.");
-                }
-            }
+            var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
+            AddValidators(results);
+        }
 
-            var results = AssemblyScanner.FindValidatorsInAssembly(assembly).ToList();
-            if (throwForNoValidatorsFound && !results.Any())
-            {
-                throw new Exception($"No validators were found in {assemblyName}.");
-            }
-
+        public void AddValidators(IEnumerable<AssemblyScanner.AssemblyScanResult> results)
+        {
+            Guard.AgainstNull(results, nameof(results));
             endpoint.RegisterComponents(components =>
             {
                 foreach (var result in results)
@@ -91,17 +71,7 @@ namespace NServiceBus
         /// </summary>
         public void AddValidatorsFromMessagesSuffixedAssemblies()
         {
-            var directory = AppDomain.CurrentDomain.BaseDirectory;
-            var messageAssemblies = Directory.EnumerateFiles(directory, "*.Messages.dll").ToList();
-            if (!messageAssemblies.Any())
-            {
-                throw new Exception($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
-            }
-
-            foreach (var assemblyFile in messageAssemblies)
-            {
-                AddValidatorsFromAssembly(Assembly.LoadFrom(assemblyFile));
-            }
+            AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
         }
     }
 }
