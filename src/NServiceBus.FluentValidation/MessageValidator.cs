@@ -23,7 +23,7 @@ class MessageValidator
         return Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
     }
 
-    public async Task Validate(Type messageType, IBuilder contextBuilder, object instance, Dictionary<string, string> headers, ContextBag contextBag)
+    public async Task Validate(Type messageType, IBuilder contextBuilder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
         if (!validatorTypeCache.TryGetValidators(messageType, contextBuilder, out var buildAll))
         {
