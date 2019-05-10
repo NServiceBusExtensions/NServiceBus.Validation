@@ -62,6 +62,7 @@ namespace NServiceBus.Testing
             tasks.AddRange(context.PublishedMessages.Select(Validate));
             tasks.AddRange(context.SentMessages.Select(Validate));
             tasks.AddRange(context.RepliedMessages.Select(Validate));
+            tasks.AddRange(context.TimeoutMessages.Select(Validate));
 
             return Task.WhenAll(tasks);
         }
