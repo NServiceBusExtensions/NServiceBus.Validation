@@ -65,8 +65,8 @@ namespace NServiceBus.Testing
 
             return Task.WhenAll(tasks);
         }
-
-        internal static Task Validate<T>(OutgoingMessage<object, T> message)
+        
+        static Task Validate<T>(OutgoingMessage<object, T> message)
             where T : ExtendableOptions
         {
             var instance = message.Message;
