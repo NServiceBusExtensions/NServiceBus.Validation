@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentValidation;
 using NServiceBus.FluentValidation;
+using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus
 {
@@ -54,7 +54,7 @@ namespace NServiceBus
             AddValidators(results);
         }
 
-        public void AddValidators(IEnumerable<AssemblyScanner.AssemblyScanResult> results)
+        public void AddValidators(IEnumerable<Result> results)
         {
             Guard.AgainstNull(results, nameof(results));
             endpoint.RegisterComponents(components =>

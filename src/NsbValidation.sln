@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.DataAnnotations
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.DataAnnotations.Tests", "NServiceBus.DataAnnotations.Tests\NServiceBus.DataAnnotations.Tests.csproj", "{07389C10-2CF9-4F3C-ABB1-8EA2BCCDB028}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.FluentValidation.Testing", "NServiceBus.FluentValidation.Testing\NServiceBus.FluentValidation.Testing.csproj", "{B9B8C512-8928-422F-8E4E-0FF58FBCF11B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{07389C10-2CF9-4F3C-ABB1-8EA2BCCDB028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07389C10-2CF9-4F3C-ABB1-8EA2BCCDB028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07389C10-2CF9-4F3C-ABB1-8EA2BCCDB028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B8C512-8928-422F-8E4E-0FF58FBCF11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B8C512-8928-422F-8E4E-0FF58FBCF11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B8C512-8928-422F-8E4E-0FF58FBCF11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B8C512-8928-422F-8E4E-0FF58FBCF11B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
