@@ -17,6 +17,11 @@ namespace NServiceBus.FluentValidation
             MessageType = messageType;
         }
 
+        public override string Message
+        {
+            get => $"Validation failed for message '{MessageType.FullName}'.{Environment.NewLine}{base.Message}";
+        }
+
         public override string ToString()
         {
             return $"Validation failed for message '{MessageType.FullName}'.{Environment.NewLine}{base.ToString()}";
