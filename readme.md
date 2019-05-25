@@ -30,7 +30,7 @@ NServiceBus.FluentValidation
 Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using [FluentValidation](https://github.com/JeremySkinner/FluentValidation).
 
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.FluentValidation.svg?style=flat)](https://www.nuget.org/packages/NServiceBus.FluentValidation/)
+## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.FluentValidation.svg)](https://www.nuget.org/packages/NServiceBus.FluentValidation/)
 
 https://nuget.org/packages/NServiceBus.FluentValidation/
 
@@ -48,7 +48,7 @@ NServiceBus.DataAnnotations
 Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using [DataAnnotations](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.aspx).
 
 
-## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.DataAnnotations.svg?style=flat)](https://www.nuget.org/packages/NServiceBus.DataAnnotations/)
+## The NuGet package [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.DataAnnotations.svg)](https://www.nuget.org/packages/NServiceBus.DataAnnotations/)
 
 https://nuget.org/packages/NServiceBus.DataAnnotations/
 
