@@ -6,7 +6,7 @@ using FluentValidation;
 using NServiceBus.ObjectBuilder;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
-class TestingValidatorTypeCache : 
+class TestingValidatorTypeCache :
     IValidatorTypeCache
 {
     List<Result> validatorScanResults;

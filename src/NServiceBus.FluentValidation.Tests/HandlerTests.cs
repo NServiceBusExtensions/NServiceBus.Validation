@@ -11,7 +11,6 @@ public class HandlerTests :
     {
         var handlerContext = new TestableMessageHandlerContext();
 
-        var handler = new MyHandler();
         var message = new MyMessage();
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message));
     }
@@ -31,13 +30,5 @@ public class HandlerTests :
         var message = new MyMessage();
         var handler = new MyHandler();
         return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message));
-    }
-}
-
-public class TestBase
-{
-    static TestBase()
-    {
-        TestContextValidator.AddValidatorsFromAssemblyContaining<MyMessage>();
     }
 }
