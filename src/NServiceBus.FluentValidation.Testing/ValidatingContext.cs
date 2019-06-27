@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Threading.Tasks;
 
 namespace NServiceBus.Testing
 {
@@ -38,6 +40,9 @@ namespace NServiceBus.Testing
         {
             Guard.AgainstNull(message, nameof(message));
             this.message = message;
+            var value = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
+            MessageHeaders.Add(NServiceBus.Headers.TimeSent, value);
+            Headers.Add(NServiceBus.Headers.TimeSent, value);
         }
 
         public async Task Run(IHandleMessages<TMessage> handler)
