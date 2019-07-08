@@ -34,8 +34,6 @@ Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using 
 
 https://nuget.org/packages/NServiceBus.FluentValidation/
 
-    PM> Install-Package NServiceBus.FluentValidation
-
 
 ## Documentation
 
@@ -52,8 +50,6 @@ Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using 
 
 https://nuget.org/packages/NServiceBus.DataAnnotations/
 
-    PM> Install-Package NServiceBus.DataAnnotations
-
 
 ## Documentation
 
@@ -62,6 +58,4 @@ https://docs.particular.net/nuget/NServiceBus.DataAnnotations
 
 ## Icon
 
-<a href="http://thenounproject.com/term/validation/1680887/" target="_blank">Validation</a> designed by Becrisp from <a href="http://thenounproject.com/" target="_blank">The Noun Project</a>
-
-
+[Validation](http://thenounproject.com/term/validation/1680887/) designed by Becrisp from [The Noun Project](http://thenounproject.com/).
