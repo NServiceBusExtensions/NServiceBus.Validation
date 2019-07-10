@@ -27,14 +27,5 @@ namespace NServiceBus.Testing
             await context.Run(handler);
             return context;
         }
-
-        public static async Task<ValidatingContext<TMessage>> Run<TMessage>(IAmStartedByMessages<TMessage> handler, TMessage message)
-        {
-            Guard.AgainstNull(message, nameof(message));
-            Guard.AgainstNull(handler, nameof(handler));
-            var context = Build(message);
-            await context.Run(handler);
-            return context;
-        }
     }
 }

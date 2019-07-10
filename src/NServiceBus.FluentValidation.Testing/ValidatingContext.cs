@@ -25,13 +25,6 @@ namespace NServiceBus.Testing
             await handler.Handle(message, this);
         }
 
-        public async Task Run(IAmStartedByMessages<TMessage> handler)
-        {
-            Guard.AgainstNull(handler, nameof(handler));
-            await TestContextValidator.Validate(message, Headers, Extensions);
-            await handler.Handle(message, this);
-        }
-
         public async Task Run(IHandleTimeouts<TMessage> handler)
         {
             Guard.AgainstNull(handler, nameof(handler));
