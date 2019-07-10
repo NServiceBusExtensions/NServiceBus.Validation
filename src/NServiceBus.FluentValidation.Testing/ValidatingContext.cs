@@ -23,6 +23,7 @@ namespace NServiceBus.Testing
             Guard.AgainstNull(handler, nameof(handler));
             await TestContextValidator.Validate(message, Headers, Extensions);
             await handler.Handle(message, this);
+            AddDataIfSaga(handler);
         }
 
         public async Task Run(IHandleTimeouts<TMessage> handler)
@@ -30,6 +31,15 @@ namespace NServiceBus.Testing
             Guard.AgainstNull(handler, nameof(handler));
             await TestContextValidator.Validate(message, Headers, Extensions);
             await handler.Timeout(message, this);
+            AddDataIfSaga(handler);
+        }
+
+        void AddDataIfSaga(object handler)
+        {
+            if (handler is Saga saga)
+            {
+                Extensions.Set("SagaData", saga.Entity);
+            }
         }
 
         public override async Task Send(object message, SendOptions options)
