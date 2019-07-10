@@ -38,9 +38,11 @@ namespace NServiceBus.Testing
         {
             if (handler is Saga saga)
             {
-                Extensions.Set("SagaData", saga.Entity);
+                SagaData = saga.Entity;
             }
         }
+
+        public IContainSagaData SagaData { get; private set; }
 
         public override async Task Send(object message, SendOptions options)
         {

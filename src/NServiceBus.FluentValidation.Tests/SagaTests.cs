@@ -19,6 +19,6 @@ public class SagaTests :
             Data = sagaData
         };
         await handlerContext.Run(saga);
-        Assert.Equal(handlerContext.Extensions.Get<MySaga.MySagaData>("SagaData"),sagaData);
+        Assert.Equal(handlerContext.SagaData, sagaData);
     }
 }
