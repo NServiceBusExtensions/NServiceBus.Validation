@@ -61,6 +61,7 @@ public class OutgoingTests
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
+        configuration.DisableFeature<Sagas>();
 
         var validation = configuration.UseFluentValidation(lifecycle, incoming: false);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>();
