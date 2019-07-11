@@ -54,7 +54,7 @@ public class IncomingTests
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
-        if (!resetEvent.WaitOne(TimeSpan.FromSeconds(2)))
+        if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {
             throw new Exception("No Set received.");
         }
