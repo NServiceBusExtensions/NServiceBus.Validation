@@ -60,7 +60,7 @@ namespace NServiceBus.Testing
         {
             if (!hasRun)
             {
-                throw new Exception("ValidatingContext should be executed via `validatingContext.Run(handler)`, not `handler.Handle(message)`.");
+                throw new Exception("ValidatingContext should be executed via `validatingContext.Run(handler)`, not `handler.Handle(message, handlerContext)`.");
             }
         }
 
