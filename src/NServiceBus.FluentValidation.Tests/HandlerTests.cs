@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using ApprovalTests;
+using NServiceBus;
 using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 using Xunit;
@@ -22,6 +25,26 @@ public class HandlerTests :
         var handlerContext = ValidatingContext.Build(message);
         var handler = new MyHandler();
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
+    }
+
+    class SimpleMessage:IMessage
+    {
+    }
+    class HandlerThatSends : IHandleMessages<SimpleMessage>
+    {
+        public Task Handle(SimpleMessage message, IMessageHandlerContext context)
+        {
+            return context.SendLocal(new SimpleMessage());
+        }
+    }
+    [Fact]
+    public async Task Should_throw_for_handle()
+    {
+        var message = new SimpleMessage {};
+        var handlerContext = ValidatingContext.Build(message);
+        var handler = new HandlerThatSends();
+        var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
+        Approvals.Verify(exception.Message);
     }
 
     [Fact]

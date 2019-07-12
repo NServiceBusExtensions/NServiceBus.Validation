@@ -1,0 +1,1 @@
+﻿ValidatingContext should be executed via `validatingContext.Run(handler)`, not `handler.Handle(message)`.
