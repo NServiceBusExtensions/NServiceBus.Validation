@@ -5,7 +5,7 @@ using System.Linq;
 using FluentValidation;
 using NServiceBus.ObjectBuilder;
 
-class UnitOfWorkValidatorTypeCache : 
+class UnitOfWorkValidatorTypeCache :
     IValidatorTypeCache
 {
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new ConcurrentDictionary<Type, ValidatorInfo>();
