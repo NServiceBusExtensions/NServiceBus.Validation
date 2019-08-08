@@ -3,19 +3,7 @@
   <PropertyGroup>
     <Version>3.9.2</Version>
     <NoWarn>CS1591</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>latest</LangVersion>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)). All rights reserved</Copyright>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.Validation/master/src/icon.png</PackageIconUrl>
-    <PackageOutputPath>..\..\nugets</PackageOutputPath>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/NServiceBusExtensions/NServiceBus.Validation</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <DebugType>embedded</DebugType>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 </Project>
