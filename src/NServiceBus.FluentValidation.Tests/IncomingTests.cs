@@ -6,7 +6,6 @@ using FluentValidation;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
-using ObjectApproval;
 using Xunit;
 
 public class IncomingTests
