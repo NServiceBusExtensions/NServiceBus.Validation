@@ -32,7 +32,7 @@ Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using 
 
 ## NuGet package
 
-https://nuget.org/packages/NServiceBus.FluentValidation/ [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.FluentValidation.svg)](https://www.nuget.org/packages/NServiceBus.FluentValidation/)
+https://nuget.org/packages/NServiceBus.FluentValidation/ [![NuGet Status](https://img.shields.io/nuget/v/NServiceBus.FluentValidation.svg)](https://www.nuget.org/packages/NServiceBus.FluentValidation/)
 
 
 ## Documentation
@@ -47,7 +47,7 @@ Validate [NServiceBus messages](https://docs.particular.net/nservicebus/) using 
 
 ## NuGet package
 
-https://nuget.org/packages/NServiceBus.DataAnnotations/ [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.DataAnnotations.svg)](https://www.nuget.org/packages/NServiceBus.DataAnnotations/)
+https://nuget.org/packages/NServiceBus.DataAnnotations/ [![NuGet Status](https://img.shields.io/nuget/v/NServiceBus.DataAnnotations.svg)](https://www.nuget.org/packages/NServiceBus.DataAnnotations/)
 
 
 ## Documentation
