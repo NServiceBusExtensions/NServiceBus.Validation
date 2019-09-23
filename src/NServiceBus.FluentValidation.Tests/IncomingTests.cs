@@ -71,6 +71,8 @@ public class IncomingTests
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
+        configuration.DisableFeature<TimeoutManager>();
+        configuration.DisableFeature<Sagas>();
 
         var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
