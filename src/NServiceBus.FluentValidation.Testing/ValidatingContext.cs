@@ -6,6 +6,7 @@ namespace NServiceBus.Testing
 {
     public class ValidatingContext<TMessage> :
         TestableMessageHandlerContext
+        where TMessage : class
     {
         TMessage message;
         bool hasRun;
@@ -23,7 +24,7 @@ namespace NServiceBus.Testing
         {
             Guard.AgainstNull(handler, nameof(handler));
             hasRun = true;
-            await TestContextValidator.Validate(message, Headers, Extensions);
+            await TestContextValidator.Validate(message, Headers, Extensions, Builder);
             await handler.Handle(message, this);
             AddDataIfSaga(handler);
         }
@@ -32,7 +33,7 @@ namespace NServiceBus.Testing
         {
             Guard.AgainstNull(handler, nameof(handler));
             hasRun = true;
-            await TestContextValidator.Validate(message, Headers, Extensions);
+            await TestContextValidator.Validate(message, Headers, Extensions, Builder);
             await handler.Timeout(message, this);
             AddDataIfSaga(handler);
         }
@@ -45,14 +46,14 @@ namespace NServiceBus.Testing
             }
         }
 
-        public IContainSagaData SagaData { get; private set; }
+        public IContainSagaData? SagaData { get; private set; }
 
         public override async Task Send(object message, SendOptions options)
         {
             Guard.AgainstNull(message, nameof(message));
             Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
-            await TestContextValidator.Validate(message, options);
+            await TestContextValidator.Validate(message, options, Builder);
             await base.Send(message, options);
         }
 
@@ -69,7 +70,7 @@ namespace NServiceBus.Testing
             Guard.AgainstNull(message, nameof(message));
             Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
-            await TestContextValidator.Validate(message, options);
+            await TestContextValidator.Validate(message, options, Builder);
             await base.Reply(message, options);
         }
 
@@ -78,7 +79,7 @@ namespace NServiceBus.Testing
             Guard.AgainstNull(message, nameof(message));
             Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
-            await TestContextValidator.Validate(message, options);
+            await TestContextValidator.Validate(message, options, Builder);
             await base.Publish(message, options);
         }
     }

@@ -40,7 +40,7 @@ public class HandlerTests :
     [Fact]
     public async Task Should_throw_for_handle()
     {
-        var message = new SimpleMessage {};
+        var message = new SimpleMessage();
         var handlerContext = ValidatingContext.Build(message);
         var handler = new HandlerThatSends();
         var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));

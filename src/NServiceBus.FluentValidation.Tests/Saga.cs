@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using NServiceBus;
 
-class MySaga : Saga<MySaga.MySagaData>,
+class MySaga :
+    Saga<MySaga.MySagaData>,
     IHandleMessages<MyMessage>
 {
     public Task Handle(MyMessage message, IMessageHandlerContext context)
@@ -14,8 +15,9 @@ class MySaga : Saga<MySaga.MySagaData>,
     {
     }
 
-    public class MySagaData : ContainSagaData
+    public class MySagaData : 
+        ContainSagaData
     {
-        public string Property { get; set; }
+        public string? Property { get; set; }
     }
 }

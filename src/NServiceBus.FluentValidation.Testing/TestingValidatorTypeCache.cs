@@ -31,10 +31,10 @@ class TestingValidatorTypeCache :
                     .Cast<IValidator>()
                     .ToList();
                 return new ValidatorInfo
-                {
-                    Validators = all,
-                    HasValidators = all.Any()
-                };
+                (
+                    validators: all,
+                    hasValidators: all.Any()
+                );
             });
 
         validators = validatorInfo.Validators;

@@ -16,9 +16,9 @@ class UnitOfWorkValidatorTypeCache :
     {
         var validatorInfo = typeCache.GetOrAdd(messageType,
             type => new ValidatorInfo
-            {
-                ValidatorType = validatorType.MakeGenericType(type)
-            });
+            (
+                validatorType: validatorType.MakeGenericType(type)
+            ));
 
         if (validatorInfo.HasValidators.HasValue)
         {
@@ -41,7 +41,11 @@ class UnitOfWorkValidatorTypeCache :
 
     class ValidatorInfo
     {
-        public Type ValidatorType;
+        public ValidatorInfo(Type validatorType)
+        {
+            ValidatorType = validatorType;
+        }
+        public Type ValidatorType { get; }
         public bool? HasValidators;
     }
 }

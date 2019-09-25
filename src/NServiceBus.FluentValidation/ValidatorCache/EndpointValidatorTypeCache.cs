@@ -23,10 +23,10 @@ class EndpointValidatorTypeCache :
                     .Cast<IValidator>()
                     .ToList();
                 return new ValidatorInfo
-                {
-                    Validators = all,
-                    HasValidators = all.Any()
-                };
+                (
+                    validators: all,
+                    hasValidators: all.Any()
+                );
             });
 
         validators = validatorInfo.Validators;
@@ -35,7 +35,13 @@ class EndpointValidatorTypeCache :
 
     class ValidatorInfo
     {
-        public bool HasValidators;
-        public List<IValidator> Validators;
+        public bool HasValidators { get; }
+        public List<IValidator> Validators { get; }
+
+        public ValidatorInfo(List<IValidator> validators, bool hasValidators)
+        {
+            Validators = validators;
+            HasValidators = hasValidators;
+        }
     }
 }

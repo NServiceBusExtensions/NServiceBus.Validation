@@ -66,7 +66,7 @@ public class IncomingTests
         ObjectApprover.Verify(exception);
     }
 
-    static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null)
+    static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string? key = null)
     {
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
@@ -76,7 +76,7 @@ public class IncomingTests
 
         var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
-        ValidationException exception = null;
+        ValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
             (config, context) =>
