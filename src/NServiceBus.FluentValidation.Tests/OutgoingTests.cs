@@ -55,7 +55,7 @@ public class OutgoingTests
         return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
-    static async Task Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = null!)
+    static async Task Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("FluentValidationOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
