@@ -30,22 +30,25 @@ class MessageValidator
             return;
         }
 
-        var results = new List<ValidationFailure>();
+        var results = new List<TypeValidationFailure>();
         var validationContext = new ValidationContext(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         foreach (var validator in buildAll)
         {
+            IList<ValidationFailure> errors;
             if (AsyncValidatorChecker.IsAsync(validator, validationContext))
             {
                 var result = await validator.ValidateAsync(validationContext);
-                results.AddRange(result.Errors);
+                errors = result.Errors;
             }
             else
             {
                 var result = validator.Validate(validationContext);
-                results.AddRange(result.Errors);
+                errors = result.Errors;
             }
+
+            results.AddRange(errors.Select(failure => new TypeValidationFailure(validator.GetType(), failure)));
         }
 
         if (results.Any())

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FluentValidation.Results;
 
 namespace NServiceBus.FluentValidation
 {
@@ -10,9 +9,10 @@ namespace NServiceBus.FluentValidation
     {
         public Type MessageType { get; }
 
-        public MessageValidationException(Type messageType, IReadOnlyList<ValidationFailure> errors)
+        public MessageValidationException(Type messageType, IReadOnlyList<TypeValidationFailure> errors)
         {
             Guard.AgainstNull(messageType, nameof(messageType));
+            Guard.AgainstNull(errors, nameof(errors));
             MessageType = messageType;
             Errors = errors;
         }
@@ -25,13 +25,14 @@ namespace NServiceBus.FluentValidation
                 builder.AppendLine();
                 foreach (var error in Errors)
                 {
-                    builder.AppendLine($" * {error.PropertyName}: {error.ErrorMessage}");
+                    var failure = error.Failure;
+                    builder.AppendLine($" * {failure.PropertyName}: {failure.ErrorMessage} (Validator: {error.ValidatorType.FullName})");
                 }
 
                 return builder.ToString();
             }
         }
 
-        public IReadOnlyList<ValidationFailure> Errors { get; }
+        public IReadOnlyList<TypeValidationFailure> Errors { get; }
     }
 }
