@@ -74,8 +74,10 @@ public class IncomingTests :
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        Approvals.Verify(exception.ToString(),
-            scrubber: s => s.Replace(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Context.SourceFile)!,"../")), ""));
+        var text = exception.ToString();
+        Approvals.Verify(text,
+            scrubber: s => s.Replace(Environment.NewLine, "\r\n")
+                .Replace(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Context.SourceFile)!, "../")), ""));
     }
 
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
