@@ -3,10 +3,10 @@ using FluentValidation.Results;
 using NServiceBus;
 using Xunit;
 
-public class MessageValidator :
+public class SyncMessageValidator :
     AbstractValidator<MessageWithValidator>
 {
-    public MessageValidator()
+    public SyncMessageValidator()
     {
         RuleFor(_ => _.Content).NotEmpty();
     }
