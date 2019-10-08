@@ -1,6 +1,6 @@
 ﻿{
   MessageType: 'MessageWithValidator',
-  Message: 'Validation failed for message \'MessageWithValidator\'.\r\nValidation failed: \r\n -- Content: \'Content\' must not be empty.',
+  Message: 'Validation failed for message \'MessageWithValidator\'.\r\n * Content: \'Content\' must not be empty.\r\n',
   Errors: [
     {
       PropertyName: 'Content',

@@ -1,7 +1,6 @@
-﻿Validation failed for message 'MessageWithValidator'.
-NServiceBus.FluentValidation.MessageValidationException: Validation failed for message 'MessageWithValidator'.
-Validation failed: 
- -- Content: 'Content' must not be empty.
+﻿NServiceBus.FluentValidation.MessageValidationException: Validation failed for message 'MessageWithValidator'.
+ * Content: 'Content' must not be empty.
+
    at MessageValidator.Validate(Type messageType, IBuilder contextBuilder, Object instance, IReadOnlyDictionary`2 headers, ContextBag contextBag) in C:\Code\NServiceBus.Validation\src\NServiceBus.FluentValidation\MessageValidator.cs:line 53
    at IncomingValidationBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next) in C:\Code\NServiceBus.Validation\src\NServiceBus.FluentValidation\IncomingValidationBehavior.cs:line 18
    at NServiceBus.DeserializeLogicalMessagesConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage)

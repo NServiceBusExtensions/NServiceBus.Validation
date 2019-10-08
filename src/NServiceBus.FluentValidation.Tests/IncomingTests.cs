@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
+using ApprovalTests;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
@@ -71,10 +71,10 @@ public class IncomingTests
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        ApprovalTests.Approvals.Verify(exception.ToString());
+        Approvals.Verify(exception.ToString());
     }
 
-    static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
+    static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
@@ -84,12 +84,12 @@ public class IncomingTests
 
         var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
-        ValidationException exception = null!;
+        MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
             (config, context) =>
             {
-                exception = (ValidationException) context.Exception;
+                exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
