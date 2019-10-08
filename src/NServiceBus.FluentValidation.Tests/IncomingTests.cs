@@ -66,6 +66,14 @@ public class IncomingTests
         ObjectApprover.Verify(exception);
     }
 
+    [Fact]
+    public async Task Exception_ToString()
+    {
+        var message = new MessageWithValidator();
+        var exception = await Send(message);
+        ApprovalTests.Approvals.Verify(exception.ToString());
+    }
+
     static async Task<ValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
