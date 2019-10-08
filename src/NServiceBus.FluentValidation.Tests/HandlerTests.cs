@@ -26,7 +26,8 @@ public class HandlerTests
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
 
-    class SimpleMessage : IMessage
+    class SimpleMessage :
+        IMessage
     {
     }
 

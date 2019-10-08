@@ -10,7 +10,7 @@ namespace NServiceBus.FluentValidation
     {
         public Type MessageType { get; }
 
-        public MessageValidationException(Type messageType, ICollection<ValidationFailure> errors) :
+        public MessageValidationException(Type messageType, IEnumerable<ValidationFailure> errors) :
             base(errors)
         {
             Guard.AgainstNull(messageType, nameof(messageType));

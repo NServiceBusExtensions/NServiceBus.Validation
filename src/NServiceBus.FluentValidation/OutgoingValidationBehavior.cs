@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using NServiceBus.Pipeline;
 
-class OutgoingValidationBehavior : Behavior<IOutgoingLogicalMessageContext>
+class OutgoingValidationBehavior :
+    Behavior<IOutgoingLogicalMessageContext>
 {
     MessageValidator validator;
 

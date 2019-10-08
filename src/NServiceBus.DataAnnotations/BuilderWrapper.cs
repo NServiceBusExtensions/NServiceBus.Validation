@@ -1,7 +1,8 @@
 ﻿using System;
 using NServiceBus.ObjectBuilder;
 
-class BuilderWrapper : IServiceProvider
+class BuilderWrapper :
+    IServiceProvider
 {
     IBuilder builder;
 

@@ -61,29 +61,29 @@ namespace NServiceBus.Testing
                 validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
             };
 
-            tasks.AddRange(context.PublishedMessages.Select(publishedMessage => Validate(publishedMessage,builder)));
-            tasks.AddRange(context.SentMessages.Select(sentMessage => Validate(sentMessage,builder)));
-            tasks.AddRange(context.RepliedMessages.Select(repliedMessage => Validate(repliedMessage,builder)));
-            tasks.AddRange(context.TimeoutMessages.Select(timeoutMessage => Validate(timeoutMessage,builder)));
+            tasks.AddRange(context.PublishedMessages.Select(publishedMessage => Validate(publishedMessage, builder)));
+            tasks.AddRange(context.SentMessages.Select(sentMessage => Validate(sentMessage, builder)));
+            tasks.AddRange(context.RepliedMessages.Select(repliedMessage => Validate(repliedMessage, builder)));
+            tasks.AddRange(context.TimeoutMessages.Select(timeoutMessage => Validate(timeoutMessage, builder)));
 
             return Task.WhenAll(tasks);
         }
 
-        static Task Validate<T>(OutgoingMessage<object, T> message,IBuilder builder)
+        static Task Validate<T>(OutgoingMessage<object, T> message, IBuilder builder)
             where T : ExtendableOptions
         {
             var instance = message.Message;
             var options = message.Options;
-            return Validate(instance, options,builder);
+            return Validate(instance, options, builder);
         }
 
-        internal static Task Validate<T>(object instance, T options,IBuilder builder)
+        internal static Task Validate<T>(object instance, T options, IBuilder builder)
             where T : ExtendableOptions
         {
             return validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
         }
 
-        internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag,IBuilder builder)
+        internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
         {
             return validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
         }

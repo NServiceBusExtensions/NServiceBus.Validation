@@ -1,7 +1,8 @@
 ﻿using NServiceBus;
 using NServiceBus.Pipeline;
 
-class IncomingValidationStep : RegisterStep
+class IncomingValidationStep :
+    RegisterStep
 {
     public IncomingValidationStep(FluentValidationConfig config) :
         base(

@@ -1,9 +1,13 @@
 ﻿using NServiceBus.Pipeline;
 
-class IncomingValidationStep : RegisterStep
+class IncomingValidationStep :
+    RegisterStep
 {
     public IncomingValidationStep() :
-        base("IncomingDataAnnotations", typeof(IncomingValidationBehavior), "Validates incoming messages using DataAnnotations",
+        base(
+            "IncomingDataAnnotations",
+            typeof(IncomingValidationBehavior),
+            "Validates incoming messages using DataAnnotations",
             builder => new IncomingValidationBehavior())
     {
     }
