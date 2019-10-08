@@ -3,10 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using NServiceBus;
+using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
 using Xunit;
+using Xunit.Abstractions;
 
-public class IncomingTests
+public class IncomingTests :
+    XunitApprovalBase
 {
     [Fact]
     public async Task With_no_validator()
@@ -32,7 +35,7 @@ public class IncomingTests
         Assert.NotNull(await Send(message));
     }
 
-    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = "")
+    static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();
@@ -41,12 +44,12 @@ public class IncomingTests
 
         var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
-        ValidationException exception = null!;
+        MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
             (config, context) =>
             {
-                exception = (ValidationException) context.Exception;
+                exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
@@ -60,5 +63,10 @@ public class IncomingTests
         }
 
         return exception;
+    }
+
+    public IncomingTests(ITestOutputHelper output) : 
+        base(output)
+    {
     }
 }

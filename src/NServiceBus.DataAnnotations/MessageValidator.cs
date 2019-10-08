@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using NServiceBus.DataAnnotations;
 using NServiceBus.Extensibility;
 using NServiceBus.ObjectBuilder;
 
@@ -33,6 +34,6 @@ static class MessageValidator
             errorMessage.AppendLine(result.ErrorMessage);
         }
 
-        throw new ValidationException(errorMessage.ToString());
+        throw new MessageValidationException(message.GetType(),results);
     }
 }

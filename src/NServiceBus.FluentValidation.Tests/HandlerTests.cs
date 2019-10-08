@@ -5,8 +5,10 @@ using NServiceBus;
 using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 using Xunit;
+using Xunit.Abstractions;
 
-public class HandlerTests
+public class HandlerTests :
+    XunitApprovalBase
 {
     [Fact]
     public Task Validate_TestableMessageHandlerContext()
@@ -56,5 +58,10 @@ public class HandlerTests
         var message = new MyMessage();
         var handler = new MyHandler();
         return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message));
+    }
+
+    public HandlerTests(ITestOutputHelper output) :
+        base(output)
+    {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,8 +8,10 @@ using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
 using Xunit;
+using Xunit.Abstractions;
 
-public class IncomingTests
+public class IncomingTests :
+    XunitApprovalBase
 {
     [Fact]
     public async Task With_no_validator()
@@ -71,7 +74,8 @@ public class IncomingTests
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        Approvals.Verify(exception.ToString());
+        Approvals.Verify(exception.ToString(),
+            scrubber: s => s.Replace(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Context.SourceFile)!,"../")), ""));
     }
 
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
@@ -104,5 +108,10 @@ public class IncomingTests
         }
 
         return exception;
+    }
+
+    public IncomingTests(ITestOutputHelper output) :
+        base(output)
+    {
     }
 }

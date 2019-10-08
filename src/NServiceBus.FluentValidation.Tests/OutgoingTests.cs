@@ -4,8 +4,10 @@ using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
 using Xunit;
+using Xunit.Abstractions;
 
-public class OutgoingTests
+public class OutgoingTests :
+    XunitApprovalBase
 {
     [Fact]
     public Task With_no_validator()
@@ -68,5 +70,10 @@ public class OutgoingTests
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
+    }
+
+    public OutgoingTests(ITestOutputHelper output) : 
+        base(output)
+    {
     }
 }

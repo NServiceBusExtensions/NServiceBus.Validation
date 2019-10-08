@@ -1,10 +1,13 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using NServiceBus;
+using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
 using Xunit;
+using Xunit.Abstractions;
 
-public class OutgoingTests
+public class OutgoingTests :
+    XunitApprovalBase
 {
     [Fact]
     public Task With_no_validator()
@@ -27,7 +30,7 @@ public class OutgoingTests
     public Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        return Assert.ThrowsAsync<ValidationException>(() => Send(message));
+        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(object message, [CallerMemberName] string key = "")
@@ -41,5 +44,10 @@ public class OutgoingTests
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
+    }
+
+    public OutgoingTests(ITestOutputHelper output) : 
+        base(output)
+    {
     }
 }

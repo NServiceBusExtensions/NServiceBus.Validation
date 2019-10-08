@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 using NServiceBus.Testing;
 using Xunit;
+using Xunit.Abstractions;
 
-public class SagaTests
+public class SagaTests :
+    XunitApprovalBase
 {
     [Fact]
     public async Task Ensure_saga_data_is_added_to_context()
@@ -19,5 +21,10 @@ public class SagaTests
         };
         await handlerContext.Run(saga);
         Assert.Equal(handlerContext.SagaData, sagaData);
+    }
+
+    public SagaTests(ITestOutputHelper output) :
+        base(output)
+    {
     }
 }

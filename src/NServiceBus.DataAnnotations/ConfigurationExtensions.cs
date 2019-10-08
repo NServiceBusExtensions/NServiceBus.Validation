@@ -1,4 +1,6 @@
-﻿namespace NServiceBus
+﻿using NServiceBus.DataAnnotations;
+
+namespace NServiceBus
 {
     /// <summary>
     /// Extensions to control message validation with DataAnnotations.
@@ -9,7 +11,7 @@
         {
             Guard.AgainstNull(endpoint, nameof(endpoint));
             var recoverability = endpoint.Recoverability();
-            recoverability.AddUnrecoverableException<ValidationException>();
+            recoverability.AddUnrecoverableException<MessageValidationException>();
             var pipeline = endpoint.Pipeline;
             if (incoming)
             {
