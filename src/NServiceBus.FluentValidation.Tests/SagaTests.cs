@@ -2,8 +2,7 @@
 using NServiceBus.Testing;
 using Xunit;
 
-public class SagaTests :
-    TestBase
+public class SagaTests
 {
     [Fact]
     public async Task Ensure_saga_data_is_added_to_context()

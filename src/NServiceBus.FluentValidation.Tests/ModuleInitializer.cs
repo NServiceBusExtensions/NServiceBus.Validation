@@ -1,8 +1,8 @@
 ﻿using NServiceBus.Testing;
 
-public class TestBase
+public static class ModuleInitializer
 {
-    static TestBase()
+    public static void Initialize()
     {
         TestContextValidator.AddValidatorsFromAssemblyContaining<MyMessage>();
     }

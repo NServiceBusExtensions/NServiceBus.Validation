@@ -3,7 +3,8 @@ using FluentValidation.Results;
 using NServiceBus;
 using Xunit;
 
-public class MessageValidator : AbstractValidator<MessageWithValidator>
+public class MessageValidator :
+    AbstractValidator<MessageWithValidator>
 {
     public MessageValidator()
     {

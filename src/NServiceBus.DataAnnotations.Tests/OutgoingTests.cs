@@ -30,7 +30,7 @@ public class OutgoingTests
         return Assert.ThrowsAsync<ValidationException>(() => Send(message));
     }
 
-    static async Task Send(object message, [CallerMemberName] string key = null!)
+    static async Task Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();

@@ -32,7 +32,7 @@ public class IncomingTests
         Assert.NotNull(await Send(message));
     }
 
-    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = null!)
+    static async Task<ValidationException> Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();

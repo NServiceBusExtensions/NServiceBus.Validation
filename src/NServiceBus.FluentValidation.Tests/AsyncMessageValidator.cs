@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using FluentValidation;
 
-public class AsyncMessageValidator : AbstractValidator<MessageWithAsyncValidator>
+public class AsyncMessageValidator :
+    AbstractValidator<MessageWithAsyncValidator>
 {
     public AsyncMessageValidator()
     {

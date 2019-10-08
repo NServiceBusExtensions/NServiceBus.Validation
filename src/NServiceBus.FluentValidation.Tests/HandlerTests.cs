@@ -6,8 +6,7 @@ using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 using Xunit;
 
-public class HandlerTests :
-    TestBase
+public class HandlerTests
 {
     [Fact]
     public Task Validate_TestableMessageHandlerContext()
@@ -27,16 +26,19 @@ public class HandlerTests :
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
 
-    class SimpleMessage:IMessage
+    class SimpleMessage : IMessage
     {
     }
-    class HandlerThatSends : IHandleMessages<SimpleMessage>
+
+    class HandlerThatSends :
+        IHandleMessages<SimpleMessage>
     {
         public Task Handle(SimpleMessage message, IMessageHandlerContext context)
         {
             return context.SendLocal(new SimpleMessage());
         }
     }
+
     [Fact]
     public async Task Should_throw_for_handle()
     {

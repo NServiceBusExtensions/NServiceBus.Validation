@@ -15,7 +15,7 @@ class MySaga :
     {
     }
 
-    public class MySagaData : 
+    public class MySagaData :
         ContainSagaData
     {
         public string? Property { get; set; }

@@ -2,7 +2,8 @@
 using NServiceBus;
 // ReSharper disable UnusedVariable
 
-public class MyMessageValidator : AbstractValidator<MyMessage>
+public class MyMessageValidator :
+    AbstractValidator<MyMessage>
 {
     public MyMessageValidator()
     {
