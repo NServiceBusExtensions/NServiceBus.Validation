@@ -69,17 +69,6 @@ public class IncomingTests :
         ObjectApprover.Verify(exception);
     }
 
-    [Fact]
-    public async Task Exception_ToString()
-    {
-        var message = new MessageWithValidator();
-        var exception = await Send(message);
-        var text = exception.ToString();
-        Approvals.Verify(text,
-            scrubber: s => s.Replace(Environment.NewLine, "\r\n")
-                .Replace(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Context.SourceFile)!, "../")), ""));
-    }
-
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
