@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentValidation;
+using System.Text;
 using FluentValidation.Results;
 
 namespace NServiceBus.FluentValidation
 {
     public class MessageValidationException :
-        ValidationException
+        Exception
     {
         public Type MessageType { get; }
 
-        public MessageValidationException(Type messageType, IEnumerable<ValidationFailure> errors) :
-            base(errors)
+        public MessageValidationException(Type messageType, IReadOnlyList<ValidationFailure> errors)
         {
             Guard.AgainstNull(messageType, nameof(messageType));
             MessageType = messageType;
+            Errors = errors;
         }
 
         public override string Message
         {
-            get => $"Validation failed for message '{MessageType.FullName}'.{Environment.NewLine}{base.Message}";
+            get
+            {
+                var builder = new StringBuilder($"Validation failed for message '{MessageType.FullName}'.");
+                builder.AppendLine();
+                foreach (var error in Errors)
+                {
+                    builder.AppendLine($" * {error.PropertyName}: {error.ErrorMessage}");
+                }
+
+                return builder.ToString();
+            }
         }
 
-        public override string ToString()
-        {
-            return $"Validation failed for message '{MessageType.FullName}'.{Environment.NewLine}{base.ToString()}";
-        }
+        public IReadOnlyList<ValidationFailure> Errors { get; }
     }
 }
