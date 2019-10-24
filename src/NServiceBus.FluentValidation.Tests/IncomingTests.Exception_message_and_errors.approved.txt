@@ -16,6 +16,9 @@
       }
     }
   ],
-  Data: {},
+  Data: {
+    Message ID: Guid_1,
+    Transport message ID: Guid_2
+  },
   Source: 'NServiceBus.FluentValidation'
 }
