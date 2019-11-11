@@ -18,6 +18,6 @@
     <ProjectReference Include="..\NServiceBus.FluentValidation.Sample\NServiceBus.FluentValidation.Sample.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Testing\NServiceBus.FluentValidation.Testing.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.28" PrivateAssets="All" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.29" PrivateAssets="All" />
   </ItemGroup>
 </Project>
