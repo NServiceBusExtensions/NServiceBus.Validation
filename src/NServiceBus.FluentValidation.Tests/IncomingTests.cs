@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class IncomingTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public async Task With_no_validator()
@@ -64,7 +65,7 @@ public class IncomingTests :
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        ObjectApprover.Verify(exception);
+        await Verify(exception);
     }
 
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")

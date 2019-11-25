@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class AsyncValidatorCheckerTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public void IsAsync()

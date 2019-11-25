@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class OutgoingTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public Task With_no_validator()

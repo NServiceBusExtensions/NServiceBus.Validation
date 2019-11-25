@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ApprovalTests;
+using VerifyXunit;
 using NServiceBus;
 using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
@@ -8,7 +8,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 public class HandlerTests :
-    XunitApprovalBase
+    VerifyBase
 {
     [Fact]
     public Task Validate_TestableMessageHandlerContext()
@@ -49,7 +49,7 @@ public class HandlerTests :
         var handlerContext = ValidatingContext.Build(message);
         var handler = new HandlerThatSends();
         var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
-        Approvals.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]
