@@ -11,6 +11,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C1E7C253-4815-48DA-8871-B0ADB1A46A7D}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		..\readme.source.md = ..\readme.source.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.DataAnnotations", "NServiceBus.DataAnnotations\NServiceBus.DataAnnotations.csproj", "{70ECB218-2581-437E-A8D8-F9580641FB93}"
