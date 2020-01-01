@@ -5,7 +5,7 @@ Source File: /readme.source.md
 To change this file edit the source file and then run MarkdownSnippets.
 -->
 
-<img src="/src/icon.png" height="25px"> NServiceBus Validation
+# <img src="/src/icon.png" height="25px"> NServiceBus Validation
 
 [![Build status](https://ci.appveyor.com/api/projects/status/v9gfk5x5xo6kf46a/branch/master?svg=true)](https://ci.appveyor.com/project/SimonCropp/nservicebus-validation)
 [![NuGet Status](https://img.shields.io/nuget/v/NServiceBus.DataAnnotations.svg?label=NServiceBus.DataAnnotations)](https://www.nuget.org/packages/NServiceBus.DataAnnotations/)
