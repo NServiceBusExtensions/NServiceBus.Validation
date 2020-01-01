@@ -32,6 +32,17 @@ Thanks to the current backers.
 <!--- EndOpenCollectiveBackers -->
 
 
+<!-- toc -->
+## Contents
+
+  * [NServiceBus.FluentValidation](#nservicebusfluentvalidation)
+    * [Usage](#usage)
+    * [Accessing the current pipeline context](#accessing-the-current-pipeline-context)
+    * [Validator scanning](#validator-scanning)
+  * [NServiceBus.DataAnnotations](#nservicebusdataannotations)
+    * [Usage](#usage-1)<!-- endtoc -->
+
+
 ## NServiceBus.FluentValidation
 
 Uses [FluentValidation](https://github.com/JeremySkinner/FluentValidation) to validate incoming and outgoing messages.

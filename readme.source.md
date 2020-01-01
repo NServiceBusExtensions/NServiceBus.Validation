@@ -25,6 +25,9 @@ Thanks to the current backers.
 <!--- EndOpenCollectiveBackers -->
 
 
+toc
+
+
 ## NServiceBus.FluentValidation
 
 Uses [FluentValidation](https://github.com/JeremySkinner/FluentValidation) to validate incoming and outgoing messages.
