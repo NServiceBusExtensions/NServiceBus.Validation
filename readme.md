@@ -40,7 +40,8 @@ Thanks to the current backers.
     * [Accessing the current pipeline context](#accessing-the-current-pipeline-context)
     * [Validator scanning](#validator-scanning)
   * [NServiceBus.DataAnnotations](#nservicebusdataannotations)
-    * [Usage](#usage-1)<!-- endtoc -->
+    * [Usage](#usage-1)
+  * [Security contact information](#security-contact-information)<!-- endtoc -->
 
 
 ## NServiceBus.FluentValidation
@@ -276,9 +277,9 @@ public class TheMessage :
 <!-- endsnippet -->
 
 
-## Release Notes
+## Security contact information
 
-See [closed milestones](../../milestones?state=closed)
+To report a security vulnerability, use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
 
 
 ## Icon
