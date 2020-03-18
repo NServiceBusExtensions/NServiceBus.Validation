@@ -17,11 +17,13 @@ namespace NServiceBus.FluentValidation
 
         public static IEnumerable<Result> FindValidatorsInAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
         {
-           return FindValidatorsInAssembly(type.GetTypeInfo().Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
+            Guard.AgainstNull(type, nameof(type));
+            return FindValidatorsInAssembly(type.GetTypeInfo().Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
         }
 
         public static IEnumerable<Result> FindValidatorsInAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
         {
+            Guard.AgainstNull(assembly, nameof(assembly));
             var assemblyName = assembly.GetName().Name;
             if (throwForNonPublicValidators)
             {
