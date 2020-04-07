@@ -4,12 +4,5 @@
     <Version>4.0.1</Version>
     <NoWarn>CS1591</NoWarn>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
-    <PackageLicenseFile>license.txt</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileFullPath)\..\..\license.txt"
-          Pack="true"
-          PackagePath="license.txt"/>
-  </ItemGroup>
 </Project>
