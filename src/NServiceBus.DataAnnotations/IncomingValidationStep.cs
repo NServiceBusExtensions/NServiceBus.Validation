@@ -10,5 +10,6 @@ class IncomingValidationStep :
             "Validates incoming messages using DataAnnotations",
             builder => new IncomingValidationBehavior())
     {
+        InsertAfter("MutateIncomingMessages");
     }
 }
