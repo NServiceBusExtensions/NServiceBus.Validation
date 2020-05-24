@@ -1,6 +1,6 @@
 {
   MessageType: 'MessageWithValidator',
-  Message: 'Validation failed for message \'MessageWithValidator\'.\r\n * Content: \'Content\' must not be empty. (Validator: SyncMessageValidator)\r\n',
+  Message: 'Validation failed for message \'MessageWithValidator\'.\n * Content: \'Content\' must not be empty. (Validator: SyncMessageValidator)\n',
   Errors: [
     {
       ValidatorType: 'SyncMessageValidator',
