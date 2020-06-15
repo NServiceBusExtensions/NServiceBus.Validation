@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class IncomingTests :
-    VerifyBase
+public class IncomingTests
 {
     [Fact]
     public async Task With_no_validator()
@@ -64,10 +61,5 @@ public class IncomingTests :
         }
 
         return exception;
-    }
-
-    public IncomingTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }

@@ -7,10 +7,9 @@ using NServiceBus.Features;
 using NServiceBus.FluentValidation;
 using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class IncomingTests :
-    VerifyBase
+[UsesVerify]
+public class IncomingTests
 {
     [Fact]
     public async Task With_no_validator()
@@ -65,7 +64,7 @@ public class IncomingTests :
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        await Verify(exception);
+        await Verifier.Verify(exception);
     }
 
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
@@ -98,10 +97,5 @@ public class IncomingTests :
         }
 
         return exception;
-    }
-
-    public IncomingTests(ITestOutputHelper output) :
-        base(output)
-    {
     }
 }

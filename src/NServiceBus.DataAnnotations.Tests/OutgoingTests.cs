@@ -3,12 +3,9 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class OutgoingTests :
-    VerifyBase
+public class OutgoingTests
 {
     [Fact]
     public Task With_no_validator()
@@ -45,10 +42,5 @@ public class OutgoingTests :
 
         var endpoint = await Endpoint.Start(configuration);
         await endpoint.SendLocal(message);
-    }
-
-    public OutgoingTests(ITestOutputHelper output) : 
-        base(output)
-    {
     }
 }
