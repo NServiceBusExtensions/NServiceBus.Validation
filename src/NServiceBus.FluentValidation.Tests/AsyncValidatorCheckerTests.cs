@@ -6,7 +6,10 @@ public class AsyncValidatorCheckerTests
     [Fact]
     public void IsAsync()
     {
-        Assert.True(AsyncValidatorChecker.IsAsync(new AsyncMessageValidator(), new ValidationContext(new MessageWithAsyncValidator())));
-        Assert.False(AsyncValidatorChecker.IsAsync(new SyncMessageValidator(), new ValidationContext(new MessageWithValidator())));
+        var asyncMessageValidator = new AsyncMessageValidator();
+        Assert.True(asyncMessageValidator.IsAsync(new ValidationContext<MessageWithAsyncValidator>(new MessageWithAsyncValidator())));
+
+        var syncMessageValidator = new SyncMessageValidator();
+        Assert.False(syncMessageValidator.IsAsync(new ValidationContext<MessageWithValidator>(new MessageWithValidator())));
     }
 }

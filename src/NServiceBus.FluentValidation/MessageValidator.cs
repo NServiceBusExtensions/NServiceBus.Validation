@@ -23,7 +23,7 @@ class MessageValidator
         return Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
     }
 
-    public async Task Validate(Type messageType, IBuilder contextBuilder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public async Task Validate<T>(Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
         if (!validatorTypeCache.TryGetValidators(messageType, contextBuilder, out var buildAll))
         {
@@ -31,13 +31,13 @@ class MessageValidator
         }
 
         var results = new List<TypeValidationFailure>();
-        var validationContext = new ValidationContext(instance);
+        var validationContext = new ValidationContext<T>(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         foreach (var validator in buildAll)
         {
             IList<ValidationFailure> errors;
-            if (AsyncValidatorChecker.IsAsync(validator, validationContext))
+            if (validator.IsAsync(validationContext))
             {
                 var result = await validator.ValidateAsync(validationContext);
                 errors = result.Errors;
