@@ -11,8 +11,7 @@
         FormattedMessagePlaceholderValues: {
           PropertyName: 'Content',
           PropertyValue: null
-        },
-        ResourceName: 'NotEmptyValidator'
+        }
       }
     }
   ],

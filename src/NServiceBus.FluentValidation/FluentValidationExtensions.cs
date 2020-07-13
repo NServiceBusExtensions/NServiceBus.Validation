@@ -13,13 +13,13 @@ namespace NServiceBus
         public static IReadOnlyDictionary<string, string> Headers(this CustomContext customContext)
         {
             Guard.AgainstNull(customContext, nameof(customContext));
-            return customContext.Headers();
+            return customContext.ParentContext.Headers();
         }
 
         public static ContextBag ContextBag(this CustomContext customContext)
         {
             Guard.AgainstNull(customContext, nameof(customContext));
-            return customContext.ContextBag();
+            return customContext.ParentContext.ContextBag();
         }
 
         public static IReadOnlyDictionary<string, string> Headers(this IValidationContext validationContext)
