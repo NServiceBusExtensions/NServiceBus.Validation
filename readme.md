@@ -54,7 +54,7 @@ Support is available via a [Tidelift Subscription](https://tidelift.com/subscrip
     * [Validator scanning](#validator-scanning)
   * [NServiceBus.DataAnnotations](#nservicebusdataannotations)
     * [Usage](#usage-1)
-  * [Security contact information](#security-contact-information)<!-- endtoc -->
+  * [Security contact information](#security-contact-information)<!-- endToc -->
 
 
 ## NServiceBus.FluentValidation
@@ -78,9 +78,9 @@ var validationConfig = endpointConfiguration.UseFluentValidation();
 validationConfig.AddValidatorsFromAssemblyContaining<TheMessage>();
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L9-L14' title='File snippet `fluentvalidation` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation' title='Navigate to start of snippet `fluentvalidation`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
-This will result in, when an invalid message being detected, a validation exception being thrown and that message being handled by [Recoverability](/nservicebus/recoverability/). The validation exception will also be added to [Unrecoverable exceptions](/nservicebus/recoverability/#unrecoverable-exceptions) to avoid unnecessary retries. <!-- include: validationexception. path: /doco/validationexception.include.md -->
+This will result in, when an invalid message being detected, a validation exception being thrown and that message being handled by [Recoverability](/nservicebus/recoverability/). The validation exception will also be added to [Unrecoverable exceptions](/nservicebus/recoverability/#unrecoverable-exceptions) to avoid unnecessary retries. <!-- singleLineInclude: validationexception. path: /doco/validationexception.include.md -->
 
 By default, incoming and outgoing messages are validated.
 
@@ -93,7 +93,7 @@ endpointConfiguration.UseFluentValidation(
     incoming: false);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L16-L21' title='File snippet `fluentvalidation_disableincoming` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_disableincoming' title='Navigate to start of snippet `fluentvalidation_disableincoming`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 To disable for outgoing messages use the following:
 
@@ -104,9 +104,9 @@ endpointConfiguration.UseFluentValidation(
     outgoing: false);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L23-L28' title='File snippet `fluentvalidation_disableoutgoing` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_disableoutgoing' title='Navigate to start of snippet `fluentvalidation_disableoutgoing`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
-Enabling validation on outgoing message will result in the validation exception be thrown in the context of the sender, instead of during message processing on the receiving endpoint. This can be particularly helpful in development and/or debugging scenarios since the stack trace and debugger will more accurately reflect the cause of the invalid message. <!-- include: validationoutgoing. path: /doco/validationoutgoing.include.md -->
+Enabling validation on outgoing message will result in the validation exception be thrown in the context of the sender, instead of during message processing on the receiving endpoint. This can be particularly helpful in development and/or debugging scenarios since the stack trace and debugger will more accurately reflect the cause of the invalid message. <!-- singleLineInclude: validationoutgoing. path: /doco/validationoutgoing.include.md -->
 
 Messages can then have an associated [validator](https://github.com/JeremySkinner/FluentValidation/wiki/b.-Creating-a-Validator):
 
@@ -130,7 +130,7 @@ public class MyMessageValidator :
 }
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/TheMessage.cs#L4-L20' title='File snippet `fluentvalidation_message` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_message' title='Navigate to start of snippet `fluentvalidation_message`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 
 ### Accessing the current pipeline context
@@ -166,7 +166,7 @@ public class ContextValidator :
 }
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/ContextValidator.cs#L4-L24' title='File snippet `fluentvalidation_contextvalidator` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_contextvalidator' title='Navigate to start of snippet `fluentvalidation_contextvalidator`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 
 ### Validator scanning
@@ -182,7 +182,7 @@ validationConfig.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
 validationConfig.AddValidatorsFromAssembly(assembly);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L45-L52' title='File snippet `fluentvalidation_addvalidators` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_addvalidators' title='Navigate to start of snippet `fluentvalidation_addvalidators`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 Validator lifecycle can either be per endpoint ([Single instance](https://docs.particular.net/nservicebus/dependency-injection/)):
 
@@ -192,7 +192,7 @@ Validator lifecycle can either be per endpoint ([Single instance](https://docs.p
 endpointConfiguration.UseFluentValidation(ValidatorLifecycle.Endpoint);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L30-L34' title='File snippet `fluentvalidation_endpointlifecycle` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_endpointlifecycle' title='Navigate to start of snippet `fluentvalidation_endpointlifecycle`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 Or [instance per unit of work](https://docs.particular.net/nservicebus/dependency-injection/):
 
@@ -202,7 +202,7 @@ Or [instance per unit of work](https://docs.particular.net/nservicebus/dependenc
 endpointConfiguration.UseFluentValidation(ValidatorLifecycle.UnitOfWork);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L36-L40' title='File snippet `fluentvalidation_unitofworklifecycle` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_unitofworklifecycle' title='Navigate to start of snippet `fluentvalidation_unitofworklifecycle`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 The default lifecycle is per endpoint.
 
@@ -222,7 +222,7 @@ validationConfig.AddValidatorsFromAssembly(assembly,
     throwForNoValidatorsFound: false);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L57-L64' title='File snippet `fluentvalidation_ignorevalidatorconventions` was extracted from'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Navigate to start of snippet `fluentvalidation_ignorevalidatorconventions`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 
 ## NServiceBus.DataAnnotations
@@ -246,9 +246,9 @@ DataAnnotations message validation can be enabled using the following:
 configuration.UseDataAnnotationsValidation();
 ```
 <sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/Usage.cs#L7-L11' title='File snippet `dataannotations` was extracted from'>snippet source</a> | <a href='#snippet-dataannotations' title='Navigate to start of snippet `dataannotations`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
-This will result in, when an invalid message being detected, a validation exception being thrown and that message being handled by [Recoverability](/nservicebus/recoverability/). The validation exception will also be added to [Unrecoverable exceptions](/nservicebus/recoverability/#unrecoverable-exceptions) to avoid unnecessary retries. <!-- include: validationexception. path: /doco/validationexception.include.md -->
+This will result in, when an invalid message being detected, a validation exception being thrown and that message being handled by [Recoverability](/nservicebus/recoverability/). The validation exception will also be added to [Unrecoverable exceptions](/nservicebus/recoverability/#unrecoverable-exceptions) to avoid unnecessary retries. <!-- singleLineInclude: validationexception. path: /doco/validationexception.include.md -->
 
 By default, incoming and outgoing messages are validated.
 
@@ -260,7 +260,7 @@ To disable for incoming messages use the following:
 configuration.UseDataAnnotationsValidation(incoming: false);
 ```
 <sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/Usage.cs#L13-L17' title='File snippet `dataannotations_disableincoming` was extracted from'>snippet source</a> | <a href='#snippet-dataannotations_disableincoming' title='Navigate to start of snippet `dataannotations_disableincoming`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 To disable for outgoing messages use the following:
 
@@ -270,9 +270,9 @@ To disable for outgoing messages use the following:
 configuration.UseDataAnnotationsValidation(outgoing: false);
 ```
 <sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/Usage.cs#L19-L23' title='File snippet `dataannotations_disableoutgoing` was extracted from'>snippet source</a> | <a href='#snippet-dataannotations_disableoutgoing' title='Navigate to start of snippet `dataannotations_disableoutgoing`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
-Enabling validation on outgoing message will result in the validation exception be thrown in the context of the sender, instead of during message processing on the receiving endpoint. This can be particularly helpful in development and/or debugging scenarios since the stack trace and debugger will more accurately reflect the cause of the invalid message. <!-- include: validationoutgoing. path: /doco/validationoutgoing.include.md -->
+Enabling validation on outgoing message will result in the validation exception be thrown in the context of the sender, instead of during message processing on the receiving endpoint. This can be particularly helpful in development and/or debugging scenarios since the stack trace and debugger will more accurately reflect the cause of the invalid message. <!-- singleLineInclude: validationoutgoing. path: /doco/validationoutgoing.include.md -->
 
 Messages can then be decorated with DataAnnotations attributes. For example, to make a property required use the [RequiredAttribute](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.requiredattribute.aspx):
 
@@ -287,7 +287,7 @@ public class TheMessage :
 }
 ```
 <sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/TheMessage.cs#L4-L11' title='File snippet `dataannotations_message` was extracted from'>snippet source</a> | <a href='#snippet-dataannotations_message' title='Navigate to start of snippet `dataannotations_message`'>anchor</a></sup>
-<!-- endsnippet -->
+<!-- endSnippet -->
 
 
 ## Security contact information
