@@ -1,12 +1,12 @@
 {
   MessageType: 'MessageWithValidator',
-  Message: 'Validation failed for message \'MessageWithValidator\'.\n * Content: \'Content\' must not be empty. (Validator: SyncMessageValidator)\n',
+  Message: "Validation failed for message 'MessageWithValidator'.\n * Content: 'Content' must not be empty. (Validator: SyncMessageValidator)\n",
   Errors: [
     {
       ValidatorType: 'SyncMessageValidator',
       Failure: {
         PropertyName: 'Content',
-        ErrorMessage: '\'Content\' must not be empty.',
+        ErrorMessage: "'Content' must not be empty.",
         ErrorCode: 'NotEmptyValidator',
         FormattedMessagePlaceholderValues: {
           PropertyName: 'Content',
