@@ -11,7 +11,7 @@
     <PackageReference Include="Xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
     <PackageReference Include="NServiceBus.Testing" Version="7.2.0" />
-    <PackageReference Include="MarkdownSnippets.MsBuild" Version="20.0.0" />
+    <PackageReference Include="MarkdownSnippets.MsBuild" Version="20.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Sample\NServiceBus.FluentValidation.Sample.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Testing\NServiceBus.FluentValidation.Testing.csproj" />
