@@ -1,4 +1,5 @@
 {
+  Type: 'MessageValidationException',
   MessageType: 'MessageWithValidator',
   Message: "Validation failed for message 'MessageWithValidator'.\n * Content: 'Content' must not be empty. (Validator: SyncMessageValidator)\n",
   Errors: [
@@ -18,6 +19,5 @@
   Data: {
     Message ID: Guid_1,
     Transport message ID: Guid_2
-  },
-  Source: 'NServiceBus.FluentValidation'
+  }
 }
