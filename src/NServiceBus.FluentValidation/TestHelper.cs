@@ -17,35 +17,31 @@ namespace NServiceBus.FluentValidation
         public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies)
         {
             Guard.AgainstNull(messageAssemblies, nameof(messageAssemblies));
-            var tracking = new List<(Type messageType, Type validatorOrHandler)>();
 
-            foreach (var t in messageAssemblies.GetClasses())
+            var messageTypes = messageAssemblies.GetTypes()
+                .Where(p => p.IsMessage())
+                .ToList();
+
+            foreach (var validator in messageAssemblies.GetTypes().Where(p => p.IsValidator()))
             {
-                var interfaces = t.GetInterfaces();
-                foreach (var argType in AllGenericArgs(interfaces))
+                // if a validator handles an IMessage remove that message type from the messageTypes list
+                var interfaces = validator.GetInterfaces();
+                var args = interfaces.Select(p => p.GenericTypeArguments)
+                    .SelectMany(p => p)
+                    .ToList();
+                var messageType = args.FirstOrDefault(p => p.IsMessage());
+                if (messageType != null)
                 {
-                    if (!argType.IsMessage())
+                    if (messageTypes.Contains(messageType))
                     {
-                        continue;
-                    }
-
-                    if (t.IsValidator())
-                    {
-                        tracking.Add((messageType: argType, validatorOrHandler: typeof(IValidator)));
+                        messageTypes.Remove(messageType);
                     }
                 }
             }
 
-            foreach (var messageGroup in tracking.GroupBy(p => p.messageType))
-            {
-                var validatorCount = messageGroup.Count(p => p.validatorOrHandler == typeof(IValidator));
-
-                if (validatorCount == 0)
-                {
-                    yield return messageGroup.Key;
-                }
-            }
+            return messageTypes;
         }
+
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies)
         {
             Guard.AgainstNull(handlerAssemblies, nameof(handlerAssemblies));

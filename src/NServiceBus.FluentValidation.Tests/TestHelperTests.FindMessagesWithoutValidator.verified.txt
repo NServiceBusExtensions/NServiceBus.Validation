@@ -1,0 +1,4 @@
+[
+  'HandlerTests.SimpleMessage',
+  'MessageWithNoValidator'
+]
