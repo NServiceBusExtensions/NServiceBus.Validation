@@ -8,6 +8,44 @@ namespace NServiceBus.FluentValidation
 {
     public static class TestHelper
     {
+        public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies)
+        {
+            Guard.AgainstNull(messageAssemblies, nameof(messageAssemblies));
+            return messageAssemblies.SelectMany(FindMessagesWithoutValidator);
+        }
+
+        public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies)
+        {
+            Guard.AgainstNull(messageAssemblies, nameof(messageAssemblies));
+            var tracking = new List<(Type messageType, Type validatorOrHandler)>();
+
+            foreach (var t in messageAssemblies.GetClasses())
+            {
+                var interfaces = t.GetInterfaces();
+                foreach (var argType in AllGenericArgs(interfaces))
+                {
+                    if (!argType.IsMessage())
+                    {
+                        continue;
+                    }
+
+                    if (t.IsValidator())
+                    {
+                        tracking.Add((messageType: argType, validatorOrHandler: typeof(IValidator)));
+                    }
+                }
+            }
+
+            foreach (var messageGroup in tracking.GroupBy(p => p.messageType))
+            {
+                var validatorCount = messageGroup.Count(p => p.validatorOrHandler == typeof(IValidator));
+
+                if (validatorCount == 0)
+                {
+                    yield return messageGroup.Key;
+                }
+            }
+        }
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies)
         {
             Guard.AgainstNull(handlerAssemblies, nameof(handlerAssemblies));
@@ -19,23 +57,18 @@ namespace NServiceBus.FluentValidation
             Guard.AgainstNull(handlerAssembly, nameof(handlerAssembly));
             var tracking = new List<(Type messageType, Type validatorOrHandler)>();
 
-            foreach (var t in handlerAssembly.GetTypes().Where(p => !p.IsInterface))
+            foreach (var t in handlerAssembly.GetClasses())
             {
                 var interfaces = t.GetInterfaces();
-                foreach (var argType in interfaces.Select(p => p.GenericTypeArguments).SelectMany(p => p))
+                foreach (var argType in AllGenericArgs(interfaces))
                 {
-                    if (!typeof(IMessage).IsAssignableFrom(argType))
+                    if (!argType.IsMessage())
                     {
                         continue;
                     }
 
-                    if (typeof(IValidator).IsAssignableFrom(t))
+                    if (t.IsValidator())
                     {
-                        if (!t.IsPublic)
-                        {
-                            throw new Exception($"Found a non-public IMessage Validator - {t}");
-                        }
-
                         tracking.Add((messageType: argType, validatorOrHandler: typeof(IValidator)));
                     }
 
@@ -56,6 +89,34 @@ namespace NServiceBus.FluentValidation
                     yield return messageGroup.Key;
                 }
             }
+        }
+
+        static IEnumerable<Type> AllGenericArgs(Type[] interfaces)
+        {
+            return interfaces.Select(p => p.GenericTypeArguments).SelectMany(p => p);
+        }
+
+        static IEnumerable<Type> GetClasses(this Assembly handlerAssembly)
+        {
+            return handlerAssembly.GetTypes().Where(p => !p.IsInterface);
+        }
+
+        static bool IsValidator(this Type type)
+        {
+            var isValidator = typeof(IValidator).IsAssignableFrom(type);
+            if (isValidator)
+            {
+                if (!type.IsPublic)
+                {
+                    throw new Exception($"Found a non-public IMessage Validator - {type}");
+                }
+            }
+            return isValidator;
+        }
+
+        static bool IsMessage(this Type type)
+        {
+            return typeof(IMessage).IsAssignableFrom(type);
         }
     }
 }
