@@ -1,5 +1,5 @@
 [
-  'MessageWithNoValidator',
-  'HandlerTests.SimpleMessage',
-  'MyMessage'
+  MessageWithNoValidator,
+  HandlerTests.SimpleMessage,
+  MyMessage
 ]
