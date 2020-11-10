@@ -9,7 +9,7 @@
     <PackageReference Include="Verify.Xunit" Version="8.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="MarkdownSnippets.MsBuild" Version="21.6.1" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <ProjectReference Include="..\NServiceBus.DataAnnotations\NServiceBus.DataAnnotations.csproj" />
     <PackageReference Include="ProjectDefaults" Version="1.0.47" PrivateAssets="All" />
   </ItemGroup>
