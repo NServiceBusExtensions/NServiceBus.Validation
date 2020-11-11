@@ -29,14 +29,20 @@ class UnitOfWorkValidatorTypeCache :
             }
         }
 
-        validators = builder
-            .BuildAll(validatorInfo.ValidatorType)
-            .Cast<IValidator>()
-            .ToList();
+        validators = FromBuilder(builder, validatorInfo).ToList();
 
         var any = validators.Any();
         validatorInfo.HasValidators = any;
         return any;
+    }
+
+    static IEnumerable<IValidator> FromBuilder(IBuilder builder, ValidatorInfo validatorInfo)
+    {
+        foreach (var o in builder
+            .BuildAll(validatorInfo.ValidatorType))
+        {
+            yield return (IValidator)o;
+        }
     }
 
     class ValidatorInfo
