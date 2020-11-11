@@ -12,7 +12,7 @@ static class MessageValidator
         var validationContext = new ValidationContext(
             message,
             new BuilderWrapper(builder),
-            items: new Dictionary<object, object?>
+            items: new Dictionary<object, object>
             {
                 {"Headers", headers},
                 {"ContextBag", contextBag},
