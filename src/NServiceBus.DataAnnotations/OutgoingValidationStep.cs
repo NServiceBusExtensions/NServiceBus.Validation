@@ -7,7 +7,7 @@ class OutgoingValidationStep :
         base("OutgoingDataAnnotations",
             typeof(OutgoingValidationBehavior),
             "Validates outgoing messages using DataAnnotations",
-            builder => new OutgoingValidationBehavior())
+            _ => new OutgoingValidationBehavior())
     {
         InsertAfterIfExists("ApplyReplyToAddressBehavior");
         InsertAfter("AddHostInfoHeaders");

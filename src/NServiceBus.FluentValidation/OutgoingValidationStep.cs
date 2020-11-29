@@ -8,7 +8,7 @@ class OutgoingValidationStep : RegisterStep
             stepId: "OutgoingFluentValidation",
             behavior: typeof(OutgoingValidationBehavior),
             description: "Validates outgoing messages using FluentValidation",
-            factoryMethod: builder => BuildBehavior(config))
+            factoryMethod: _ => BuildBehavior(config))
     {
     }
 
