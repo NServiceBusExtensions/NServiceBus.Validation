@@ -30,8 +30,8 @@ class MessageValidator
             return;
         }
 
-        var results = new List<TypeValidationFailure>();
-        var validationContext = new ValidationContext<T>(instance);
+        List<TypeValidationFailure> results = new();
+        ValidationContext<T> validationContext = new(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         foreach (var validator in buildAll)

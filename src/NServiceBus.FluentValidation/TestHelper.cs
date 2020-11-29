@@ -51,7 +51,7 @@ namespace NServiceBus.FluentValidation
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly)
         {
             Guard.AgainstNull(handlerAssembly, nameof(handlerAssembly));
-            var tracking = new List<(Type messageType, Type validatorOrHandler)>();
+            List<(Type messageType, Type validatorOrHandler)> tracking = new();
 
             foreach (var t in handlerAssembly.GetClasses())
             {
@@ -104,7 +104,7 @@ namespace NServiceBus.FluentValidation
             {
                 if (!type.IsPublic)
                 {
-                    throw new Exception($"Found a non-public IMessage Validator - {type}");
+                    throw new($"Found a non-public IMessage Validator - {type}");
                 }
             }
             return isValidator;

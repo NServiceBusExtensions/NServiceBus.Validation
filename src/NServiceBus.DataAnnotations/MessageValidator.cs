@@ -9,7 +9,7 @@ static class MessageValidator
 {
     public static void Validate(object message, IBuilder builder, Dictionary<string, string> headers, ContextBag contextBag)
     {
-        var validationContext = new ValidationContext(
+        ValidationContext validationContext = new(
             message,
             new BuilderWrapper(builder),
             items: new Dictionary<object, object>
@@ -18,14 +18,14 @@ static class MessageValidator
                 {"ContextBag", contextBag},
             });
 
-        var results = new List<ValidationResult>();
+        List<ValidationResult> results = new();
 
         if (Validator.TryValidateObject(message, validationContext, results, true))
         {
             return;
         }
 
-        var errorMessage = new StringBuilder();
+        StringBuilder errorMessage = new();
         var error = $"Validation failed for message '{message.GetType()}'.";
         errorMessage.AppendLine(error);
 

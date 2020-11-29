@@ -12,18 +12,18 @@ public class HandlerTests
     [Fact]
     public Task Validate_TestableMessageHandlerContext()
     {
-        var handlerContext = new TestableMessageHandlerContext();
+        TestableMessageHandlerContext handlerContext = new();
 
-        var message = new MyMessage();
+        MyMessage message = new();
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message));
     }
 
     [Fact]
     public Task Validate_ValidatingHandlerContext()
     {
-        var message = new MyMessage();
+        MyMessage message = new();
         var handlerContext = ValidatingContext.Build(message);
-        var handler = new MyHandler();
+        MyHandler handler = new();
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
 
@@ -44,9 +44,9 @@ public class HandlerTests
     [Fact]
     public async Task Should_throw_for_handle()
     {
-        var message = new SimpleMessage();
+        SimpleMessage message = new();
         var handlerContext = ValidatingContext.Build(message);
-        var handler = new HandlerThatSends();
+        HandlerThatSends handler = new();
         var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
         await Verifier.Verify(exception.Message);
     }
@@ -54,8 +54,8 @@ public class HandlerTests
     [Fact]
     public Task Validate_ValidatingHandlerContext_Static_Run()
     {
-        var message = new MyMessage();
-        var handler = new MyHandler();
+        MyMessage message = new();
+        MyHandler handler = new();
         return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message));
     }
 }

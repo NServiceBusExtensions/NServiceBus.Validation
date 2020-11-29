@@ -7,13 +7,13 @@ public class SagaTests
     [Fact]
     public async Task Ensure_saga_data_is_added_to_context()
     {
-        var message = new MyMessage
+        MyMessage message = new()
         {
             Content = "a"
         };
         var handlerContext = ValidatingContext.Build(message);
-        var sagaData = new MySaga.MySagaData();
-        var saga = new MySaga
+        MySaga.MySagaData sagaData = new();
+        MySaga saga = new()
         {
             Data = sagaData
         };

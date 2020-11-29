@@ -42,14 +42,14 @@ namespace NServiceBus.FluentValidation
                     .ToList();
                 if (nonPublicValidators.Any())
                 {
-                    throw new Exception($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(x => x.FullName))}.");
+                    throw new($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(x => x.FullName))}.");
                 }
             }
 
             var results = AssemblyScanner.FindValidatorsInAssembly(assembly).ToList();
             if (throwForNoValidatorsFound && !results.Any())
             {
-                throw new Exception($"No validators were found in {assemblyName}.");
+                throw new($"No validators were found in {assemblyName}.");
             }
 
             return results;
@@ -64,7 +64,7 @@ namespace NServiceBus.FluentValidation
             var messageAssemblies = Directory.EnumerateFiles(directory, "*.Messages.dll").ToList();
             if (!messageAssemblies.Any())
             {
-                throw new Exception($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
+                throw new($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
             }
 
             return messageAssemblies.SelectMany(x => FindValidatorsInAssembly(Assembly.LoadFrom(x)));

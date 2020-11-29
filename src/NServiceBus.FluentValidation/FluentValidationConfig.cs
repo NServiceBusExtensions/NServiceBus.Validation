@@ -25,7 +25,7 @@ namespace NServiceBus
                 dependencyLifecycle = DependencyLifecycle.InstancePerCall;
             }
             var validatorTypeCache = GetValidatorTypeCache();
-            MessageValidator = new MessageValidator(validatorTypeCache);
+            MessageValidator = new(validatorTypeCache);
         }
 
         IValidatorTypeCache GetValidatorTypeCache()

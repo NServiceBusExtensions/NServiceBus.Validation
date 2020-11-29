@@ -6,7 +6,7 @@ class Program
 {
     static async Task Main()
     {
-        var configuration = new EndpointConfiguration("FluentValidationSample");
+        EndpointConfiguration configuration = new("FluentValidationSample");
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
         var validation = configuration.UseFluentValidation(outgoing: false);

@@ -11,7 +11,7 @@ class TestingValidatorTypeCache :
 {
     List<Result> validatorScanResults;
     static Type validatorType = typeof(IValidator<>);
-    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new ConcurrentDictionary<Type, ValidatorInfo>();
+    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
     public TestingValidatorTypeCache(List<Result> validatorScanResults)
     {

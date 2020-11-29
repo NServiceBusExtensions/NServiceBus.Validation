@@ -17,9 +17,9 @@ namespace NServiceBus.Testing
 
         static TestContextValidator()
         {
-            validatorScanResults = new List<Result>();
-            var typeCache = new TestingValidatorTypeCache(validatorScanResults);
-            validator = new MessageValidator(typeCache);
+            validatorScanResults = new();
+            TestingValidatorTypeCache typeCache = new(validatorScanResults);
+            validator = new(typeCache);
         }
 
         public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
@@ -56,7 +56,7 @@ namespace NServiceBus.Testing
             where TMessage : class
         {
             var builder = context.Builder;
-            var tasks = new List<Task>
+            List<Task> tasks = new()
             {
                 validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
             };

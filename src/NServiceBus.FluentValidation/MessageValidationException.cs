@@ -21,7 +21,7 @@ namespace NServiceBus.FluentValidation
         {
             get
             {
-                var builder = new StringBuilder($"Validation failed for message '{MessageType.FullName}'.");
+                StringBuilder builder = new($"Validation failed for message '{MessageType.FullName}'.");
                 builder.AppendLine();
                 foreach (var error in Errors)
                 {

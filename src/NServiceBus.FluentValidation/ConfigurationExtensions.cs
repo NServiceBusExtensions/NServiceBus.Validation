@@ -16,7 +16,7 @@ namespace NServiceBus
             Guard.AgainstNull(endpoint, nameof(endpoint));
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
-            var config = new FluentValidationConfig(endpoint, lifecycle);
+            FluentValidationConfig config = new(endpoint, lifecycle);
             var pipeline = endpoint.Pipeline;
             if (incoming)
             {

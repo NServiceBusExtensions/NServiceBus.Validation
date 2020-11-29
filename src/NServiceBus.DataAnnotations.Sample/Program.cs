@@ -6,7 +6,7 @@ class Program
 {
     static async Task Main()
     {
-        var configuration = new EndpointConfiguration("DataAnnotationsValidationSample");
+        EndpointConfiguration configuration = new("DataAnnotationsValidationSample");
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
         configuration.UseDataAnnotationsValidation(outgoing:false);

@@ -14,14 +14,14 @@ public class IncomingTests
     [Fact]
     public async Task With_no_validator()
     {
-        var message = new MessageWithNoValidator();
+        MessageWithNoValidator message = new();
         Assert.Null(await Send(message));
     }
 
     [Fact]
     public async Task With_validator_valid()
     {
-        var message = new MessageWithValidator
+        MessageWithValidator message = new()
         {
             Content = "content"
         };
@@ -31,21 +31,21 @@ public class IncomingTests
     [Fact]
     public async Task With_uow_validator()
     {
-        var message = new MessageWithValidator();
+        MessageWithValidator message = new();
         Assert.NotNull(await Send(message, ValidatorLifecycle.UnitOfWork));
     }
 
     [Fact]
     public async Task With_validator_invalid()
     {
-        var message = new MessageWithValidator();
+        MessageWithValidator message = new();
         Assert.NotNull(await Send(message));
     }
 
     [Fact]
     public async Task With_async_validator_valid()
     {
-        var message = new MessageWithAsyncValidator
+        MessageWithAsyncValidator message = new()
         {
             Content = "content"
         };
@@ -55,32 +55,32 @@ public class IncomingTests
     [Fact]
     public async Task With_async_validator_invalid()
     {
-        var message = new MessageWithAsyncValidator();
+        MessageWithAsyncValidator message = new();
         Assert.NotNull(await Send(message));
     }
 
     [Fact]
     public async Task Exception_message_and_errors()
     {
-        var message = new MessageWithValidator();
+        MessageWithValidator message = new();
         var exception = await Send(message);
         await Verifier.Verify(exception);
     }
 
     static async Task<MessageValidationException> Send(object message, ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint, [CallerMemberName] string key = "")
     {
-        var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
+        EndpointConfiguration configuration = new("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
-        var resetEvent = new ManualResetEvent(false);
+        ManualResetEvent resetEvent = new(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
-            (config, context) =>
+            (_, context) =>
             {
                 exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
@@ -93,7 +93,7 @@ public class IncomingTests
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {
-            throw new Exception("No Set received.");
+            throw new("No Set received.");
         }
 
         return exception;

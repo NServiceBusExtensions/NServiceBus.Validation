@@ -8,7 +8,7 @@ namespace NServiceBus.Testing
             where TMessage : class
         {
             Guard.AgainstNull(message, nameof(message));
-            return new ValidatingContext<TMessage>(message);
+            return new(message);
         }
 
         public static async Task<ValidatingContext<TMessage>> Run<TMessage>(IHandleMessages<TMessage> handler, TMessage message)

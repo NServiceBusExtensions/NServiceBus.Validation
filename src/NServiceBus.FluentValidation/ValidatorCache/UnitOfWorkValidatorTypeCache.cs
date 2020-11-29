@@ -8,7 +8,7 @@ using NServiceBus.ObjectBuilder;
 class UnitOfWorkValidatorTypeCache :
     IValidatorTypeCache
 {
-    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new ConcurrentDictionary<Type, ValidatorInfo>();
+    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
     static Type validatorType = typeof(IValidator<>);
 
