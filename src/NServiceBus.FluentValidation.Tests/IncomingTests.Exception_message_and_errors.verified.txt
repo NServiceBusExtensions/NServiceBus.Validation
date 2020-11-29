@@ -22,5 +22,16 @@ Validation failed for message 'MessageWithValidator'.
   Data: {
     Message ID: Guid_1,
     Transport message ID: Guid_2
-  }
+  },
+  StackTrace: 
+at MessageValidator.Validate[T](Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
+at IncomingValidationBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next)
+at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage)
+at NServiceBus.UnitOfWorkBehavior.InvokeUnitsOfWork(IIncomingPhysicalMessageContext context, Func`2 next)
+at NServiceBus.UnitOfWorkBehavior.InvokeUnitsOfWork(IIncomingPhysicalMessageContext context, Func`2 next)
+at NServiceBus.MutateIncomingTransportMessageBehavior.InvokeIncomingTransportMessagesMutators(IIncomingPhysicalMessageContext context, Func`2 next)
+at NServiceBus.ProcessingStatisticsBehavior.Invoke(IIncomingPhysicalMessageContext context, Func`2 next)
+at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next)
+at NServiceBus.MainPipelineExecutor.Invoke(MessageContext messageContext)
+at NServiceBus.LearningTransportMessagePump.ProcessFile(ILearningTransportTransaction transaction, String messageId)
 }

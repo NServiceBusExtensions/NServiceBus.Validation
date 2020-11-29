@@ -9,7 +9,7 @@ class IncomingValidationStep :
             stepId: "IncomingFluentValidation",
             behavior: typeof(IncomingValidationBehavior),
             description: "Validates incoming messages using FluentValidation",
-            factoryMethod: builder => BuildBehavior(config))
+            factoryMethod: _ => BuildBehavior(config))
     {
     }
 
