@@ -112,7 +112,9 @@ namespace NServiceBus.FluentValidation
 
         static bool IsMessage(this Type type)
         {
-            return typeof(IMessage).IsAssignableFrom(type);
+            return typeof(IMessage).IsAssignableFrom(type) ||
+                   typeof(ICommand).IsAssignableFrom(type) ||
+                   typeof(IEvent).IsAssignableFrom(type) ;
         }
     }
 }
