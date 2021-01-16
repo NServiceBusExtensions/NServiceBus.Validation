@@ -7,7 +7,7 @@
     <PackageReference Include="FluentValidation" Version="9.4.0" />
     <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="all" />
     <PackageReference Include="ModuleInit.Fody" Version="2.1.1" />
-    <PackageReference Include="Verify.Xunit" Version="9.0.0" />
+    <PackageReference Include="Verify.Xunit" Version="9.1.0-beta.1" />
     <PackageReference Include="Xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
     <PackageReference Include="NServiceBus.Testing" Version="7.2.0" />
@@ -16,6 +16,6 @@
     <ProjectReference Include="..\NServiceBus.FluentValidation.Sample\NServiceBus.FluentValidation.Sample.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Testing\NServiceBus.FluentValidation.Testing.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.52" PrivateAssets="All" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.53" PrivateAssets="All" />
   </ItemGroup>
 </Project>

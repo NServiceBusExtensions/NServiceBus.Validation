@@ -7,6 +7,6 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.4.0" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.52" PrivateAssets="All" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.53" PrivateAssets="All" />
   </ItemGroup>
 </Project>
