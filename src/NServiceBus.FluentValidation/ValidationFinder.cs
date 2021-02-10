@@ -57,17 +57,25 @@ namespace NServiceBus.FluentValidation
 
         /// <summary>
         /// Find all  assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
+        /// Files starting with "System." or "Microsoft." are excluded.
         /// </summary>
         public static IEnumerable<Result> FindValidatorsInMessagesSuffixedAssemblies()
         {
             var directory = AppDomain.CurrentDomain.BaseDirectory;
-            var messageAssemblies = Directory.EnumerateFiles(directory, "*.Messages.dll").ToList();
-            if (!messageAssemblies.Any())
+            var assemblies = Directory.EnumerateFiles(directory, "*.Messages.dll")
+                .Where(file =>
+                {
+                    var fileName = Path.GetFileName(file).ToLowerInvariant();
+                    return !fileName.StartsWith("microsoft.") &&
+                           !fileName.StartsWith("system.");
+                })
+                .ToList();
+            if (!assemblies.Any())
             {
                 throw new($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
             }
 
-            return messageAssemblies.SelectMany(x => FindValidatorsInAssembly(Assembly.LoadFrom(x)));
+            return assemblies.SelectMany(x => FindValidatorsInAssembly(Assembly.LoadFrom(x)));
         }
     }
 }
