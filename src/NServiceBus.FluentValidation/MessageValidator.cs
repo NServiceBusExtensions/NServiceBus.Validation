@@ -34,26 +34,31 @@ class MessageValidator
         ValidationContext<T> validationContext = new(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
-        foreach (var validator in buildAll)
+        if (validationContext.IsAsync)
         {
-            IList<ValidationFailure> errors;
-            if (validator.IsAsync(validationContext))
+            foreach (var validator in buildAll)
             {
                 var result = await validator.ValidateAsync(validationContext);
-                errors = result.Errors;
+                AddResults<T>(results, result, validator);
             }
-            else
+        }
+        else
+        {
+            foreach (var validator in buildAll)
             {
                 var result = validator.Validate(validationContext);
-                errors = result.Errors;
+                AddResults<T>(results, result, validator);
             }
-
-            results.AddRange(errors.Select(failure => new TypeValidationFailure(validator.GetType(), failure)));
         }
 
         if (results.Any())
         {
             throw new MessageValidationException(messageType, results);
         }
+    }
+
+    static void AddResults<T>(List<TypeValidationFailure> results, ValidationResult result, IValidator validator)
+    {
+        results.AddRange(result.Errors.Select(failure => new TypeValidationFailure(validator.GetType(), failure)));
     }
 }
