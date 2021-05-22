@@ -6,7 +6,6 @@
 
 Message validation using [DataAnnotations](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.aspx) and [FluentValidation](https://github.com/JeremySkinner/FluentValidation).
 
-
 <!--- StartOpenCollectiveBackers -->
 
 [Already a Patron? skip past this section](#endofbacking)
@@ -31,23 +30,6 @@ Thanks to all the backing developers. Support this project by [becoming a patron
 <a href="#" id="endofbacking"></a>
 
 <!--- EndOpenCollectiveBackers -->
-
-
-## Support via TideLift
-
-Support is available via a [Tidelift Subscription](https://tidelift.com/subscription/pkg/nuget-nservicebus.fluentvalidation?utm_source=nuget-nservicebus.fluentvalidation&utm_medium=referral&utm_campaign=enterprise).
-
-
-<!-- toc -->
-## Contents
-
-  * [NServiceBus.FluentValidation](#nservicebusfluentvalidation)
-    * [Usage](#usage)
-    * [Accessing the current pipeline context](#accessing-the-current-pipeline-context)
-    * [Validator scanning](#validator-scanning)
-  * [NServiceBus.DataAnnotations](#nservicebusdataannotations)
-    * [Usage](#usage-1)
-  * [Security contact information](#security-contact-information)<!-- endToc -->
 
 
 ## NServiceBus.FluentValidation
@@ -281,11 +263,6 @@ public class TheMessage :
 ```
 <sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/TheMessage.cs#L4-L11' title='Snippet source file'>snippet source</a> | <a href='#snippet-dataannotations_message' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
-
-
-## Security contact information
-
-To report a security vulnerability, use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
 
 
 ## Icon
