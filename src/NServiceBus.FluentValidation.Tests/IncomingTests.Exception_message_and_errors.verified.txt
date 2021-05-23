@@ -1,7 +1,7 @@
-{
+﻿{
   Type: MessageValidationException,
   MessageType: MessageWithValidator,
-  Message: 
+  Message:
 Validation failed for message 'MessageWithValidator'.
  * Content: 'Content' must not be empty. (Validator: SyncMessageValidator)
 ,
@@ -23,7 +23,7 @@ Validation failed for message 'MessageWithValidator'.
     Message ID: Guid_1,
     Transport message ID: Guid_2
   },
-  StackTrace: 
+  StackTrace:
 at MessageValidator.Validate[T](Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
 at IncomingValidationBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next)
 at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage)
