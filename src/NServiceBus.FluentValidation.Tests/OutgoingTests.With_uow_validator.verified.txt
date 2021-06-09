@@ -1,0 +1,27 @@
+﻿{
+  Type: MessageValidationException,
+  MessageType: MessageWithValidator,
+  Message:
+Validation failed for message 'MessageWithValidator'.
+ * Content: 'Content' must not be empty. (Validator: SyncMessageValidator)
+,
+  Errors: [
+    {
+      ValidatorType: SyncMessageValidator,
+      Failure: {
+        PropertyName: Content,
+        ErrorMessage: 'Content' must not be empty.,
+        ErrorCode: NotEmptyValidator,
+        FormattedMessagePlaceholderValues: {
+          PropertyName: Content,
+          PropertyValue: null
+        }
+      }
+    }
+  ],
+  StackTrace:
+at MessageValidator.Validate[T](Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
+at OutgoingValidationBehavior.Invoke(IOutgoingLogicalMessageContext context, Func`1 next)
+at NServiceBus.SendConnector.Invoke(IOutgoingSendContext context, Func`2 stage)
+at OutgoingTests.Send(Object message, ValidatorLifecycle lifecycle, String key)
+}

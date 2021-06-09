@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
+using VerifyXunit;
 using Xunit;
 
+[UsesVerify]
 public class OutgoingTests
 {
     [Fact]
@@ -28,14 +30,14 @@ public class OutgoingTests
     public Task With_uow_validator()
     {
         MessageWithValidator message = new();
-        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message, ValidatorLifecycle.UnitOfWork));
+        return Verifier.ThrowsTask(() => Send(message, ValidatorLifecycle.UnitOfWork));
     }
 
     [Fact]
     public Task With_validator_invalid()
     {
         MessageWithValidator message = new();
-        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
+        return Verifier.ThrowsTask(() => Send(message));
     }
 
     [Fact]
