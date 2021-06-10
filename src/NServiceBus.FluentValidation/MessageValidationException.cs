@@ -17,6 +17,22 @@ namespace NServiceBus.FluentValidation
             Errors = errors;
         }
 
+        public string UserMessage
+        {
+            get
+            {
+                StringBuilder builder = new($"Validation failed for '{MessageType.Name}'.");
+                builder.AppendLine();
+                foreach (var error in Errors)
+                {
+                    var failure = error.Failure;
+                    builder.AppendLine($" * {failure.ErrorMessage}");
+                }
+
+                return builder.ToString();
+            }
+        }
+
         public override string Message
         {
             get
@@ -26,7 +42,7 @@ namespace NServiceBus.FluentValidation
                 foreach (var error in Errors)
                 {
                     var failure = error.Failure;
-                    builder.AppendLine($" * {failure.PropertyName}: {failure.ErrorMessage} (Validator: {error.ValidatorType.FullName})");
+                    builder.AppendLine($" * {failure.ErrorMessage} (Validator: {error.ValidatorType.FullName})");
                 }
 
                 return builder.ToString();

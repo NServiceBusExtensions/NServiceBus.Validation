@@ -1,9 +1,13 @@
 ﻿{
   Type: MessageValidationException,
   MessageType: MessageWithValidator,
+  UserMessage:
+Validation failed for 'MessageWithValidator'.
+ * 'Content' must not be empty.
+,
   Message:
 Validation failed for message 'MessageWithValidator'.
- * Content: 'Content' must not be empty. (Validator: SyncMessageValidator)
+ * 'Content' must not be empty. (Validator: SyncMessageValidator)
 ,
   Errors: [
     {
