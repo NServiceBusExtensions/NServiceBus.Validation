@@ -30,7 +30,7 @@ namespace NServiceBus.FluentValidation
                     .SelectMany(p => p)
                     .ToList();
                 var messageType = args.FirstOrDefault(p => p.IsMessage());
-                if (messageType != null)
+                if (messageType is not null)
                 {
                     if (messageTypes.Contains(messageType))
                     {

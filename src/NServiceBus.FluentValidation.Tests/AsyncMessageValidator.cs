@@ -7,6 +7,6 @@ public class AsyncMessageValidator :
     public AsyncMessageValidator()
     {
         RuleFor(_ => _.Content)
-            .MustAsync((s, _) => Task.FromResult(s != null));
+            .MustAsync((s, _) => Task.FromResult(s is not null));
     }
 }
