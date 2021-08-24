@@ -12,8 +12,6 @@ namespace NServiceBus.DataAnnotations
 
         public MessageValidationException(Type messageType, IReadOnlyList<ValidationResult> errors)
         {
-            Guard.AgainstNull(messageType, nameof(messageType));
-            Guard.AgainstNull(errors, nameof(errors));
             MessageType = messageType;
             Errors = errors;
         }
