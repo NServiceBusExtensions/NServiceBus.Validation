@@ -14,8 +14,6 @@ namespace NServiceBus.FluentValidation
 
         public TypeValidationFailure(Type validatorType, ValidationFailure failure)
         {
-            Guard.AgainstNull(validatorType, nameof(validatorType));
-            Guard.AgainstNull(failure, nameof(failure));
             ValidatorType = validatorType;
             Failure = failure;
         }

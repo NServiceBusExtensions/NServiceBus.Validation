@@ -11,8 +11,6 @@ namespace NServiceBus.FluentValidation
 
         public MessageValidationException(Type messageType, IReadOnlyList<TypeValidationFailure> errors)
         {
-            Guard.AgainstNull(messageType, nameof(messageType));
-            Guard.AgainstNull(errors, nameof(errors));
             MessageType = messageType;
             Errors = errors;
         }

@@ -56,7 +56,6 @@ namespace NServiceBus
 
         public void AddValidators(IEnumerable<Result> results)
         {
-            Guard.AgainstNull(results, nameof(results));
             endpoint.RegisterComponents(components =>
             {
                 foreach (var result in results)

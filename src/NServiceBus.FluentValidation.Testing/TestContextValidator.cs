@@ -40,7 +40,6 @@ namespace NServiceBus.Testing
 
         public static void AddValidators(IEnumerable<Result> results)
         {
-            Guard.AgainstNull(results, nameof(results));
             validatorScanResults.AddRange(results);
         }
 

@@ -10,14 +10,11 @@ namespace NServiceBus.FluentValidation
     {
         public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies)
         {
-            Guard.AgainstNull(messageAssemblies, nameof(messageAssemblies));
             return messageAssemblies.SelectMany(FindMessagesWithoutValidator);
         }
 
         public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies)
         {
-            Guard.AgainstNull(messageAssemblies, nameof(messageAssemblies));
-
             var messageTypes = messageAssemblies.GetTypes()
                 .Where(p => p.IsMessage())
                 .ToList();
@@ -44,13 +41,11 @@ namespace NServiceBus.FluentValidation
 
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies)
         {
-            Guard.AgainstNull(handlerAssemblies, nameof(handlerAssemblies));
             return handlerAssemblies.SelectMany(FindHandledMessagesWithoutValidator);
         }
 
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly)
         {
-            Guard.AgainstNull(handlerAssembly, nameof(handlerAssembly));
             List<(Type messageType, Type validatorOrHandler)> tracking = new();
 
             foreach (var t in handlerAssembly.GetClasses())

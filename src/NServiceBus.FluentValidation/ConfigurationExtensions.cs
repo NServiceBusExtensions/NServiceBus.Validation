@@ -13,7 +13,6 @@ namespace NServiceBus
             bool incoming = true,
             bool outgoing = true)
         {
-            Guard.AgainstNull(endpoint, nameof(endpoint));
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
             FluentValidationConfig config = new(endpoint, lifecycle);

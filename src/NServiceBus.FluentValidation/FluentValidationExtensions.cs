@@ -11,13 +11,11 @@ namespace NServiceBus
     {
         public static IReadOnlyDictionary<string, string> Headers(this IValidationContext validationContext)
         {
-            Guard.AgainstNull(validationContext, nameof(validationContext));
             return (IReadOnlyDictionary<string, string>)validationContext.RootContextData["Headers"];
         }
 
         public static ContextBag ContextBag(this IValidationContext validationContext)
         {
-            Guard.AgainstNull(validationContext, nameof(validationContext));
             return (ContextBag)validationContext.RootContextData["ContextBag"];
         }
     }

@@ -13,7 +13,6 @@ namespace NServiceBus.Testing
 
         public ValidatingContext(TMessage message)
         {
-            Guard.AgainstNull(message, nameof(message));
             this.message = message;
             var value = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
             MessageHeaders.Add(NServiceBus.Headers.TimeSent, value);
@@ -22,7 +21,6 @@ namespace NServiceBus.Testing
 
         public async Task Run(IHandleMessages<TMessage> handler)
         {
-            Guard.AgainstNull(handler, nameof(handler));
             hasRun = true;
             await TestContextValidator.Validate(message, Headers, Extensions, Builder);
             await handler.Handle(message, this);
@@ -31,7 +29,6 @@ namespace NServiceBus.Testing
 
         public async Task Run(IHandleTimeouts<TMessage> handler)
         {
-            Guard.AgainstNull(handler, nameof(handler));
             hasRun = true;
             await TestContextValidator.Validate(message, Headers, Extensions, Builder);
             await handler.Timeout(message, this);
@@ -50,8 +47,6 @@ namespace NServiceBus.Testing
 
         public override async Task Send(object message, SendOptions options)
         {
-            Guard.AgainstNull(message, nameof(message));
-            Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
             await TestContextValidator.Validate(message, options, Builder);
             await base.Send(message, options);
@@ -67,8 +62,6 @@ namespace NServiceBus.Testing
 
         public override async Task Reply(object message, ReplyOptions options)
         {
-            Guard.AgainstNull(message, nameof(message));
-            Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
             await TestContextValidator.Validate(message, options, Builder);
             await base.Reply(message, options);
@@ -76,8 +69,6 @@ namespace NServiceBus.Testing
 
         public override async Task Publish(object message, PublishOptions options)
         {
-            Guard.AgainstNull(message, nameof(message));
-            Guard.AgainstNull(options, nameof(options));
             ValidateHasRun();
             await TestContextValidator.Validate(message, options, Builder);
             await base.Publish(message, options);
