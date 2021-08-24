@@ -9,7 +9,6 @@ namespace NServiceBus
     {
         public static void UseDataAnnotationsValidation(this EndpointConfiguration endpoint, bool incoming = true, bool outgoing = true)
         {
-            Guard.AgainstNull(endpoint, nameof(endpoint));
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
             var pipeline = endpoint.Pipeline;

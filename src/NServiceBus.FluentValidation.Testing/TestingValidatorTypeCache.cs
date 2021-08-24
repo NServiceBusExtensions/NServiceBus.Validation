@@ -30,8 +30,7 @@ class TestingValidatorTypeCache :
                     .Select(x => Activator.CreateInstance(x.ValidatorType))
                     .Cast<IValidator>()
                     .ToList();
-                return new ValidatorInfo
-                (
+                return new(
                     validators: all,
                     hasValidators: all.Any()
                 );

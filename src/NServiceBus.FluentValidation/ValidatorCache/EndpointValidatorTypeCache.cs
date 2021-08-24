@@ -22,8 +22,7 @@ class EndpointValidatorTypeCache :
                 var all = builder.BuildAll(makeGenericType)
                     .Cast<IValidator>()
                     .ToList();
-                return new ValidatorInfo
-                (
+                return new(
                     validators: all,
                     hasValidators: all.Any()
                 );

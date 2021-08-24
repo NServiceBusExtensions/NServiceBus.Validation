@@ -15,10 +15,7 @@ class UnitOfWorkValidatorTypeCache :
     public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(messageType,
-            type => new ValidatorInfo
-            (
-                validatorType: validatorType.MakeGenericType(type)
-            ));
+            type => new(validatorType: validatorType.MakeGenericType(type)));
 
         if (validatorInfo.HasValidators.HasValue)
         {
