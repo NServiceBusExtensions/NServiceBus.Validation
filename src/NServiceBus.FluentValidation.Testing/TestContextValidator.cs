@@ -19,7 +19,7 @@ namespace NServiceBus.Testing
         {
             validatorScanResults = new();
             TestingValidatorTypeCache typeCache = new(validatorScanResults);
-            validator = new(typeCache);
+            validator = new(typeCache.TryGetValidators);
         }
 
         public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)

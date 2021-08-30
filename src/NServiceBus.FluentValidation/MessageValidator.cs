@@ -11,11 +11,11 @@ using NServiceBus.Pipeline;
 
 class MessageValidator
 {
-    IValidatorTypeCache validatorTypeCache;
+    TryGetValidators tryGetValidators;
 
-    public MessageValidator(IValidatorTypeCache validatorTypeCache)
+    public MessageValidator(TryGetValidators tryGetValidators)
     {
-        this.validatorTypeCache = validatorTypeCache;
+        this.tryGetValidators = tryGetValidators;
     }
 
     public Task Validate(IInvokeHandlerContext handlerContext)
@@ -25,7 +25,7 @@ class MessageValidator
 
     public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
-        if (!validatorTypeCache.TryGetValidators(messageType, builder, out var validators))
+        if (!tryGetValidators(messageType, builder, out var validators))
         {
             return;
         }

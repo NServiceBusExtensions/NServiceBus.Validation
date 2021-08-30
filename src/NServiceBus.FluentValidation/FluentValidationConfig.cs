@@ -29,14 +29,14 @@ namespace NServiceBus
             MessageValidator = new(validatorTypeCache);
         }
 
-        IValidatorTypeCache GetValidatorTypeCache()
+        TryGetValidators GetValidatorTypeCache()
         {
             if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
             {
-                return new EndpointValidatorTypeCache();
+                return new EndpointValidatorTypeCache().TryGetValidators;
             }
 
-            return new UnitOfWorkValidatorTypeCache();
+            return new UnitOfWorkValidatorTypeCache().TryGetValidators;
         }
 
         public void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
