@@ -26,6 +26,8 @@ public class Usage
             outgoing: false);
 
         #endregion
+        
+        // ReSharper disable once RedundantArgumentDefaultValue
 
         #region FluentValidation_EndpointLifecycle
 

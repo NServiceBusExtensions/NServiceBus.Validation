@@ -23,9 +23,9 @@ class MessageValidator
         return Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
     }
 
-    public async Task Validate<T>(Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
-        if (!validatorTypeCache.TryGetValidators(messageType, contextBuilder, out var buildAll))
+        if (!validatorTypeCache.TryGetValidators(messageType, builder, out var buildAll))
         {
             return;
         }
@@ -39,7 +39,7 @@ class MessageValidator
             foreach (var validator in buildAll)
             {
                 var result = await validator.ValidateAsync(validationContext);
-                AddResults<T>(results, result, validator);
+                AddResults(results, result, validator);
             }
         }
         else
@@ -47,7 +47,7 @@ class MessageValidator
             foreach (var validator in buildAll)
             {
                 var result = validator.Validate(validationContext);
-                AddResults<T>(results, result, validator);
+                AddResults(results, result, validator);
             }
         }
 
@@ -57,7 +57,7 @@ class MessageValidator
         }
     }
 
-    static void AddResults<T>(List<TypeValidationFailure> results, ValidationResult result, IValidator validator)
+    static void AddResults(List<TypeValidationFailure> results, ValidationResult result, IValidator validator)
     {
         results.AddRange(result.Errors.Select(failure => new TypeValidationFailure(validator.GetType(), failure)));
     }

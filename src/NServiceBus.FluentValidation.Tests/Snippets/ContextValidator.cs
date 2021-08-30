@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using NServiceBus;
+// ReSharper disable UnusedVariable
 
 #region FluentValidation_ContextValidator
 public class ContextValidator :

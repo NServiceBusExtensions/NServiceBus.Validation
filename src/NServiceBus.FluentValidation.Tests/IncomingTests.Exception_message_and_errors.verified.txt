@@ -28,7 +28,7 @@ Validation failed for message 'MessageWithValidator'.
     Transport message ID: Guid_2
   },
   StackTrace:
-at MessageValidator.Validate[T](Type messageType, IBuilder contextBuilder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
+at MessageValidator.Validate[T](Type messageType, IBuilder builder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
 at IncomingValidationBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next)
 at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage)
 at NServiceBus.UnitOfWorkBehavior.InvokeUnitsOfWork(IIncomingPhysicalMessageContext context, Func`2 next)
