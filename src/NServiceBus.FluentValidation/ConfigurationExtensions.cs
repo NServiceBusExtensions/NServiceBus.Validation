@@ -15,16 +15,20 @@ namespace NServiceBus
         {
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
+
             FluentValidationConfig config = new(endpoint, lifecycle);
             var pipeline = endpoint.Pipeline;
+
             if (incoming)
             {
                 pipeline.Register(new IncomingValidationStep(config));
             }
+
             if (outgoing)
             {
                 pipeline.Register(new OutgoingValidationStep(config));
             }
+
             return config;
         }
     }
