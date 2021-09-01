@@ -1,5 +1,4 @@
 ﻿[
-  MessageWithNoValidator,
   MyMessage,
   HandlerTests.SimpleMessage
 ]

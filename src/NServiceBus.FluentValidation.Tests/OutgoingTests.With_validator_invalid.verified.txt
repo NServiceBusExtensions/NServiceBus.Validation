@@ -27,5 +27,5 @@ Validation failed for message 'MessageWithValidator'.
 at MessageValidator.Validate[T](Type messageType, IBuilder builder, T instance, IReadOnlyDictionary`2 headers, ContextBag contextBag)
 at OutgoingValidationBehavior.Invoke(IOutgoingLogicalMessageContext context, Func`1 next)
 at NServiceBus.SendConnector.Invoke(IOutgoingSendContext context, Func`2 stage)
-at OutgoingTests.Send(Object message, ValidatorLifecycle lifecycle, String key)
+at OutgoingTests.Send(Object message, ValidatorLifecycle lifecycle, String key, Func`2 fallback)
 }

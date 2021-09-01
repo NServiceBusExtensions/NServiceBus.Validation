@@ -1,4 +1,3 @@
 ﻿[
-  MessageWithNoValidator,
   HandlerTests.SimpleMessage
 ]

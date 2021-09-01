@@ -10,16 +10,16 @@ namespace NServiceBus.FluentValidation
     {
         public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies)
         {
-            return messageAssemblies.SelectMany(FindMessagesWithoutValidator);
+            return messageAssemblies.SelectMany(assembly => FindMessagesWithoutValidator(assembly));
         }
 
-        public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies)
+        public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies, bool throwForNonPublicValidators = true)
         {
             var messageTypes = messageAssemblies.GetTypes()
                 .Where(p => p.IsMessage())
                 .ToList();
 
-            foreach (var validator in messageAssemblies.GetTypes().Where(p => p.IsValidator()))
+            foreach (var validator in messageAssemblies.GetTypes().Where(p => p.IsValidator(throwForNonPublicValidators)))
             {
                 // if a validator handles an IMessage remove that message type from the messageTypes list
                 var interfaces = validator.GetInterfaces();
@@ -41,10 +41,10 @@ namespace NServiceBus.FluentValidation
 
         public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies)
         {
-            return handlerAssemblies.SelectMany(FindHandledMessagesWithoutValidator);
+            return handlerAssemblies.SelectMany(assembly => FindHandledMessagesWithoutValidator(assembly));
         }
 
-        public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly)
+        public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly, bool throwForNonPublicValidators = true)
         {
             List<(Type messageType, Type validatorOrHandler)> tracking = new();
 
@@ -58,7 +58,7 @@ namespace NServiceBus.FluentValidation
                         continue;
                     }
 
-                    if (t.IsValidator())
+                    if (t.IsValidator(throwForNonPublicValidators))
                     {
                         tracking.Add((messageType: argType, validatorOrHandler: typeof(IValidator)));
                     }
@@ -92,12 +92,12 @@ namespace NServiceBus.FluentValidation
             return handlerAssembly.GetTypes().Where(p => !p.IsInterface);
         }
 
-        static bool IsValidator(this Type type)
+        static bool IsValidator(this Type type, bool throwForNonPublicValidators)
         {
             var isValidator = typeof(IValidator).IsAssignableFrom(type);
             if (isValidator)
             {
-                if (!type.IsPublic)
+                if (throwForNonPublicValidators && !type.IsPublic)
                 {
                     throw new($"Found a non-public IMessage Validator - {type}");
                 }

@@ -10,14 +10,14 @@ public class TestHelperTests
     [Fact]
     public Task FindHandledMessagesWithoutValidator()
     {
-        var types = TestHelper.FindHandledMessagesWithoutValidator(typeof(Handler).Assembly);
+        var types = TestHelper.FindHandledMessagesWithoutValidator(typeof(Handler).Assembly, false);
         return Verifier.Verify(types.ToList());
     }
 
     [Fact]
     public Task FindMessagesWithoutValidator()
     {
-        var types = TestHelper.FindMessagesWithoutValidator(typeof(Handler).Assembly);
+        var types = TestHelper.FindMessagesWithoutValidator(typeof(Handler).Assembly, false);
         return Verifier.Verify(types.ToList());
     }
 }

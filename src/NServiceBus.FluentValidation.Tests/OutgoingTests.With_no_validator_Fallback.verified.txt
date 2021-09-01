@@ -1,17 +1,17 @@
 ﻿{
   Type: MessageValidationException,
-  MessageType: MessageWithValidator,
+  MessageType: MessageWithNoValidator,
   UserMessage:
-Validation failed for 'MessageWithValidator'.
+Validation failed for 'MessageWithNoValidator'.
  * 'Content' must not be empty.
 ,
   Message:
-Validation failed for message 'MessageWithValidator'.
- * 'Content' must not be empty. (Validator: SyncMessageValidator)
+Validation failed for message 'MessageWithNoValidator'.
+ * 'Content' must not be empty. (Validator: OutgoingTests+FallbackValidator)
 ,
   Errors: [
     {
-      ValidatorType: SyncMessageValidator,
+      ValidatorType: OutgoingTests.FallbackValidator,
       Failure: {
         PropertyName: Content,
         ErrorMessage: 'Content' must not be empty.,
