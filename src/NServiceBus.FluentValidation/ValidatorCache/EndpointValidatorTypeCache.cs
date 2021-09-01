@@ -17,8 +17,8 @@ class EndpointValidatorTypeCache
             messageType,
             type =>
             {
-                var makeGenericType = validatorType.MakeGenericType(type);
-                var all = builder.BuildAll(makeGenericType)
+                var genericType = validatorType.MakeGenericType(type);
+                var all = builder.BuildAll(genericType)
                     .Cast<IValidator>()
                     .ToList();
                 return new(
