@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentValidation;
 using NServiceBus.FluentValidation;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
@@ -12,7 +13,7 @@ namespace NServiceBus
         DependencyLifecycle dependencyLifecycle;
         internal MessageValidator MessageValidator;
 
-        internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle)
+        internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle, Func<Type?, IValidator>? fallback)
         {
             this.endpoint = endpoint;
 
@@ -25,18 +26,18 @@ namespace NServiceBus
                 dependencyLifecycle = DependencyLifecycle.InstancePerCall;
             }
 
-            var validatorTypeCache = GetValidatorTypeCache();
+            var validatorTypeCache = GetValidatorTypeCache(fallback);
             MessageValidator = new(validatorTypeCache);
         }
 
-        TryGetValidators GetValidatorTypeCache()
+        TryGetValidators GetValidatorTypeCache(Func<Type?, IValidator>? fallback)
         {
             if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
             {
-                return new EndpointValidatorTypeCache().TryGetValidators;
+                return new EndpointValidatorTypeCache(fallback).TryGetValidators;
             }
 
-            return new UnitOfWorkValidatorTypeCache().TryGetValidators;
+            return new UnitOfWorkValidatorTypeCache(fallback).TryGetValidators;
         }
 
         public void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)

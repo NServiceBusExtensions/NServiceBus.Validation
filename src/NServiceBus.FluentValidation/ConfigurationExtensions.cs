@@ -1,4 +1,6 @@
-﻿using NServiceBus.FluentValidation;
+﻿using System;
+using FluentValidation;
+using NServiceBus.FluentValidation;
 
 namespace NServiceBus
 {
@@ -11,12 +13,12 @@ namespace NServiceBus
             this EndpointConfiguration endpoint,
             ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint,
             bool incoming = true,
-            bool outgoing = true)
+            bool outgoing = true, Func<Type?, IValidator>? fallback = null)
         {
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
 
-            FluentValidationConfig config = new(endpoint, lifecycle);
+            FluentValidationConfig config = new(endpoint, lifecycle, fallback);
             var pipeline = endpoint.Pipeline;
 
             if (incoming)
