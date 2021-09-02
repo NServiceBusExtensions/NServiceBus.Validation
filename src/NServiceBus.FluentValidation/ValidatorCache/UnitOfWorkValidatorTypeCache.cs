@@ -10,9 +10,9 @@ class UnitOfWorkValidatorTypeCache
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
     static Type validatorType = typeof(IValidator<>);
-    Func<Type?, IValidator>? fallback;
+    Func<Type, IValidator>? fallback;
 
-    public UnitOfWorkValidatorTypeCache(Func<Type?, IValidator>? fallback)
+    public UnitOfWorkValidatorTypeCache(Func<Type, IValidator>? fallback)
     {
         this.fallback = fallback;
     }

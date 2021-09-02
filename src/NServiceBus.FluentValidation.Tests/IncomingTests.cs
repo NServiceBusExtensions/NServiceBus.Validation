@@ -87,7 +87,7 @@ public class IncomingTests
         object message,
         ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint,
         [CallerMemberName] string key = "",
-        Func<Type?, IValidator>? fallback = null)
+        Func<Type, IValidator>? fallback = null)
     {
         EndpointConfiguration configuration = new("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();

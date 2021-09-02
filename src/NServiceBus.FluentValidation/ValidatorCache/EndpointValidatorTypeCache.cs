@@ -7,12 +7,12 @@ using NServiceBus.ObjectBuilder;
 
 class EndpointValidatorTypeCache
 {
-    Func<Type?, IValidator>? fallback;
+    Func<Type, IValidator>? fallback;
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
     static Type validatorType = typeof(IValidator<>);
 
-    public EndpointValidatorTypeCache(Func<Type?, IValidator>? fallback)
+    public EndpointValidatorTypeCache(Func<Type, IValidator>? fallback)
     {
         this.fallback = fallback;
     }
