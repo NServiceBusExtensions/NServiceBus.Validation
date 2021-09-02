@@ -70,9 +70,9 @@ namespace NServiceBus
         /// <summary>
         /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
         /// </summary>
-        public void AddValidatorsFromMessagesSuffixedAssemblies()
+        public void AddValidatorsFromMessagesSuffixedAssemblies(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
         {
-            AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
+            AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
         }
     }
 }
