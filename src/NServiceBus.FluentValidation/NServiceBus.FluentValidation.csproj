@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Message validation using FluentValidation.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.3.3" />
