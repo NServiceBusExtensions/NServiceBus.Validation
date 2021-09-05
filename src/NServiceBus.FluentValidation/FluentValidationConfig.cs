@@ -13,7 +13,7 @@ namespace NServiceBus
         DependencyLifecycle dependencyLifecycle;
         internal MessageValidator MessageValidator;
 
-        internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle, Func<Type, IValidator>? fallback)
+        internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle, Func<Type, IValidator?>? fallback)
         {
             this.endpoint = endpoint;
 
@@ -30,7 +30,7 @@ namespace NServiceBus
             MessageValidator = new(validatorTypeCache);
         }
 
-        TryGetValidators GetValidatorTypeCache(Func<Type, IValidator>? fallback)
+        TryGetValidators GetValidatorTypeCache(Func<Type, IValidator?>? fallback)
         {
             if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
             {

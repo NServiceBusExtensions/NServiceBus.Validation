@@ -14,7 +14,7 @@ namespace NServiceBus
             ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint,
             bool incoming = true,
             bool outgoing = true,
-            Func<Type, IValidator>? fallback = null)
+            Func<Type, IValidator?>? fallback = null)
         {
             var recoverability = endpoint.Recoverability();
             recoverability.AddUnrecoverableException<MessageValidationException>();
