@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using NServiceBus.FluentValidation;
 
 namespace NServiceBus

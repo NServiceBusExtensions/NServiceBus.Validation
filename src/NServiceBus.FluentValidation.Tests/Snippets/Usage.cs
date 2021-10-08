@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using NServiceBus;
+﻿using NServiceBus;
 using NServiceBus.FluentValidation;
 
 public class Usage

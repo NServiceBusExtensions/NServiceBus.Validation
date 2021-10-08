@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using FluentValidation;
+﻿using FluentValidation;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus.FluentValidation

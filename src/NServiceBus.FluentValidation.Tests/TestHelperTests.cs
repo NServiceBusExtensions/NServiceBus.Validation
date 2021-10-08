@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using NServiceBus.FluentValidation;
+﻿using NServiceBus.FluentValidation;
 using VerifyXunit;
 using Xunit;
 

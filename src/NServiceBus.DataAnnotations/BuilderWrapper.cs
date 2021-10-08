@@ -1,5 +1,4 @@
-﻿using System;
-using NServiceBus.ObjectBuilder;
+﻿using NServiceBus.ObjectBuilder;
 
 class BuilderWrapper :
     IServiceProvider

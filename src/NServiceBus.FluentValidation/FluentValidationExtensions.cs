@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FluentValidation;
+﻿using FluentValidation;
 using NServiceBus.Extensibility;
 
 namespace NServiceBus

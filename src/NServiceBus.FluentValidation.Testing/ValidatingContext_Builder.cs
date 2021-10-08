@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace NServiceBus.Testing
+﻿namespace NServiceBus.Testing
 {
     public static class ValidatingContext
     {

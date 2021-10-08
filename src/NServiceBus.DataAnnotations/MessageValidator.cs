@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Extensibility;
 using NServiceBus.ObjectBuilder;

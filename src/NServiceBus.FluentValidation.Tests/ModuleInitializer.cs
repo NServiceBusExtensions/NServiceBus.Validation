@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using NServiceBus.Testing;
+﻿using NServiceBus.Testing;
 
 public static class ModuleInitializer
 {

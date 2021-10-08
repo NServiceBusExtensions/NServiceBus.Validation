@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using NServiceBus;
+﻿using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
 using Xunit;
