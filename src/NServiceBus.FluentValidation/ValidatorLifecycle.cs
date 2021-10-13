@@ -1,8 +1,7 @@
-﻿namespace NServiceBus.FluentValidation
+﻿namespace NServiceBus.FluentValidation;
+
+public enum ValidatorLifecycle
 {
-    public enum ValidatorLifecycle
-    {
-        Endpoint,
-        UnitOfWork
-    }
+    Endpoint,
+    UnitOfWork
 }
