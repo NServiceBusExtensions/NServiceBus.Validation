@@ -3,11 +3,13 @@
 public class MessageValidationException :
     Exception
 {
+    public object Target { get; }
     public Type MessageType { get; }
 
-    public MessageValidationException(Type messageType, IReadOnlyList<TypeValidationFailure> errors)
+    public MessageValidationException(object target, IReadOnlyList<TypeValidationFailure> errors)
     {
-        MessageType = messageType;
+        MessageType = target.GetType();
+        Target = target;
         Errors = errors;
     }
 

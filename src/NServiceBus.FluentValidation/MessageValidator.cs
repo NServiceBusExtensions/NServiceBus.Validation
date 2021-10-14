@@ -49,7 +49,7 @@ class MessageValidator
 
         if (results.Any())
         {
-            throw new MessageValidationException(messageType, results);
+            throw new MessageValidationException(instance!, results);
         }
     }
 

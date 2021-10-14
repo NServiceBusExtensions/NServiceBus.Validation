@@ -32,6 +32,6 @@ static class MessageValidator
             errorMessage.AppendLine(result.ErrorMessage);
         }
 
-        throw new MessageValidationException(message.GetType(),results);
+        throw new MessageValidationException(message, results);
     }
 }

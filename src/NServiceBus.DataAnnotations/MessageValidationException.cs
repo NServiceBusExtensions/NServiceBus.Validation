@@ -5,12 +5,14 @@ namespace NServiceBus.DataAnnotations;
 public class MessageValidationException :
     Exception
 {
+    public object Target { get; }
     public Type MessageType { get; }
 
-    public MessageValidationException(Type messageType, IReadOnlyList<ValidationResult> errors)
+    public MessageValidationException(object target, IReadOnlyList<ValidationResult> errors)
     {
-        MessageType = messageType;
+        MessageType = target.GetType();
         Errors = errors;
+        Target = target;
     }
 
     public override string Message
