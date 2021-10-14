@@ -1,5 +1,6 @@
 ﻿{
   Type: MessageValidationException,
+  Target: {},
   MessageType: MessageWithValidator,
   UserMessage:
 Validation failed for 'MessageWithValidator'.
