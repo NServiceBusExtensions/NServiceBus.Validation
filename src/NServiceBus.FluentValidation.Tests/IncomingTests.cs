@@ -85,7 +85,7 @@ public class IncomingTests
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
-        EndpointConfiguration configuration = new("FluentValidationIncoming" + key);
+        var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

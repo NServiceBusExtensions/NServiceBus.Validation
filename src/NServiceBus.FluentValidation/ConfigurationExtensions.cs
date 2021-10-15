@@ -18,7 +18,7 @@ public static class FluentValidationConfigurationExtensions
         var recoverability = endpoint.Recoverability();
         recoverability.AddUnrecoverableException<MessageValidationException>();
 
-        FluentValidationConfig config = new(endpoint, lifecycle, fallback);
+        var config = new FluentValidationConfig(endpoint, lifecycle, fallback);
         var pipeline = endpoint.Pipeline;
 
         if (incoming)

@@ -42,7 +42,7 @@ public static class TestHelper
 
     public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly, bool throwForNonPublicValidators = true)
     {
-        List<(Type messageType, Type validatorOrHandler)> tracking = new();
+        var tracking = new List<(Type messageType, Type validatorOrHandler)>();
 
         foreach (var t in handlerAssembly.GetClasses())
         {

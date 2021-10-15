@@ -8,14 +8,14 @@ public class OutgoingTests
     [Fact]
     public Task With_no_validator()
     {
-        MessageWithNoValidator message = new();
+        var message = new MessageWithNoValidator();
         return Send(message);
     }
 
     [Fact]
     public Task With_validator_valid()
     {
-        MessageWithValidator message = new()
+        var message = new MessageWithValidator
         {
             Content = "content"
         };
@@ -25,13 +25,13 @@ public class OutgoingTests
     [Fact]
     public Task With_validator_invalid()
     {
-        MessageWithValidator message = new();
+        var message = new MessageWithValidator();
         return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(object message, [CallerMemberName] string key = "")
     {
-        EndpointConfiguration configuration = new("DataAnnotationsOutgoing" + key);
+        var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

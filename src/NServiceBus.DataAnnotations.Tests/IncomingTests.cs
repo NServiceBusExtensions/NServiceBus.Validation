@@ -8,14 +8,14 @@ public class IncomingTests
     [Fact]
     public async Task With_no_validator()
     {
-        MessageWithNoValidator message = new();
+        var message = new MessageWithNoValidator();
         Assert.Null(await Send(message));
     }
 
     [Fact]
     public async Task With_validator_valid()
     {
-        MessageWithValidator message = new()
+        var message = new MessageWithValidator
         {
             Content = "content"
         };
@@ -25,18 +25,18 @@ public class IncomingTests
     [Fact]
     public async Task With_validator_invalid()
     {
-        MessageWithValidator message = new();
+        var message = new MessageWithValidator();
         Assert.NotNull(await Send(message));
     }
 
     static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")
     {
-        EndpointConfiguration configuration = new("DataAnnotationsIncoming" + key);
+        var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
 
-        ManualResetEvent resetEvent = new(false);
+        using var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
