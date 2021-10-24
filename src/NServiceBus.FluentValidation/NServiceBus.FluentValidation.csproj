@@ -5,10 +5,10 @@
     <Description>Message validation using FluentValidation.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
     <PackageReference Include="NServiceBus" Version="7.5.0" />
     <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="6.5.3" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="6.6.0" PrivateAssets="all" />
     <PackageReference Include="ProjectDefaults" Version="1.0.61" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" Condition="$(Configuration) == 'Release'" />
   </ItemGroup>
