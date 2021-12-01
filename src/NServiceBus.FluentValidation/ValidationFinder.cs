@@ -12,7 +12,7 @@ public static class ValidationFinder
 
     public static IEnumerable<Result> FindValidatorsInAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
     {
-        return FindValidatorsInAssembly(type.GetTypeInfo().Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
+        return FindValidatorsInAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
     }
 
     public static IEnumerable<Result> FindValidatorsInAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
@@ -30,7 +30,7 @@ public static class ValidationFinder
                         !type.IsAbstract &&
                         !type.IsGenericTypeDefinition &&
                         type.GetInterfaces()
-                            .Any(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
+                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
                 )
                 .ToList();
             if (nonPublicValidators.Any())
