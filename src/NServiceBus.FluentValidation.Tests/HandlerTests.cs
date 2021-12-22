@@ -46,7 +46,7 @@ public class HandlerTests
         var handlerContext = ValidatingContext.Build(message);
         var handler = new HandlerThatSends();
         var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
-        await Verifier.Verify(exception.Message);
+        await Verify(exception.Message);
     }
 
     [Fact]

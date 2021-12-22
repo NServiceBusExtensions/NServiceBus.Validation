@@ -76,7 +76,7 @@ public class IncomingTests
     {
         var message = new MessageWithValidator();
         var exception = await Send(message);
-        await Verifier.Verify(exception);
+        await Verify(exception);
     }
 
     static async Task<MessageValidationException> Send(
