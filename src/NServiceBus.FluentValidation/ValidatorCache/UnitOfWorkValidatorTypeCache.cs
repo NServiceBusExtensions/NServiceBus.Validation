@@ -31,7 +31,7 @@ class UnitOfWorkValidatorTypeCache
             .BuildAll(validatorInfo.ValidatorType)
             .Cast<IValidator>()
             .ToList();
-        
+
         if (fallback != null && !validators.Any())
         {
             var fallbackValidator = fallback(messageType);

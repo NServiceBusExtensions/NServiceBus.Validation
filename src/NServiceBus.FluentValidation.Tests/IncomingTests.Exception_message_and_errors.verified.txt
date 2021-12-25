@@ -39,5 +39,7 @@ at NServiceBus.ProcessingStatisticsBehavior.Invoke(IIncomingPhysicalMessageConte
 at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next)
 at NServiceBus.RetryAcknowledgementBehavior.Invoke(ITransportReceiveContext context, Func`2 next)
 at NServiceBus.MainPipelineExecutor.Invoke(MessageContext messageContext)
+at NServiceBus.TransportReceiver.InvokePipeline(MessageContext c)
+at NServiceBus.TransportReceiver.InvokePipeline(MessageContext c)
 at NServiceBus.LearningTransportMessagePump.ProcessFile(ILearningTransportTransaction transaction, String messageId)
 }

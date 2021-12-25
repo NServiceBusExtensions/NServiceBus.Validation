@@ -1,8 +1,6 @@
-﻿using VerifyXunit;
-using NServiceBus;
+﻿using NServiceBus;
 using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
-using Xunit;
 
 [UsesVerify]
 public class HandlerTests

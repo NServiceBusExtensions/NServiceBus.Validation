@@ -1,6 +1,4 @@
 ﻿using NServiceBus.FluentValidation;
-using VerifyXunit;
-using Xunit;
 
 [UsesVerify]
 public class TestHelperTests

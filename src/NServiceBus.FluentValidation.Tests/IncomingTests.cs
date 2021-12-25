@@ -2,8 +2,6 @@
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
-using VerifyXunit;
-using Xunit;
 
 [UsesVerify]
 public class IncomingTests

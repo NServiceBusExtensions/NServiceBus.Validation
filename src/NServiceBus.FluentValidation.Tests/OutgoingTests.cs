@@ -2,8 +2,6 @@
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
-using VerifyXunit;
-using Xunit;
 
 [UsesVerify]
 public class OutgoingTests
@@ -19,7 +17,7 @@ public class OutgoingTests
     public Task With_no_validator_Fallback()
     {
         var message = new MessageWithNoValidator();
-        return Verifier.ThrowsTask(() => Send(message, fallback: _ => new FallbackValidator()));
+        return ThrowsTask(() => Send(message, fallback: _ => new FallbackValidator()));
     }
 
     class FallbackValidator : AbstractValidator<MessageWithNoValidator>
@@ -44,14 +42,14 @@ public class OutgoingTests
     public Task With_uow_validator()
     {
         var message = new MessageWithValidator();
-        return Verifier.ThrowsTask(() => Send(message, ValidatorLifecycle.UnitOfWork));
+        return ThrowsTask(() => Send(message, ValidatorLifecycle.UnitOfWork));
     }
 
     [Fact]
     public Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        return Verifier.ThrowsTask(() => Send(message));
+        return ThrowsTask(() => Send(message));
     }
 
     [Fact]

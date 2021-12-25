@@ -1,7 +1,6 @@
 ﻿using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
-using Xunit;
 
 public class IncomingTests
 {
