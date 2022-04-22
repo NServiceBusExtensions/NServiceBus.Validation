@@ -6,8 +6,7 @@ using NServiceBus;
 public class ContextValidator :
     AbstractValidator<TheMessage>
 {
-    public ContextValidator()
-    {
+    public ContextValidator() =>
         RuleFor(_ => _.Content)
             .Custom((propertyValue, validationContext) =>
             {
@@ -20,6 +19,5 @@ public class ContextValidator :
                 }
                 validationContext.AddFailure("Expected Auth header to exist");
             });
-    }
 }
 #endregion

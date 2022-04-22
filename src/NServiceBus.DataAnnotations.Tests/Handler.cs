@@ -6,10 +6,8 @@ class Handler :
 {
     ManualResetEvent resetEvent;
 
-    public Handler(ManualResetEvent resetEvent)
-    {
+    public Handler(ManualResetEvent resetEvent) =>
         this.resetEvent = resetEvent;
-    }
 
     public Task Handle(MessageWithNoValidator message, IMessageHandlerContext context)
     {

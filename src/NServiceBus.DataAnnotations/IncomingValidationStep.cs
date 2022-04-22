@@ -8,8 +8,6 @@ class IncomingValidationStep :
             "IncomingDataAnnotations",
             typeof(IncomingValidationBehavior),
             "Validates incoming messages using DataAnnotations",
-            _ => new IncomingValidationBehavior())
-    {
+            _ => new IncomingValidationBehavior()) =>
         InsertAfter("MutateIncomingMessages");
-    }
 }

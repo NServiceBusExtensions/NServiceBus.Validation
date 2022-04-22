@@ -13,8 +13,6 @@ class IncomingValidationStep :
     {
     }
 
-    static IBehavior BuildBehavior(FluentValidationConfig config)
-    {
-        return new IncomingValidationBehavior(config.MessageValidator);
-    }
+    static IBehavior BuildBehavior(FluentValidationConfig config) =>
+        new IncomingValidationBehavior(config.MessageValidator);
 }
