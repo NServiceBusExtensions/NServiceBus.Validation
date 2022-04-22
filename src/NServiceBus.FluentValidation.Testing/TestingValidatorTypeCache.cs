@@ -8,10 +8,8 @@ class TestingValidatorTypeCache
     static Type validatorType = typeof(IValidator<>);
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
-    public TestingValidatorTypeCache(List<Result> validatorScanResults)
-    {
+    public TestingValidatorTypeCache(List<Result> validatorScanResults) =>
         this.validatorScanResults = validatorScanResults;
-    }
 
     public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {

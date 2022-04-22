@@ -8,13 +8,9 @@ namespace NServiceBus;
 /// </summary>
 public static class FluentValidationExtensions
 {
-    public static IReadOnlyDictionary<string, string> Headers(this IValidationContext validationContext)
-    {
-        return (IReadOnlyDictionary<string, string>)validationContext.RootContextData["Headers"];
-    }
+    public static IReadOnlyDictionary<string, string> Headers(this IValidationContext validationContext) =>
+        (IReadOnlyDictionary<string, string>)validationContext.RootContextData["Headers"];
 
-    public static ContextBag ContextBag(this IValidationContext validationContext)
-    {
-        return (ContextBag)validationContext.RootContextData["ContextBag"];
-    }
+    public static ContextBag ContextBag(this IValidationContext validationContext) =>
+        (ContextBag)validationContext.RootContextData["ContextBag"];
 }

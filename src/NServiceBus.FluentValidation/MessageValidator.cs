@@ -9,15 +9,11 @@ class MessageValidator
 {
     TryGetValidators tryGetValidators;
 
-    public MessageValidator(TryGetValidators tryGetValidators)
-    {
+    public MessageValidator(TryGetValidators tryGetValidators) =>
         this.tryGetValidators = tryGetValidators;
-    }
 
-    public Task Validate(IInvokeHandlerContext handlerContext)
-    {
-        return Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
-    }
+    public Task Validate(IInvokeHandlerContext handlerContext) =>
+        Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
 
     public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
@@ -53,8 +49,6 @@ class MessageValidator
         }
     }
 
-    static void AddResults(List<TypeValidationFailure> results, ValidationResult result, IValidator validator)
-    {
+    static void AddResults(List<TypeValidationFailure> results, ValidationResult result, IValidator validator) =>
         results.AddRange(result.Errors.Select(failure => new TypeValidationFailure(validator.GetType(), failure)));
-    }
 }

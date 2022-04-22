@@ -11,10 +11,8 @@ public class TheMessage :
 public class MyMessageValidator :
     AbstractValidator<TheMessage>
 {
-    public MyMessageValidator()
-    {
+    public MyMessageValidator() =>
         RuleFor(_ => _.Content)
             .NotEmpty();
-    }
 }
 #endregion

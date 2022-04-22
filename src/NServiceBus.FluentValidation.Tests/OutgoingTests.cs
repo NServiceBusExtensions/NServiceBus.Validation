@@ -22,10 +22,8 @@ public class OutgoingTests
 
     class FallbackValidator : AbstractValidator<MessageWithNoValidator>
     {
-        public FallbackValidator()
-        {
+        public FallbackValidator() =>
             RuleFor(_ => _.Content).NotEmpty();
-        }
     }
 
     [Fact]

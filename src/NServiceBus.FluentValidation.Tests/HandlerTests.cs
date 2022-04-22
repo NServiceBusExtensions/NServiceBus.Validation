@@ -31,10 +31,8 @@ public class HandlerTests
     class HandlerThatSends :
         IHandleMessages<SimpleMessage>
     {
-        public Task Handle(SimpleMessage message, IMessageHandlerContext context)
-        {
-            return context.SendLocal(new SimpleMessage());
-        }
+        public Task Handle(SimpleMessage message, IMessageHandlerContext context) =>
+            context.SendLocal(new SimpleMessage());
     }
 
     [Fact]

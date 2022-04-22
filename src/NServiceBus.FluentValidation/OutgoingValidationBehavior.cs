@@ -5,10 +5,8 @@ class OutgoingValidationBehavior :
 {
     MessageValidator validator;
 
-    public OutgoingValidationBehavior(MessageValidator validator)
-    {
+    public OutgoingValidationBehavior(MessageValidator validator) =>
         this.validator = validator;
-    }
 
     public override async Task Invoke(IOutgoingLogicalMessageContext context, Func<Task> next)
     {

@@ -8,10 +8,8 @@ class EndpointValidatorTypeCache
 
     static Type validatorType = typeof(IValidator<>);
 
-    public EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
-    {
+    public EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
         this.fallback = fallback;
-    }
 
     public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {

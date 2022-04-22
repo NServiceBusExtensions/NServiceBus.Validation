@@ -5,13 +5,9 @@ class BuilderWrapper :
 {
     IBuilder builder;
 
-    public BuilderWrapper(IBuilder builder)
-    {
+    public BuilderWrapper(IBuilder builder) =>
         this.builder = builder;
-    }
 
-    public object GetService(Type serviceType)
-    {
-        return builder.Build(serviceType);
-    }
+    public object GetService(Type serviceType) =>
+        builder.Build(serviceType);
 }

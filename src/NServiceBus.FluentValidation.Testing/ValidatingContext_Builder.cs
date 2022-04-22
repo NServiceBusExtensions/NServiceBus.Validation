@@ -3,10 +3,8 @@
 public static class ValidatingContext
 {
     public static ValidatingContext<TMessage> Build<TMessage>(TMessage message)
-        where TMessage : class
-    {
-        return new(message);
-    }
+        where TMessage : class =>
+        new(message);
 
     public static async Task<ValidatingContext<TMessage>> Run<TMessage>(IHandleMessages<TMessage> handler, TMessage message)
         where TMessage : class

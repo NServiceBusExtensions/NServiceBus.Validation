@@ -97,14 +97,12 @@ public class TheMessage :
 public class MyMessageValidator :
     AbstractValidator<TheMessage>
 {
-    public MyMessageValidator()
-    {
+    public MyMessageValidator() =>
         RuleFor(_ => _.Content)
             .NotEmpty();
-    }
 }
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/TheMessage.cs#L4-L20' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_message' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/TheMessage.cs#L4-L18' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_message' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -123,8 +121,7 @@ The current message context can be accessed via two extension methods:
 public class ContextValidator :
     AbstractValidator<TheMessage>
 {
-    public ContextValidator()
-    {
+    public ContextValidator() =>
         RuleFor(_ => _.Content)
             .Custom((propertyValue, validationContext) =>
             {
@@ -137,10 +134,9 @@ public class ContextValidator :
                 }
                 validationContext.AddFailure("Expected Auth header to exist");
             });
-    }
 }
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/ContextValidator.cs#L5-L25' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_contextvalidator' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/ContextValidator.cs#L5-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_contextvalidator' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
