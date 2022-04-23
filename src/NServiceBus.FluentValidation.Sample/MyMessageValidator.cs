@@ -5,8 +5,7 @@ using NServiceBus;
 public class MyMessageValidator :
     AbstractValidator<MyMessage>
 {
-    public MyMessageValidator()
-    {
+    public MyMessageValidator() =>
         RuleFor(_ => _.Content)
             .NotEmpty()
             .Custom((propertyValue, validationContext) =>
@@ -19,5 +18,4 @@ public class MyMessageValidator :
                     validationContext.AddFailure("D");
                 }
             });
-    }
 }

@@ -4,10 +4,8 @@ namespace NServiceBus.FluentValidation;
 
 public static class TestHelper
 {
-    public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies)
-    {
-        return messageAssemblies.SelectMany(assembly => FindMessagesWithoutValidator(assembly));
-    }
+    public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies) =>
+        messageAssemblies.SelectMany(assembly => FindMessagesWithoutValidator(assembly));
 
     public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies, bool throwForNonPublicValidators = true)
     {
@@ -35,10 +33,8 @@ public static class TestHelper
         return messageTypes;
     }
 
-    public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies)
-    {
-        return handlerAssemblies.SelectMany(assembly => FindHandledMessagesWithoutValidator(assembly));
-    }
+    public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies) =>
+        handlerAssemblies.SelectMany(assembly => FindHandledMessagesWithoutValidator(assembly));
 
     public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly, bool throwForNonPublicValidators = true)
     {
@@ -78,15 +74,11 @@ public static class TestHelper
         }
     }
 
-    static IEnumerable<Type> AllGenericArgs(Type[] interfaces)
-    {
-        return interfaces.Select(p => p.GenericTypeArguments).SelectMany(p => p);
-    }
+    static IEnumerable<Type> AllGenericArgs(Type[] interfaces) =>
+        interfaces.Select(p => p.GenericTypeArguments).SelectMany(p => p);
 
-    static IEnumerable<Type> GetClasses(this Assembly handlerAssembly)
-    {
-        return handlerAssembly.GetTypes().Where(p => !p.IsInterface);
-    }
+    static IEnumerable<Type> GetClasses(this Assembly handlerAssembly) =>
+        handlerAssembly.GetTypes().Where(p => !p.IsInterface);
 
     static bool IsValidator(this Type type, bool throwForNonPublicValidators)
     {
@@ -101,10 +93,8 @@ public static class TestHelper
         return isValidator;
     }
 
-    static bool IsMessage(this Type type)
-    {
-        return typeof(IMessage).IsAssignableFrom(type) ||
-               typeof(ICommand).IsAssignableFrom(type) ||
-               typeof(IEvent).IsAssignableFrom(type) ;
-    }
+    static bool IsMessage(this Type type) =>
+        typeof(IMessage).IsAssignableFrom(type) ||
+        typeof(ICommand).IsAssignableFrom(type) ||
+        typeof(IEvent).IsAssignableFrom(type);
 }

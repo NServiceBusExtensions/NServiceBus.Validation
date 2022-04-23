@@ -9,8 +9,6 @@ class OutgoingValidationBehavior :
         return next();
     }
 
-    static void Validate(IOutgoingLogicalMessageContext context)
-    {
+    static void Validate(IOutgoingLogicalMessageContext context) =>
         MessageValidator.Validate(context.Message.Instance, context.Builder, context.Headers, context.Extensions);
-    }
 }

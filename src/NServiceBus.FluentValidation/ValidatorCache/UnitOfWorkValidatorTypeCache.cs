@@ -8,10 +8,8 @@ class UnitOfWorkValidatorTypeCache
     static Type validatorType = typeof(IValidator<>);
     Func<Type, IValidator?>? fallback;
 
-    public UnitOfWorkValidatorTypeCache(Func<Type, IValidator?>? fallback)
-    {
+    public UnitOfWorkValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
         this.fallback = fallback;
-    }
 
     public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
@@ -48,10 +46,9 @@ class UnitOfWorkValidatorTypeCache
 
     class ValidatorInfo
     {
-        public ValidatorInfo(Type validatorType)
-        {
+        public ValidatorInfo(Type validatorType) =>
             ValidatorType = validatorType;
-        }
+
         public Type ValidatorType { get; }
         public bool? HasValidators;
     }

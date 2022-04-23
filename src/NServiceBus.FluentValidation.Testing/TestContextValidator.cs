@@ -17,15 +17,11 @@ public static class TestContextValidator
         validator = new(typeCache.TryGetValidators);
     }
 
-    public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
-    {
+    public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssemblyContaining(typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
-    }
 
-    public static void AddValidatorsFromAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
-    {
+    public static void AddValidatorsFromAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
-    }
 
     public static void AddValidatorsFromAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
     {
@@ -33,18 +29,14 @@ public static class TestContextValidator
         AddValidators(results);
     }
 
-    public static void AddValidators(IEnumerable<Result> results)
-    {
+    public static void AddValidators(IEnumerable<Result> results) =>
         validatorScanResults.AddRange(results);
-    }
 
     /// <summary>
     /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
     /// </summary>
-    public static void AddValidatorsFromMessagesSuffixedAssemblies()
-    {
+    public static void AddValidatorsFromMessagesSuffixedAssemblies() =>
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
-    }
 
     public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message)
         where TMessage : class
@@ -72,13 +64,9 @@ public static class TestContextValidator
     }
 
     internal static Task Validate<T>(object instance, T options, IBuilder builder)
-        where T : ExtendableOptions
-    {
-        return validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
-    }
+        where T : ExtendableOptions =>
+        validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
-    {
-        return validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
-    }
+    internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder) =>
+        validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
 }

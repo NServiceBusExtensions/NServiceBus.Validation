@@ -5,10 +5,8 @@ using NServiceBus;
 public class SyncMessageValidator :
     AbstractValidator<MessageWithValidator>
 {
-    public SyncMessageValidator()
-    {
+    public SyncMessageValidator() =>
         RuleFor(_ => _.Content).NotEmpty();
-    }
 
     public override ValidationResult Validate(ValidationContext<MessageWithValidator> context)
     {
