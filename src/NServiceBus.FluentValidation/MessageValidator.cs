@@ -12,8 +12,8 @@ class MessageValidator
     public MessageValidator(TryGetValidators tryGetValidators) =>
         this.tryGetValidators = tryGetValidators;
 
-    public Task Validate(IInvokeHandlerContext handlerContext) =>
-        Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
+    public Task Validate(IInvokeHandlerContext context) =>
+        Validate(context.MessageBeingHandled.GetType(), context.Builder, context.MessageBeingHandled, context.Headers, context.Extensions);
 
     public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
