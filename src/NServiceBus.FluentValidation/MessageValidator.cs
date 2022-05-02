@@ -25,21 +25,10 @@ class MessageValidator
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         var validators = cacheResult.Validators;
-        if (validationContext.IsAsync)
+        foreach (var validator in validators)
         {
-            foreach (var validator in validators)
-            {
-                var result = await validator.ValidateAsync(validationContext);
-                AddResults(results, result, validator);
-            }
-        }
-        else
-        {
-            foreach (var validator in validators)
-            {
-                var result = validator.Validate(validationContext);
-                AddResults(results, result, validator);
-            }
+            var result = await validator.ValidateAsync(validationContext);
+            AddResults(results, result, validator);
         }
 
         if (results.Any())
