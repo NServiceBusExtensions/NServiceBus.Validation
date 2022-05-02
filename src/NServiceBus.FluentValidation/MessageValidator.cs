@@ -11,9 +11,30 @@ class MessageValidator
     public MessageValidator(TryGetValidators tryGetValidators) =>
         this.tryGetValidators = tryGetValidators;
 
+    static MethodInfo innerValidateMethod = typeof(MessageValidator).GetMethod(nameof(Validate))!;
+
+    public Task ValidateWithTypeRedirect(Type messageType, IBuilder builder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    {
+        var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
+        return (Task) genericMethod.Invoke(this,
+            new[]
+            {
+                messageType,
+                builder,
+                instance,
+                headers,
+                contextBag
+            })!;
+    }
+
     public async Task Validate<TMessage>(Type messageType, IBuilder builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
         where TMessage : class
     {
+        if (typeof(TMessage) == typeof(object))
+        {
+            throw new("TMessage must not be object");
+        }
+
         if (!tryGetValidators(messageType, builder, out var validators))
         {
             return;

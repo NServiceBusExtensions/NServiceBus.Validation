@@ -59,21 +59,9 @@ public static class TestContextValidator
         return Task.WhenAll(tasks);
     }
 
-    static MethodInfo innerValidateMethod = typeof(TestContextValidator).GetMethod(nameof(InnerValidate))!;
-
     internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IBuilder builder)
-        where TOptions : ExtendableOptions
-    {
-        var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
-        return (Task) genericMethod.Invoke(null,
-            new[]
-            {
-                instance,
-                options.GetHeaders(),
-                options.GetExtensions(),
-                builder
-            })!;
-    }
+        where TOptions : ExtendableOptions =>
+        validator.ValidateWithTypeRedirect(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
     internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
         where TMessage : class
