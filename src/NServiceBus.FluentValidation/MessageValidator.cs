@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
 using NServiceBus.ObjectBuilder;
-using NServiceBus.Pipeline;
 
 class MessageValidator
 {
@@ -12,10 +11,8 @@ class MessageValidator
     public MessageValidator(TryGetValidators tryGetValidators) =>
         this.tryGetValidators = tryGetValidators;
 
-    public Task Validate(IInvokeHandlerContext context) =>
-        Validate(context.MessageBeingHandled.GetType(), context.Builder, context.MessageBeingHandled, context.Headers, context.Extensions);
-
-    public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public async Task Validate<TMessage>(Type messageType, IBuilder builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+        where TMessage : class
     {
         var cacheResult = tryGetValidators(messageType, builder);
         if (!cacheResult.HasValidator)
@@ -24,7 +21,7 @@ class MessageValidator
         }
 
         var results = new List<TypeValidationFailure>();
-        var validationContext = new ValidationContext<T>(instance);
+        var validationContext = new ValidationContext<TMessage>(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         var validators = cacheResult.Validators;
@@ -47,7 +44,7 @@ class MessageValidator
 
         if (results.Any())
         {
-            throw new MessageValidationException(instance!, results);
+            throw new MessageValidationException(instance, results);
         }
     }
 
