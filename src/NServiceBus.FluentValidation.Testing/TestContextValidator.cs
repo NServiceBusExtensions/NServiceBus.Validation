@@ -67,6 +67,7 @@ public static class TestContextValidator
         where TOptions : ExtendableOptions =>
         validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder) =>
-        validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
+    internal static Task Validate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
+        where TMessage : class
+        => validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
 }
