@@ -23,11 +23,10 @@ public class FluentValidationConfig
             dependencyLifecycle = DependencyLifecycle.InstancePerCall;
         }
 
-        var validatorTypeCache = GetValidatorTypeCache(fallback);
-        MessageValidator = new(validatorTypeCache);
+        MessageValidator = new(GetValidatorCache(fallback));
     }
 
-    TryGetValidators GetValidatorTypeCache(Func<Type, IValidator?>? fallback)
+    TryGetValidators GetValidatorCache(Func<Type, IValidator?>? fallback)
     {
         if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
         {
