@@ -55,16 +55,16 @@ public static class TestContextValidator
         return Task.WhenAll(tasks);
     }
 
-    static Task Validate<T>(OutgoingMessage<object, T> message, IBuilder builder)
-        where T : ExtendableOptions
+    static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IBuilder builder)
+        where TOptions : ExtendableOptions
     {
         var instance = message.Message;
         var options = message.Options;
         return Validate(instance, options, builder);
     }
 
-    internal static Task Validate<T>(object instance, T options, IBuilder builder)
-        where T : ExtendableOptions =>
+    internal static Task Validate<TOptions>(object instance, TOptions options, IBuilder builder)
+        where TOptions : ExtendableOptions =>
         validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
     internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder) =>
