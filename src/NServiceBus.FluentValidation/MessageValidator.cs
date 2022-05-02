@@ -14,8 +14,7 @@ class MessageValidator
     public async Task Validate<TMessage>(Type messageType, IBuilder builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
         where TMessage : class
     {
-        var cacheResult = tryGetValidators(messageType, builder);
-        if (!cacheResult.HasValidator)
+        if (!tryGetValidators(messageType, builder, out var validators))
         {
             return;
         }
@@ -24,7 +23,6 @@ class MessageValidator
         var validationContext = new ValidationContext<TMessage>(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
-        var validators = cacheResult.Validators;
         foreach (var validator in validators)
         {
             var result = await validator.ValidateAsync(validationContext);

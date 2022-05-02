@@ -11,7 +11,7 @@ class EndpointValidatorTypeCache
     public EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
         this.fallback = fallback;
 
-    public CacheResult TryGetValidators(Type messageType, IBuilder builder)
+    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,
@@ -30,17 +30,25 @@ class EndpointValidatorTypeCache
                     }
                 }
 
-                return new(validators: all);
+                return new(
+                    validators: all,
+                    hasValidators: all.Any()
+                );
             });
 
-        return new(validatorInfo.Validators);
+        validators = validatorInfo.Validators;
+        return validatorInfo.HasValidators;
     }
 
     class ValidatorInfo
     {
+        public bool HasValidators { get; }
         public List<IValidator> Validators { get; }
 
-        public ValidatorInfo(List<IValidator> validators) =>
+        public ValidatorInfo(List<IValidator> validators, bool hasValidators)
+        {
             Validators = validators;
+            HasValidators = hasValidators;
+        }
     }
 }

@@ -11,7 +11,7 @@ class TestingValidatorTypeCache
     public TestingValidatorTypeCache(List<Result> validatorScanResults) =>
         this.validatorScanResults = validatorScanResults;
 
-    public CacheResult TryGetValidators(Type messageType, IBuilder builder)
+    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,
@@ -29,6 +29,7 @@ class TestingValidatorTypeCache
                 );
             });
 
-        return new(validatorInfo.Validators);
+        validators = validatorInfo.Validators;
+        return validatorInfo.HasValidators;
     }
 }

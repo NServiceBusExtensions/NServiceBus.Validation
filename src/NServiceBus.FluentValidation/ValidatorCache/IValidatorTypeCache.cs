@@ -1,3 +1,4 @@
-﻿using NServiceBus.ObjectBuilder;
+﻿using FluentValidation;
+using NServiceBus.ObjectBuilder;
 
-delegate CacheResult TryGetValidators(Type messageType, IBuilder builder);
+delegate bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators);
