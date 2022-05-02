@@ -11,7 +11,7 @@ class UnitOfWorkValidatorTypeCache
     public UnitOfWorkValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
         this.fallback = fallback;
 
-    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
+    public CacheResult TryGetValidators(Type messageType, IBuilder builder)
     {
         var validatorInfo = typeCache.GetOrAdd(messageType,
             type => new(validatorType.MakeGenericType(type)));
@@ -20,12 +20,11 @@ class UnitOfWorkValidatorTypeCache
         {
             if (!validatorInfo.HasValidators.Value)
             {
-                validators = Enumerable.Empty<IValidator>();
-                return false;
+                return new (Array.Empty<IValidator>());
             }
         }
 
-        validators = builder
+        var validators = builder
             .BuildAll(validatorInfo.ValidatorType)
             .Cast<IValidator>()
             .ToList();
@@ -35,13 +34,13 @@ class UnitOfWorkValidatorTypeCache
             var fallbackValidator = fallback(messageType);
             if (fallbackValidator != null)
             {
-                validators = new[] { fallbackValidator };
+                validators = new()
+                    { fallbackValidator };
             }
         }
 
-        var any = validators.Any();
-        validatorInfo.HasValidators = any;
-        return any;
+        validatorInfo.HasValidators = validators.Any();
+        return new(validators);
     }
 
     class ValidatorInfo
