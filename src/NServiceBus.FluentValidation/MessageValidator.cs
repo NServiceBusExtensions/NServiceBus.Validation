@@ -22,8 +22,8 @@ class MessageValidator
             return;
         }
 
-        List<TypeValidationFailure> results = new();
-        ValidationContext<T> validationContext = new(instance);
+        var results = new List<TypeValidationFailure>();
+        var validationContext = new ValidationContext<T>(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
         if (validationContext.IsAsync)
