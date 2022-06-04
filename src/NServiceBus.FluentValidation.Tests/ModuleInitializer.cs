@@ -6,6 +6,6 @@ public static class ModuleInitializer
     public static void Initialize()
     {
         TestContextValidator.AddValidatorsFromAssemblyContaining<MyMessage>(throwForNonPublicValidators: false);
-        VerifierSettings.IgnoreStackTrack();
+        VerifierSettings.IgnoreStackTrace();
     }
 }
