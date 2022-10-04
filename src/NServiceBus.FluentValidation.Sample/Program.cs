@@ -1,10 +1,12 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 
 class Program
 {
     static async Task Main()
     {
         var configuration = new EndpointConfiguration("FluentValidationSample");
+        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UsePersistence<LearningPersistence>();
         configuration.UseTransport<LearningTransport>();
         var validation = configuration.UseFluentValidation(outgoing: false);

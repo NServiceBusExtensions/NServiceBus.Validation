@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
@@ -74,6 +75,7 @@ public class OutgoingTests
         Func<Type, IValidator>? fallback = null)
     {
         var configuration = new EndpointConfiguration("FluentValidationOutgoing" + key);
+        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

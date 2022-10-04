@@ -1,4 +1,5 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Features;
 
@@ -31,6 +32,7 @@ public class OutgoingTests
     static async Task Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
+        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
