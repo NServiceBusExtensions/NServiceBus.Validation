@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 
-var serviceCollection = new ServiceCollection();
+var services = new ServiceCollection();
 var configuration = new EndpointConfiguration("DataAnnotationsValidationSample");
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseDataAnnotationsValidation(outgoing:false);
 
 var endpointProvider = EndpointWithExternallyManagedServiceProvider
-    .Create(configuration, serviceCollection);
-await using var provider = serviceCollection.BuildServiceProvider();
+    .Create(configuration, services);
+await using var provider = services.BuildServiceProvider();
 var endpoint = await endpointProvider.Start(provider);
 
 await endpoint.SendLocal(new MyMessage{Content = "sd"});
