@@ -7,10 +7,10 @@ configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseDataAnnotationsValidation(outgoing:false);
 
-var endpointWithExternallyManagedServiceProvider = EndpointWithExternallyManagedServiceProvider
+var endpointProvider = EndpointWithExternallyManagedServiceProvider
     .Create(configuration, serviceCollection);
 await using var provider = serviceCollection.BuildServiceProvider();
-var endpoint = await endpointWithExternallyManagedServiceProvider.Start(serviceProvider);
+var endpoint = await endpointProvider.Start(provider);
 
 await endpoint.SendLocal(new MyMessage{Content = "sd"});
 await endpoint.SendLocal(new MyMessage());
