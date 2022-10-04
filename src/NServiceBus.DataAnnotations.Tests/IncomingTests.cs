@@ -36,7 +36,7 @@ public class IncomingTests
         configuration.DisableFeature<TimeoutManager>();
 
         using var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
+        configuration.RegisterComponents(_ => _.RegisterSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(

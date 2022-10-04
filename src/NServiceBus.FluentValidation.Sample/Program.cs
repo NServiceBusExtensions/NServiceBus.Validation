@@ -1,22 +1,16 @@
 ﻿using NServiceBus;
 
-class Program
-{
-    static async Task Main()
-    {
-        var configuration = new EndpointConfiguration("FluentValidationSample");
-        configuration.UsePersistence<LearningPersistence>();
-        configuration.UseTransport<LearningTransport>();
-        var validation = configuration.UseFluentValidation(outgoing: false);
-        validation.AddValidatorsFromAssemblyContaining<MyMessage>();
+var configuration = new EndpointConfiguration("FluentValidationSample");
+configuration.UsePersistence<LearningPersistence>();
+configuration.UseTransport<LearningTransport>();
+var validation = configuration.UseFluentValidation(outgoing: false);
+validation.AddValidatorsFromAssemblyContaining<MyMessage>();
 
-        var endpoint = await Endpoint.Start(configuration);
+var endpoint = await Endpoint.Start(configuration);
 
-        await endpoint.SendLocal(new MyMessage {Content = "sd"});
-        await endpoint.SendLocal(new MyMessage());
+await endpoint.SendLocal(new MyMessage {Content = "sd"});
+await endpoint.SendLocal(new MyMessage());
 
-        Console.WriteLine("Press any key to stop program");
-        Console.Read();
-        await endpoint.Stop();
-    }
-}
+Console.WriteLine("Press any key to stop program");
+Console.Read();
+await endpoint.Stop();
