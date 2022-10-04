@@ -20,7 +20,7 @@ public class ValidatingContext<TMessage> :
     public async Task Run(IHandleMessages<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.Validate(message, Headers, Extensions, Builder);
+        await TestContextValidator.InnerValidate(message, Headers, Extensions, Builder);
         await handler.Handle(message, this);
         AddDataIfSaga(handler);
     }
@@ -28,7 +28,7 @@ public class ValidatingContext<TMessage> :
     public async Task Run(IHandleTimeouts<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.Validate(message, Headers, Extensions, Builder);
+        await TestContextValidator.InnerValidate(message, Headers, Extensions, Builder);
         await handler.Timeout(message, this);
         AddDataIfSaga(handler);
     }
@@ -46,7 +46,7 @@ public class ValidatingContext<TMessage> :
     public override async Task Send(object message, SendOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.Validate(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
         await base.Send(message, options);
     }
 
@@ -61,14 +61,14 @@ public class ValidatingContext<TMessage> :
     public override async Task Reply(object message, ReplyOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.Validate(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
         await base.Reply(message, options);
     }
 
     public override async Task Publish(object message, PublishOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.Validate(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
         await base.Publish(message, options);
     }
 }

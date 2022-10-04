@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
 using NServiceBus.ObjectBuilder;
-using NServiceBus.Pipeline;
 
 class MessageValidator
 {
@@ -12,40 +11,48 @@ class MessageValidator
     public MessageValidator(TryGetValidators tryGetValidators) =>
         this.tryGetValidators = tryGetValidators;
 
-    public Task Validate(IInvokeHandlerContext handlerContext) =>
-        Validate(handlerContext.MessageBeingHandled.GetType(), handlerContext.Builder, handlerContext.MessageBeingHandled, handlerContext.Headers, handlerContext.Extensions);
+    static MethodInfo innerValidateMethod = typeof(MessageValidator).GetMethod(nameof(Validate))!;
 
-    public async Task Validate<T>(Type messageType, IBuilder builder, T instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public Task ValidateWithTypeRedirect(Type messageType, IBuilder builder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
+        var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
+        return (Task) genericMethod.Invoke(this,
+            new[]
+            {
+                messageType,
+                builder,
+                instance,
+                headers,
+                contextBag
+            })!;
+    }
+
+    public async Task Validate<TMessage>(Type messageType, IBuilder builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+        where TMessage : class
+    {
+        if (typeof(TMessage) == typeof(object))
+        {
+            throw new("TMessage must not be object");
+        }
+
         if (!tryGetValidators(messageType, builder, out var validators))
         {
             return;
         }
 
-        List<TypeValidationFailure> results = new();
-        ValidationContext<T> validationContext = new(instance);
+        var results = new List<TypeValidationFailure>();
+        var validationContext = new ValidationContext<TMessage>(instance);
         validationContext.RootContextData.Add("Headers", headers);
         validationContext.RootContextData.Add("ContextBag", contextBag);
-        if (validationContext.IsAsync)
+        foreach (var validator in validators)
         {
-            foreach (var validator in validators)
-            {
-                var result = await validator.ValidateAsync(validationContext);
-                AddResults(results, result, validator);
-            }
-        }
-        else
-        {
-            foreach (var validator in validators)
-            {
-                var result = validator.Validate(validationContext);
-                AddResults(results, result, validator);
-            }
+            var result = await validator.ValidateAsync(validationContext);
+            AddResults(results, result, validator);
         }
 
         if (results.Any())
         {
-            throw new MessageValidationException(instance!, results);
+            throw new MessageValidationException(instance, results);
         }
     }
 

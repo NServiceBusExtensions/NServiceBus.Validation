@@ -47,26 +47,23 @@ public static class TestContextValidator
             validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
         };
 
-        tasks.AddRange(context.PublishedMessages.Select(publishedMessage => Validate(publishedMessage, builder)));
-        tasks.AddRange(context.SentMessages.Select(sentMessage => Validate(sentMessage, builder)));
-        tasks.AddRange(context.RepliedMessages.Select(repliedMessage => Validate(repliedMessage, builder)));
-        tasks.AddRange(context.TimeoutMessages.Select(timeoutMessage => Validate(timeoutMessage, builder)));
+        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IBuilder builder)
+            where TOptions : ExtendableOptions =>
+            ValidateWithTypeRedirect(message.Message, message.Options, builder);
+
+        tasks.AddRange(context.PublishedMessages.Select(_ => Validate(_, builder)));
+        tasks.AddRange(context.SentMessages.Select(_ => Validate(_, builder)));
+        tasks.AddRange(context.RepliedMessages.Select(_ => Validate(_, builder)));
+        tasks.AddRange(context.TimeoutMessages.Select(_ => Validate(_, builder)));
 
         return Task.WhenAll(tasks);
     }
 
-    static Task Validate<T>(OutgoingMessage<object, T> message, IBuilder builder)
-        where T : ExtendableOptions
-    {
-        var instance = message.Message;
-        var options = message.Options;
-        return Validate(instance, options, builder);
-    }
+    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IBuilder builder)
+        where TOptions : ExtendableOptions =>
+        validator.ValidateWithTypeRedirect(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task Validate<T>(object instance, T options, IBuilder builder)
-        where T : ExtendableOptions =>
-        validator.Validate(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
-
-    internal static Task Validate(object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder) =>
-        validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
+    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
+        where TMessage : class
+        => validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
 }
