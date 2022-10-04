@@ -1,6 +1,5 @@
 ﻿using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
-using NServiceBus.ObjectBuilder;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus.Testing;
@@ -46,23 +45,22 @@ public static class TestContextValidator
     public static void AddValidatorsFromMessagesSuffixedAssemblies() =>
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
 
-    public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message)
+    public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider provider)
         where TMessage : class
     {
-        var builder = context.Builder.Build<IServiceProvider>();
         List<Task> tasks = new()
         {
-            validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
+            validator.Validate(message.GetType(), provider, message, context.Headers, context.Extensions)
         };
 
         static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider builder)
             where TOptions : ExtendableOptions =>
             ValidateWithTypeRedirect(message.Message, message.Options, builder);
 
-        tasks.AddRange(context.PublishedMessages.Select(_ => Validate(_, builder)));
-        tasks.AddRange(context.SentMessages.Select(_ => Validate(_, builder)));
-        tasks.AddRange(context.RepliedMessages.Select(_ => Validate(_, builder)));
-        tasks.AddRange(context.TimeoutMessages.Select(_ => Validate(_, builder)));
+        tasks.AddRange(context.PublishedMessages.Select(_ => Validate(_, provider)));
+        tasks.AddRange(context.SentMessages.Select(_ => Validate(_, provider)));
+        tasks.AddRange(context.RepliedMessages.Select(_ => Validate(_, provider)));
+        tasks.AddRange(context.TimeoutMessages.Select(_ => Validate(_, provider)));
 
         return Task.WhenAll(tasks);
     }

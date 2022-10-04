@@ -10,7 +10,7 @@ public class SagaTests
             Content = "a"
         };
 
-        var handlerContext = ValidatingContext.Build(message);
+        var handlerContext = ValidatingContext.Build(message, new FakeServiceProvider());
         var sagaData = new MySaga.MySagaData();
         var saga = new MySaga
         {

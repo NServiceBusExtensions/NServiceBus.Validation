@@ -5,20 +5,22 @@ using NServiceBus.Testing;
 [UsesVerify]
 public class HandlerTests
 {
+    IServiceProvider provider = new FakeServiceProvider();
+
     [Fact]
     public Task Validate_TestableMessageHandlerContext()
     {
         var handlerContext = new TestableMessageHandlerContext();
 
         var message = new MyMessage();
-        return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message));
+        return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message, new FakeServiceProvider()));
     }
 
     [Fact]
     public Task Validate_ValidatingHandlerContext()
     {
         var message = new MyMessage();
-        var handlerContext = ValidatingContext.Build(message);
+        var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new MyHandler();
         return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
@@ -39,7 +41,7 @@ public class HandlerTests
     public async Task Should_throw_for_handle()
     {
         var message = new SimpleMessage();
-        var handlerContext = ValidatingContext.Build(message);
+        var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new HandlerThatSends();
         var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
         await Verify(exception.Message);
@@ -50,6 +52,12 @@ public class HandlerTests
     {
         var message = new MyMessage();
         var handler = new MyHandler();
-        return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message));
+        return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message, provider));
     }
+}
+
+class FakeServiceProvider : IServiceProvider
+{
+    public object? GetService(Type serviceType) =>
+        null;
 }

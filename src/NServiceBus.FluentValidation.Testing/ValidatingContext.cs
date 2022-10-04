@@ -7,11 +7,13 @@ public class ValidatingContext<TMessage> :
     where TMessage : class
 {
     TMessage message;
+    IServiceProvider provider;
     bool hasRun;
 
-    public ValidatingContext(TMessage message)
+    public ValidatingContext(TMessage message, IServiceProvider provider)
     {
         this.message = message;
+        this.provider = provider;
         var value = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
         MessageHeaders.Add(NServiceBus.Headers.TimeSent, value);
         Headers.Add(NServiceBus.Headers.TimeSent, value);
@@ -20,7 +22,7 @@ public class ValidatingContext<TMessage> :
     public async Task Run(IHandleMessages<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, Headers, Extensions, Builder);
+        await TestContextValidator.InnerValidate(message, Headers, Extensions, provider);
         await handler.Handle(message, this);
         AddDataIfSaga(handler);
     }
@@ -28,7 +30,7 @@ public class ValidatingContext<TMessage> :
     public async Task Run(IHandleTimeouts<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, Headers, Extensions, Builder);
+        await TestContextValidator.InnerValidate(message, Headers, Extensions, provider);
         await handler.Timeout(message, this);
         AddDataIfSaga(handler);
     }
@@ -46,7 +48,7 @@ public class ValidatingContext<TMessage> :
     public override async Task Send(object message, SendOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, provider);
         await base.Send(message, options);
     }
 
@@ -61,14 +63,14 @@ public class ValidatingContext<TMessage> :
     public override async Task Reply(object message, ReplyOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, provider);
         await base.Reply(message, options);
     }
 
     public override async Task Publish(object message, PublishOptions options)
     {
         ValidateHasRun();
-        await TestContextValidator.ValidateWithTypeRedirect(message, options, Builder);
+        await TestContextValidator.ValidateWithTypeRedirect(message, options, provider);
         await base.Publish(message, options);
     }
 }
