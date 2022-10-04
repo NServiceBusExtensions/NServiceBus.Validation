@@ -54,7 +54,7 @@ public class IncomingTests
         var endpointProvider = EndpointWithExternallyManagedServiceProvider
             .Create(configuration, services);
 
-        using var provider = services.BuildServiceProvider();
+        await using var provider = services.BuildServiceProvider();
         var endpoint = await endpointProvider.Start(provider);
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))

@@ -10,8 +10,8 @@ validation.AddValidatorsFromAssemblyContaining<MyMessage>();
 
 var endpointProvider = EndpointWithExternallyManagedServiceProvider
     .Create(configuration, services);
-using var serviceProvider = services.BuildServiceProvider();
-var endpoint = await endpointProvider.Start(serviceProvider);
+await using var provider = services.BuildServiceProvider();
+var endpoint = await endpointProvider.Start(provider);
 
 await endpoint.SendLocal(new MyMessage {Content = "sd"});
 await endpoint.SendLocal(new MyMessage());

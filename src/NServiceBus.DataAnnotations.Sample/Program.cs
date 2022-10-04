@@ -9,7 +9,7 @@ configuration.UseDataAnnotationsValidation(outgoing:false);
 
 var endpointWithExternallyManagedServiceProvider = EndpointWithExternallyManagedServiceProvider
     .Create(configuration, serviceCollection);
-using var serviceProvider = serviceCollection.BuildServiceProvider();
+await using var provider = serviceCollection.BuildServiceProvider();
 var endpoint = await endpointWithExternallyManagedServiceProvider.Start(serviceProvider);
 
 await endpoint.SendLocal(new MyMessage{Content = "sd"});
