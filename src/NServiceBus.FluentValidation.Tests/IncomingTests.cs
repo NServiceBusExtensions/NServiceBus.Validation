@@ -82,6 +82,7 @@ public class IncomingTests
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
+        var services = new ServiceCollection();
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
@@ -102,7 +103,11 @@ public class IncomingTests
         var validation = configuration.UseFluentValidation(lifecycle, outgoing: false, fallback: fallback);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators:false);
 
-        var endpoint = await Endpoint.Start(configuration);
+        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+            .Create(configuration, services);
+
+        using var serviceProvider = services.BuildServiceProvider();
+        var endpoint = await endpointProvider.Start(serviceProvider);
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {

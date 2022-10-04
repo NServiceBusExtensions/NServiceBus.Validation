@@ -31,6 +31,8 @@ public class IncomingTests
 
     static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")
     {
+        var services = new ServiceCollection();
+
         var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
@@ -49,7 +51,11 @@ public class IncomingTests
             });
         configuration.UseDataAnnotationsValidation(outgoing: false);
 
-        var endpoint = await Endpoint.Start(configuration);
+        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+            .Create(configuration, services);
+
+        using var provider = services.BuildServiceProvider();
+        var endpoint = await endpointProvider.Start(provider);
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {

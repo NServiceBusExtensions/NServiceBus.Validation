@@ -31,6 +31,7 @@ public class OutgoingTests
 
     static async Task Send(object message, [CallerMemberName] string key = "")
     {
+        var services = new ServiceCollection();
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
@@ -38,7 +39,10 @@ public class OutgoingTests
 
         configuration.UseDataAnnotationsValidation(incoming: false);
 
-        var endpoint = await Endpoint.Start(configuration);
+        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+            .Create(configuration, services);
+        using var provider = services.BuildServiceProvider();
+        var endpoint = await endpointProvider.Start(provider);
         await endpoint.SendLocal(message);
     }
 }
