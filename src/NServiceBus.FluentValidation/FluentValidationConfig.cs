@@ -10,7 +10,10 @@ public class FluentValidationConfig
     DependencyLifecycle dependencyLifecycle;
     internal MessageValidator MessageValidator;
 
-    internal FluentValidationConfig(EndpointConfiguration endpoint, ValidatorLifecycle validatorLifecycle, Func<Type, IValidator?>? fallback)
+    internal FluentValidationConfig(
+        EndpointConfiguration endpoint,
+        ValidatorLifecycle validatorLifecycle,
+        Func<Type, IValidator?>? fallback)
     {
         this.endpoint = endpoint;
 
@@ -36,13 +39,20 @@ public class FluentValidationConfig
         return new UnitOfWorkValidatorTypeCache(fallback).TryGetValidators;
     }
 
-    public void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public void AddValidatorsFromAssemblyContaining<T>(
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssemblyContaining(typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public void AddValidatorsFromAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public void AddValidatorsFromAssemblyContaining(
+        Type type, bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public void AddValidatorsFromAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
+    public void AddValidatorsFromAssembly(
+        Assembly assembly,
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true)
     {
         var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
         AddValidators(results);
@@ -60,6 +70,8 @@ public class FluentValidationConfig
     /// <summary>
     /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
     /// </summary>
-    public void AddValidatorsFromMessagesSuffixedAssemblies(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public void AddValidatorsFromMessagesSuffixedAssemblies(
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
 }

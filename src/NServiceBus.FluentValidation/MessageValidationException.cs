@@ -17,7 +17,7 @@ public class MessageValidationException :
     {
         get
         {
-            StringBuilder builder = new($"Validation failed for '{MessageType.Name}'.");
+            var builder = new StringBuilder($"Validation failed for '{MessageType.Name}'.");
             builder.AppendLine();
             foreach (var error in Errors)
             {
@@ -33,7 +33,7 @@ public class MessageValidationException :
     {
         get
         {
-            StringBuilder builder = new($"Validation failed for message '{MessageType.FullName}'.");
+            var builder = new StringBuilder($"Validation failed for message '{MessageType.FullName}'.");
             builder.AppendLine();
             foreach (var error in Errors)
             {

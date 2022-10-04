@@ -17,13 +17,21 @@ public static class TestContextValidator
         validator = new(typeCache.TryGetValidators);
     }
 
-    public static void AddValidatorsFromAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public static void AddValidatorsFromAssemblyContaining<T>(
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssemblyContaining(typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public static void AddValidatorsFromAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public static void AddValidatorsFromAssemblyContaining(
+        Type type,
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         AddValidatorsFromAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public static void AddValidatorsFromAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
+    public static void AddValidatorsFromAssembly(
+        Assembly assembly,
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true)
     {
         var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
         AddValidators(results);

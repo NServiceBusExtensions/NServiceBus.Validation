@@ -5,13 +5,21 @@ namespace NServiceBus.FluentValidation;
 
 public static class ValidationFinder
 {
-    public static IEnumerable<Result> FindValidatorsInAssemblyContaining<T>(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public static IEnumerable<Result> FindValidatorsInAssemblyContaining<T>(
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         FindValidatorsInAssemblyContaining(typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public static IEnumerable<Result> FindValidatorsInAssemblyContaining(Type type, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true) =>
+    public static IEnumerable<Result> FindValidatorsInAssemblyContaining(
+        Type type,
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true) =>
         FindValidatorsInAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public static IEnumerable<Result> FindValidatorsInAssembly(Assembly assembly, bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
+    public static IEnumerable<Result> FindValidatorsInAssembly(
+        Assembly assembly,
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true)
     {
         var assemblyName = assembly.GetName().Name;
         if (throwForNonPublicValidators)
@@ -31,7 +39,7 @@ public static class ValidationFinder
                 .ToList();
             if (nonPublicValidators.Any())
             {
-                throw new($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(x => x.FullName))}.");
+                throw new($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(_ => _.FullName))}.");
             }
         }
 
@@ -48,7 +56,9 @@ public static class ValidationFinder
     /// Find all  assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
     /// Files starting with "System." or "Microsoft." are excluded.
     /// </summary>
-    public static IEnumerable<Result> FindValidatorsInMessagesSuffixedAssemblies(bool throwForNonPublicValidators = true, bool throwForNoValidatorsFound = true)
+    public static IEnumerable<Result> FindValidatorsInMessagesSuffixedAssemblies(
+        bool throwForNonPublicValidators = true,
+        bool throwForNoValidatorsFound = true)
     {
         var directory = AppDomain.CurrentDomain.BaseDirectory;
         var assemblies = Directory.EnumerateFiles(directory, "*.Messages.dll")
@@ -64,6 +74,10 @@ public static class ValidationFinder
             throw new($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
         }
 
-        return assemblies.SelectMany(x => FindValidatorsInAssembly(Assembly.LoadFrom(x), throwForNonPublicValidators, throwForNoValidatorsFound));
+        return assemblies.SelectMany(file =>
+            FindValidatorsInAssembly(
+                Assembly.LoadFrom(file),
+                throwForNonPublicValidators,
+                throwForNoValidatorsFound));
     }
 }

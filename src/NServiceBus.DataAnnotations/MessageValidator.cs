@@ -7,23 +7,27 @@ static class MessageValidator
 {
     public static void Validate(object message, IBuilder builder, Dictionary<string, string> headers, ContextBag contextBag)
     {
-        ValidationContext validationContext = new(
+        var validationContext = new ValidationContext(
             message,
             new BuilderWrapper(builder),
             items: new Dictionary<object, object?>
+        {
             {
-                {"Headers", headers},
-                {"ContextBag", contextBag},
-            });
+                "Headers", headers
+            },
+            {
+                "ContextBag", contextBag
+            },
+        });
 
-        List<ValidationResult> results = new();
+        var results = new List<ValidationResult>();
 
         if (Validator.TryValidateObject(message, validationContext, results, true))
         {
             return;
         }
 
-        StringBuilder errorMessage = new();
+        var errorMessage = new StringBuilder();
         var error = $"Validation failed for message '{message.GetType()}'.";
         errorMessage.AppendLine(error);
 
