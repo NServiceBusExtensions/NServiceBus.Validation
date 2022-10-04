@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using NServiceBus.ObjectBuilder;
+using Microsoft.Extensions.DependencyInjection;
 
 class EndpointValidatorTypeCache
 {
@@ -11,14 +11,14 @@ class EndpointValidatorTypeCache
     public EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
         this.fallback = fallback;
 
-    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
+    public bool TryGetValidators(Type messageType, IServiceProvider builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,
             type =>
             {
                 var genericType = validatorType.MakeGenericType(type);
-                var all = builder.BuildAll(genericType)
+                var all = builder.GetServices(genericType)
                     .Cast<IValidator>()
                     .ToList();
                 if (fallback != null && !all.Any())

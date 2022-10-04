@@ -3,11 +3,11 @@
 class IncomingValidationStep :
     RegisterStep
 {
-    public IncomingValidationStep() :
+    public IncomingValidationStep(IServiceProvider provider) :
         base(
             "IncomingDataAnnotations",
             typeof(IncomingValidationBehavior),
             "Validates incoming messages using DataAnnotations",
-            _ => new IncomingValidationBehavior()) =>
+            _ => new IncomingValidationBehavior(provider)) =>
         InsertAfter("MutateIncomingMessages");
 }

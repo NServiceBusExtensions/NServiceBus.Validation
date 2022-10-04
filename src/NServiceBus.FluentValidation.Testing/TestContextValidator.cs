@@ -1,6 +1,5 @@
 ﻿using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
-using NServiceBus.ObjectBuilder;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus.Testing;
@@ -47,7 +46,7 @@ public static class TestContextValidator
             validator.Validate(message.GetType(), builder, message, context.Headers, context.Extensions)
         };
 
-        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IBuilder builder)
+        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider builder)
             where TOptions : ExtendableOptions =>
             ValidateWithTypeRedirect(message.Message, message.Options, builder);
 
@@ -59,11 +58,11 @@ public static class TestContextValidator
         return Task.WhenAll(tasks);
     }
 
-    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IBuilder builder)
+    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IServiceProvider builder)
         where TOptions : ExtendableOptions =>
         validator.ValidateWithTypeRedirect(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IBuilder builder)
+    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider builder)
         where TMessage : class
         => validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
 }

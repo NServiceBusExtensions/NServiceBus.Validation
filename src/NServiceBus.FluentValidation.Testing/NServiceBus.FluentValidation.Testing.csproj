@@ -5,8 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.2.2" />
-    <PackageReference Include="NServiceBus" Version="7.8.0" />
-    <PackageReference Include="NServiceBus.Testing" Version="7.4.1" />
+    <PackageReference Include="NServiceBus" Version="8.0.0-rc.3" />
+    <PackageReference Include="NServiceBus.Testing" Version="8.0.0-rc.2" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
     <PackageReference Include="ProjectDefaults" Version="1.0.80" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Condition="$(Configuration) == 'Release'" />

@@ -13,7 +13,7 @@ class MessageValidator
 
     static MethodInfo innerValidateMethod = typeof(MessageValidator).GetMethod(nameof(Validate))!;
 
-    public Task ValidateWithTypeRedirect(Type messageType, IBuilder builder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public Task ValidateWithTypeRedirect(Type messageType, IServiceProvider builder, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
         var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
         return (Task) genericMethod.Invoke(this,
@@ -27,7 +27,7 @@ class MessageValidator
             })!;
     }
 
-    public async Task Validate<TMessage>(Type messageType, IBuilder builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
+    public async Task Validate<TMessage>(Type messageType, IServiceProvider builder, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
         where TMessage : class
     {
         if (typeof(TMessage) == typeof(object))

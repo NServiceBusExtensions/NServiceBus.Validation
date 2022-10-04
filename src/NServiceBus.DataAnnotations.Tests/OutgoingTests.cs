@@ -1,6 +1,5 @@
 ﻿using NServiceBus;
 using NServiceBus.DataAnnotations;
-using NServiceBus.Features;
 
 public class OutgoingTests
 {
@@ -33,7 +32,6 @@ public class OutgoingTests
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
-        configuration.DisableFeature<TimeoutManager>();
 
         configuration.UseDataAnnotationsValidation(incoming: false);
 
