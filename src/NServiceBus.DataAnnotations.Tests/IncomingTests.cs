@@ -32,7 +32,6 @@ public class IncomingTests
     static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
-        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

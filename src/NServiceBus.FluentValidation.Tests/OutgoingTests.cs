@@ -75,7 +75,6 @@ public class OutgoingTests
         Func<Type, IValidator>? fallback = null)
     {
         var configuration = new EndpointConfiguration("FluentValidationOutgoing" + key);
-        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

@@ -83,7 +83,6 @@ public class IncomingTests
         Func<Type, IValidator>? fallback = null)
     {
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
-        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();

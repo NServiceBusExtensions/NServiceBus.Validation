@@ -32,7 +32,6 @@ public class OutgoingTests
     static async Task Send(object message, [CallerMemberName] string key = "")
     {
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
-        configuration.UseContainer(new DefaultServiceProviderFactory());
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
