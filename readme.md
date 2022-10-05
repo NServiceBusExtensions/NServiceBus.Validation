@@ -50,7 +50,7 @@ FluentValidation message validation can be enabled using the following:
 <a id='snippet-fluentvalidation'></a>
 ```cs
 endpointConfiguration.UseFluentValidation(serviceCollection);
-FluentValidationConfig.AddValidatorsFromAssemblyContaining<TheMessage>(serviceCollection);
+serviceCollection.AddValidatorsFromAssemblyContaining<TheMessage>();
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L8-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
@@ -150,9 +150,9 @@ Validators are registered and resolved using [dependency injection](https://docs
 <a id='snippet-fluentvalidation_addvalidators'></a>
 ```cs
 endpointConfiguration.UseFluentValidation(serviceCollection);
-FluentValidationConfig.AddValidatorsFromAssemblyContaining<MyMessage>(serviceCollection);
-FluentValidationConfig.AddValidatorsFromAssemblyContaining(serviceCollection,typeof(SomeOtherMessage));
-FluentValidationConfig.AddValidatorsFromAssembly(serviceCollection, assembly);
+serviceCollection.AddValidatorsFromAssemblyContaining<MyMessage>();
+serviceCollection.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
+serviceCollection.AddValidatorsFromAssembly(assembly);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L48-L55' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_addvalidators' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
@@ -190,13 +190,12 @@ These exception scenarios can be excluded using the following:
 <a id='snippet-fluentvalidation_ignorevalidatorconventions'></a>
 ```cs
 endpointConfiguration.UseFluentValidation(serviceCollection);
-FluentValidationConfig.AddValidatorsFromAssembly(
-    serviceCollection,
+serviceCollection.AddValidatorsFromAssembly(
     assembly,
     throwForNonPublicValidators: false,
     throwForNoValidatorsFound: false);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L60-L69' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L60-L68' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

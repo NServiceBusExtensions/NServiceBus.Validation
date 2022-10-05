@@ -101,7 +101,7 @@ public class IncomingTests
                 return RecoverabilityAction.MoveToError("error");
             });
         configuration.UseFluentValidation(services, lifetime, outgoing: false, fallback: fallback);
-        FluentValidationConfig.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(services, lifetime, throwForNonPublicValidators:false);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators:false);
 
         var endpointProvider = EndpointWithExternallyManagedServiceProvider
             .Create(configuration, services);

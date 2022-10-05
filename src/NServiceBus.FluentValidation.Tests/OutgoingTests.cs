@@ -82,7 +82,7 @@ public class OutgoingTests
         configuration.DisableFeature<Sagas>();
 
         configuration.UseFluentValidation(services, lifetime, incoming: false, fallback: fallback);
-        FluentValidationConfig.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(services, lifetime,throwForNonPublicValidators: false);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators: false);
 
         var endpointProvider = EndpointWithExternallyManagedServiceProvider
             .Create(configuration, services);

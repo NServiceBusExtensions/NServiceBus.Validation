@@ -8,7 +8,7 @@ public class Usage
         #region FluentValidation
 
         endpointConfiguration.UseFluentValidation(serviceCollection);
-        FluentValidationConfig.AddValidatorsFromAssemblyContaining<TheMessage>(serviceCollection);
+        serviceCollection.AddValidatorsFromAssemblyContaining<TheMessage>();
 
         #endregion
 
@@ -48,9 +48,9 @@ public class Usage
         #region FluentValidation_AddValidators
 
         endpointConfiguration.UseFluentValidation(serviceCollection);
-        FluentValidationConfig.AddValidatorsFromAssemblyContaining<MyMessage>(serviceCollection);
-        FluentValidationConfig.AddValidatorsFromAssemblyContaining(serviceCollection,typeof(SomeOtherMessage));
-        FluentValidationConfig.AddValidatorsFromAssembly(serviceCollection, assembly);
+        serviceCollection.AddValidatorsFromAssemblyContaining<MyMessage>();
+        serviceCollection.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
+        serviceCollection.AddValidatorsFromAssembly(assembly);
 
         #endregion
     }
@@ -60,8 +60,7 @@ public class Usage
         #region FluentValidation_IgnoreValidatorConventions
 
         endpointConfiguration.UseFluentValidation(serviceCollection);
-        FluentValidationConfig.AddValidatorsFromAssembly(
-            serviceCollection,
+        serviceCollection.AddValidatorsFromAssembly(
             assembly,
             throwForNonPublicValidators: false,
             throwForNoValidatorsFound: false);

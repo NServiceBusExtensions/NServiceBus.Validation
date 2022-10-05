@@ -6,7 +6,7 @@ var configuration = new EndpointConfiguration("FluentValidationSample");
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseFluentValidation(services, outgoing: false);
-FluentValidationConfig.AddValidatorsFromAssemblyContaining<MyMessage>(services);
+services.AddValidatorsFromAssemblyContaining<MyMessage>();
 
 var endpointProvider = EndpointWithExternallyManagedServiceProvider
     .Create(configuration, services);
