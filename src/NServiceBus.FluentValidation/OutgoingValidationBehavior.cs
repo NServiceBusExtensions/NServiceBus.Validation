@@ -11,7 +11,12 @@ class OutgoingValidationBehavior :
     public override async Task Invoke(IOutgoingLogicalMessageContext context, Func<Task> next)
     {
         var message = context.Message;
-        await validator.ValidateWithTypeRedirect(message.MessageType, context.Builder.Build<IServiceProvider>(), message.Instance, context.Headers, context.Extensions);
+        await validator.ValidateWithTypeRedirect(
+            message.MessageType,
+            context.Builder.Build<IServiceProvider>(),
+            message.Instance,
+            context.Headers,
+            context.Extensions);
         await next();
     }
 }

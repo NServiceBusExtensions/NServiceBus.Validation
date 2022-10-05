@@ -81,7 +81,7 @@ public class OutgoingTests
         configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
-        var validation = configuration.UseFluentValidation(lifecycle, incoming: false, fallback: fallback);
+        var validation = configuration.UseFluentValidation(services, lifecycle, incoming: false, fallback: fallback);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
 
         var endpointProvider = EndpointWithExternallyManagedServiceProvider
