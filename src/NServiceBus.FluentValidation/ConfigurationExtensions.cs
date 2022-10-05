@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus.FluentValidation;
 
 namespace NServiceBus;
@@ -10,6 +11,7 @@ public static class FluentValidationConfigurationExtensions
 {
     public static FluentValidationConfig UseFluentValidation(
         this EndpointConfiguration endpoint,
+        IServiceCollection services,
         ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint,
         bool incoming = true,
         bool outgoing = true,
@@ -18,7 +20,7 @@ public static class FluentValidationConfigurationExtensions
         var recoverability = endpoint.Recoverability();
         recoverability.AddUnrecoverableException<MessageValidationException>();
 
-        var config = new FluentValidationConfig(endpoint, lifecycle, fallback);
+        var config = new FluentValidationConfig(services, lifecycle, fallback);
         var pipeline = endpoint.Pipeline;
 
         if (incoming)

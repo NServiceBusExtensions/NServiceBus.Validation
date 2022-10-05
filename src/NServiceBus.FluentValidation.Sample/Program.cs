@@ -1,12 +1,17 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 
+var services = new ServiceCollection();
 var configuration = new EndpointConfiguration("FluentValidationSample");
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
-var validation = configuration.UseFluentValidation(outgoing: false);
+var validation = configuration.UseFluentValidation(services, outgoing: false);
 validation.AddValidatorsFromAssemblyContaining<MyMessage>();
 
-var endpoint = await Endpoint.Start(configuration);
+var endpointProvider = EndpointWithExternallyManagedServiceProvider
+    .Create(configuration, services);
+await using var provider = services.BuildServiceProvider();
+var endpoint = await endpointProvider.Start(provider);
 
 await endpoint.SendLocal(new MyMessage {Content = "sd"});
 await endpoint.SendLocal(new MyMessage());

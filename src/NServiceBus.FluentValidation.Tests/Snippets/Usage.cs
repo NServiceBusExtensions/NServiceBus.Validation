@@ -1,13 +1,14 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 using NServiceBus.FluentValidation;
 
 public class Usage
 {
-    Usage(EndpointConfiguration endpointConfiguration)
+    Usage(EndpointConfiguration endpointConfiguration, IServiceCollection serviceCollection)
     {
         #region FluentValidation
 
-        var validationConfig = endpointConfiguration.UseFluentValidation();
+        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
         validationConfig.AddValidatorsFromAssemblyContaining<TheMessage>();
 
         #endregion
@@ -15,6 +16,7 @@ public class Usage
         #region FluentValidation_disableincoming
 
         endpointConfiguration.UseFluentValidation(
+            serviceCollection,
             incoming: false);
 
         #endregion
@@ -22,6 +24,7 @@ public class Usage
         #region FluentValidation_disableoutgoing
 
         endpointConfiguration.UseFluentValidation(
+            serviceCollection,
             outgoing: false);
 
         #endregion
@@ -30,22 +33,22 @@ public class Usage
 
         #region FluentValidation_EndpointLifecycle
 
-        endpointConfiguration.UseFluentValidation(ValidatorLifecycle.Endpoint);
+        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.Endpoint);
 
         #endregion
 
         #region FluentValidation_UnitOfWorkLifecycle
 
-        endpointConfiguration.UseFluentValidation(ValidatorLifecycle.UnitOfWork);
+        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.UnitOfWork);
 
         #endregion
     }
 
-    void AddValidators(EndpointConfiguration endpointConfiguration, Assembly assembly)
+    void AddValidators(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
     {
         #region FluentValidation_AddValidators
 
-        var validationConfig = endpointConfiguration.UseFluentValidation();
+        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
         validationConfig.AddValidatorsFromAssemblyContaining<MyMessage>();
         validationConfig.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
         validationConfig.AddValidatorsFromAssembly(assembly);
@@ -53,11 +56,11 @@ public class Usage
         #endregion
     }
 
-    void IgnoreValidatorConventions(EndpointConfiguration endpointConfiguration, Assembly assembly)
+    void IgnoreValidatorConventions(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
     {
         #region FluentValidation_IgnoreValidatorConventions
 
-        var validationConfig = endpointConfiguration.UseFluentValidation();
+        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
         validationConfig.AddValidatorsFromAssembly(assembly,
             throwForNonPublicValidators: false,
             throwForNoValidatorsFound: false);

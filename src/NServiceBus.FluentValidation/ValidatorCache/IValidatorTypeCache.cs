@@ -1,4 +1,3 @@
 ﻿using FluentValidation;
-using NServiceBus.ObjectBuilder;
 
-delegate bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators);
+delegate bool TryGetValidators(Type messageType, IServiceProvider provider, out IEnumerable<IValidator> validators);

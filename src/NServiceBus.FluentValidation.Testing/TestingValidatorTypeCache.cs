@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using NServiceBus.ObjectBuilder;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 class TestingValidatorTypeCache
@@ -11,7 +10,7 @@ class TestingValidatorTypeCache
     public TestingValidatorTypeCache(List<Result> validatorScanResults) =>
         this.validatorScanResults = validatorScanResults;
 
-    public bool TryGetValidators(Type messageType, IBuilder builder, out IEnumerable<IValidator> validators)
+    public bool TryGetValidators(Type messageType, IServiceProvider builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,

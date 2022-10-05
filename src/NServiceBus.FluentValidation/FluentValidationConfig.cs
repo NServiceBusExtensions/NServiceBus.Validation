@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus.FluentValidation;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
@@ -6,32 +7,24 @@ namespace NServiceBus;
 
 public class FluentValidationConfig
 {
-    EndpointConfiguration endpoint;
-    DependencyLifecycle dependencyLifecycle;
+    IServiceCollection services;
+    ValidatorLifecycle lifecycle;
     internal MessageValidator MessageValidator;
 
     internal FluentValidationConfig(
-        EndpointConfiguration endpoint,
-        ValidatorLifecycle validatorLifecycle,
+        IServiceCollection services,
+        ValidatorLifecycle lifecycle,
         Func<Type, IValidator?>? fallback)
     {
-        this.endpoint = endpoint;
-
-        if (validatorLifecycle == ValidatorLifecycle.Endpoint)
-        {
-            dependencyLifecycle = DependencyLifecycle.SingleInstance;
-        }
-        else
-        {
-            dependencyLifecycle = DependencyLifecycle.InstancePerCall;
-        }
+        this.services = services;
+        this.lifecycle = lifecycle;
 
         MessageValidator = new(GetValidatorCache(fallback));
     }
 
     TryGetValidators GetValidatorCache(Func<Type, IValidator?>? fallback)
     {
-        if (dependencyLifecycle == DependencyLifecycle.SingleInstance)
+        if (lifecycle == ValidatorLifecycle.Endpoint)
         {
             return new EndpointValidatorTypeCache(fallback).TryGetValidators;
         }
@@ -58,14 +51,26 @@ public class FluentValidationConfig
         AddValidators(results);
     }
 
-    public void AddValidators(IEnumerable<Result> results) =>
-        endpoint.RegisterComponents(components =>
+    public void AddValidators(IEnumerable<Result> results)
+    {
+        switch (lifecycle)
         {
-            foreach (var result in results)
-            {
-                components.ConfigureComponent(result.ValidatorType, dependencyLifecycle);
-            }
-        });
+            case ValidatorLifecycle.Endpoint:
+                foreach (var result in results)
+                {
+                    services.AddSingleton(result.InterfaceType, result.ValidatorType);
+                }
+
+                break;
+            case ValidatorLifecycle.UnitOfWork:
+                foreach (var result in results)
+                {
+                    services.AddScoped(result.InterfaceType, result.ValidatorType);
+                }
+
+                break;
+        }
+    }
 
     /// <summary>
     /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.

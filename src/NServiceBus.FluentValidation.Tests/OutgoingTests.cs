@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
@@ -73,16 +74,21 @@ public class OutgoingTests
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
+        var services = new ServiceCollection();
         var configuration = new EndpointConfiguration("FluentValidationOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
-        var validation = configuration.UseFluentValidation(lifecycle, incoming: false, fallback: fallback);
+        var validation = configuration.UseFluentValidation(services, lifecycle, incoming: false, fallback: fallback);
         validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
 
-        var endpoint = await Endpoint.Start(configuration);
+        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+            .Create(configuration, services);
+
+        await using var provider = services.BuildServiceProvider();
+        var endpoint = await endpointProvider.Start(provider);
         await endpoint.SendLocal(message);
     }
 }
