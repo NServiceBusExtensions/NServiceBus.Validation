@@ -7,20 +7,24 @@ public static class TestHelper
     public static IEnumerable<Type> FindMessagesWithoutValidator(params Assembly[] messageAssemblies) =>
         messageAssemblies.SelectMany(assembly => FindMessagesWithoutValidator(assembly));
 
-    public static IEnumerable<Type> FindMessagesWithoutValidator(Assembly messageAssemblies, bool throwForNonPublicValidators = true)
+    public static IEnumerable<Type> FindMessagesWithoutValidator(
+        Assembly messageAssemblies,
+        bool throwForNonPublicValidators = true)
     {
         var messageTypes = messageAssemblies.GetTypes()
-            .Where(p => p.IsMessage())
+            .Where(_ => _.IsMessage())
             .ToList();
 
-        foreach (var validator in messageAssemblies.GetTypes().Where(p => p.IsValidator(throwForNonPublicValidators)))
+        foreach (var validator in messageAssemblies
+                     .GetTypes()
+                     .Where(_ => _.IsValidator(throwForNonPublicValidators)))
         {
             // if a validator handles an IMessage remove that message type from the messageTypes list
             var interfaces = validator.GetInterfaces();
-            var args = interfaces.Select(p => p.GenericTypeArguments)
-                .SelectMany(p => p)
+            var args = interfaces.Select(_ => _.GenericTypeArguments)
+                .SelectMany(_ => _)
                 .ToList();
-            var messageType = args.FirstOrDefault(p => p.IsMessage());
+            var messageType = args.FirstOrDefault(_ => _.IsMessage());
             if (messageType is not null)
             {
                 if (messageTypes.Contains(messageType))
@@ -36,7 +40,9 @@ public static class TestHelper
     public static IEnumerable<Type> FindHandledMessagesWithoutValidator(params Assembly[] handlerAssemblies) =>
         handlerAssemblies.SelectMany(assembly => FindHandledMessagesWithoutValidator(assembly));
 
-    public static IEnumerable<Type> FindHandledMessagesWithoutValidator(Assembly handlerAssembly, bool throwForNonPublicValidators = true)
+    public static IEnumerable<Type> FindHandledMessagesWithoutValidator(
+        Assembly handlerAssembly,
+        bool throwForNonPublicValidators = true)
     {
         var tracking = new List<(Type messageType, Type validatorOrHandler)>();
 
@@ -55,17 +61,17 @@ public static class TestHelper
                     tracking.Add((messageType: argType, validatorOrHandler: typeof(IValidator)));
                 }
 
-                if (interfaces.Any(p => p.Name.Equals(typeof(IHandleMessages<>).Name)))
+                if (interfaces.Any(_ => _.Name.Equals(typeof(IHandleMessages<>).Name)))
                 {
                     tracking.Add((messageType: argType, validatorOrHandler: typeof(IHandleMessages<>)));
                 }
             }
         }
 
-        foreach (var messageGroup in tracking.GroupBy(p => p.messageType))
+        foreach (var messageGroup in tracking.GroupBy(_ => _.messageType))
         {
-            var handlerCount = messageGroup.Count(p => p.validatorOrHandler == typeof(IHandleMessages<>));
-            var validatorCount = messageGroup.Count(p => p.validatorOrHandler == typeof(IValidator));
+            var handlerCount = messageGroup.Count(_ => _.validatorOrHandler == typeof(IHandleMessages<>));
+            var validatorCount = messageGroup.Count(_ => _.validatorOrHandler == typeof(IValidator));
 
             if (handlerCount > 0 && validatorCount == 0)
             {
@@ -75,10 +81,13 @@ public static class TestHelper
     }
 
     static IEnumerable<Type> AllGenericArgs(Type[] interfaces) =>
-        interfaces.Select(p => p.GenericTypeArguments).SelectMany(p => p);
+        interfaces.Select(_ => _.GenericTypeArguments)
+            .SelectMany(_ => _);
 
     static IEnumerable<Type> GetClasses(this Assembly handlerAssembly) =>
-        handlerAssembly.GetTypes().Where(p => !p.IsInterface);
+        handlerAssembly
+            .GetTypes()
+            .Where(_ => !_.IsInterface);
 
     static bool IsValidator(this Type type, bool throwForNonPublicValidators)
     {

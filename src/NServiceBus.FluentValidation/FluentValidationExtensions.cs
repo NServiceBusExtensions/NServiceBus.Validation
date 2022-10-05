@@ -17,6 +17,45 @@ public static class FluentValidationExtensions
     public static ContextBag ContextBag(this IValidationContext context) =>
         (ContextBag)context.RootContextData["ContextBag"];
 
+    public static void UseFluentValidation(
+        this EndpointConfiguration endpoint,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        bool incoming = true,
+        bool outgoing = true,
+        Func<Type, IValidator?>? fallback = null)
+    {
+        var recoverability = endpoint.Recoverability();
+        recoverability.AddUnrecoverableException<MessageValidationException>();
+
+        var pipeline = endpoint.Pipeline;
+
+        var messageValidator = GetMessageValidator(lifetime, fallback);
+        if (incoming)
+        {
+            pipeline.Register(new IncomingValidationStep(messageValidator));
+        }
+
+        if (outgoing)
+        {
+            pipeline.Register(new OutgoingValidationStep(messageValidator));
+        }
+    }
+
+    static MessageValidator GetMessageValidator(ServiceLifetime lifetime, Func<Type, IValidator?>? fallback)
+    {
+        TryGetValidators tryGetValidators;
+        if (lifetime == ServiceLifetime.Singleton)
+        {
+            tryGetValidators = new EndpointValidatorTypeCache(fallback).TryGetValidators;
+        }
+        else
+        {
+            tryGetValidators = new UnitOfWorkValidatorTypeCache(fallback).TryGetValidators;
+        }
+
+        return new(tryGetValidators);
+    }
+
     public static void AddValidators(this IServiceCollection services, IEnumerable<Result> results, ServiceLifetime lifetime)
     {
         foreach (var result in results)

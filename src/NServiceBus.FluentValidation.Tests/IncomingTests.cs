@@ -100,7 +100,7 @@ public class IncomingTests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        configuration.UseFluentValidation(services, lifetime, outgoing: false, fallback: fallback);
+        configuration.UseFluentValidation(lifetime, outgoing: false, fallback: fallback);
         services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators:false);
 
         var endpointProvider = EndpointWithExternallyManagedServiceProvider

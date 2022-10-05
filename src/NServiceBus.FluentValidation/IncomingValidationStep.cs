@@ -1,18 +1,14 @@
-﻿using NServiceBus;
-using NServiceBus.Pipeline;
+﻿using NServiceBus.Pipeline;
 
 class IncomingValidationStep :
     RegisterStep
 {
-    public IncomingValidationStep(FluentValidationConfig config) :
+    public IncomingValidationStep(MessageValidator validator) :
         base(
             stepId: "IncomingFluentValidation",
             behavior: typeof(IncomingValidationBehavior),
             description: "Validates incoming messages using FluentValidation",
-            factoryMethod: _ => BuildBehavior(config))
+            factoryMethod: _ => new IncomingValidationBehavior(validator))
     {
     }
-
-    static IBehavior BuildBehavior(FluentValidationConfig config) =>
-        new IncomingValidationBehavior(config.MessageValidator);
 }

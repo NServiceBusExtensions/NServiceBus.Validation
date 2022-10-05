@@ -7,24 +7,20 @@ public class Usage
     {
         #region FluentValidation
 
-        endpointConfiguration.UseFluentValidation(serviceCollection);
+        endpointConfiguration.UseFluentValidation();
         serviceCollection.AddValidatorsFromAssemblyContaining<TheMessage>();
 
         #endregion
 
         #region FluentValidation_disableincoming
 
-        endpointConfiguration.UseFluentValidation(
-            serviceCollection,
-            incoming: false);
+        endpointConfiguration.UseFluentValidation(incoming: false);
 
         #endregion
 
         #region FluentValidation_disableoutgoing
 
-        endpointConfiguration.UseFluentValidation(
-            serviceCollection,
-            outgoing: false);
+        endpointConfiguration.UseFluentValidation(outgoing: false);
 
         #endregion
 
@@ -32,13 +28,13 @@ public class Usage
 
         #region FluentValidation_Singleton
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Singleton);
+        endpointConfiguration.UseFluentValidation(ServiceLifetime.Singleton);
 
         #endregion
 
         #region FluentValidation_Scoped
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Scoped);
+        endpointConfiguration.UseFluentValidation(ServiceLifetime.Scoped);
 
         #endregion
     }
@@ -47,7 +43,7 @@ public class Usage
     {
         #region FluentValidation_AddValidators
 
-        endpointConfiguration.UseFluentValidation(serviceCollection);
+        endpointConfiguration.UseFluentValidation();
         serviceCollection.AddValidatorsFromAssemblyContaining<MyMessage>();
         serviceCollection.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
         serviceCollection.AddValidatorsFromAssembly(assembly);
@@ -59,7 +55,7 @@ public class Usage
     {
         #region FluentValidation_IgnoreValidatorConventions
 
-        endpointConfiguration.UseFluentValidation(serviceCollection);
+        endpointConfiguration.UseFluentValidation();
         serviceCollection.AddValidatorsFromAssembly(
             assembly,
             throwForNonPublicValidators: false,

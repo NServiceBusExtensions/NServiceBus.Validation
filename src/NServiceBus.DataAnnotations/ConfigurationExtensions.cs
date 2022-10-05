@@ -7,7 +7,10 @@ namespace NServiceBus;
 /// </summary>
 public static class DataAnnotationsConfigurationExtensions
 {
-    public static void UseDataAnnotationsValidation(this EndpointConfiguration endpoint, bool incoming = true, bool outgoing = true)
+    public static void UseDataAnnotationsValidation(
+        this EndpointConfiguration endpoint,
+        bool incoming = true,
+        bool outgoing = true)
     {
         var recoverability = endpoint.Recoverability();
         recoverability.AddUnrecoverableException<MessageValidationException>();

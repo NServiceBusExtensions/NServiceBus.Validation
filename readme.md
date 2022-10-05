@@ -49,7 +49,7 @@ FluentValidation message validation can be enabled using the following:
 <!-- snippet: FluentValidation -->
 <a id='snippet-fluentvalidation'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(serviceCollection);
+endpointConfiguration.UseFluentValidation();
 serviceCollection.AddValidatorsFromAssemblyContaining<TheMessage>();
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L8-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation' title='Start of snippet'>anchor</a></sup>
@@ -64,11 +64,9 @@ To disable for incoming messages use the following:
 <!-- snippet: FluentValidation_disableincoming -->
 <a id='snippet-fluentvalidation_disableincoming'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(
-    serviceCollection,
-    incoming: false);
+endpointConfiguration.UseFluentValidation(incoming: false);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L15-L21' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_disableincoming' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L15-L19' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_disableincoming' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 To disable for outgoing messages use the following:
@@ -76,11 +74,9 @@ To disable for outgoing messages use the following:
 <!-- snippet: FluentValidation_disableoutgoing -->
 <a id='snippet-fluentvalidation_disableoutgoing'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(
-    serviceCollection,
-    outgoing: false);
+endpointConfiguration.UseFluentValidation(outgoing: false);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L23-L29' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_disableoutgoing' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L21-L25' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_disableoutgoing' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Enabling validation on outgoing message will result in the validation exception be thrown in the context of the sender, instead of during message processing on the receiving endpoint. This can be particularly helpful in development and/or debugging scenarios since the stack trace and debugger will more accurately reflect the cause of the invalid message. <!-- singleLineInclude: validationoutgoing. path: /src/validationoutgoing.include.md -->
@@ -149,12 +145,12 @@ Validators are registered and resolved using [dependency injection](https://docs
 <!-- snippet: FluentValidation_AddValidators -->
 <a id='snippet-fluentvalidation_addvalidators'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(serviceCollection);
+endpointConfiguration.UseFluentValidation();
 serviceCollection.AddValidatorsFromAssemblyContaining<MyMessage>();
 serviceCollection.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
 serviceCollection.AddValidatorsFromAssembly(assembly);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L48-L55' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_addvalidators' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L44-L51' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_addvalidators' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Validator lifetime can be controlled:
@@ -162,9 +158,9 @@ Validator lifetime can be controlled:
 <!-- snippet: FluentValidation_Singleton -->
 <a id='snippet-fluentvalidation_singleton'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Singleton);
+endpointConfiguration.UseFluentValidation(ServiceLifetime.Singleton);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L33-L37' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_singleton' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L29-L33' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_singleton' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 Or [instance per unit of work](https://docs.particular.net/nservicebus/dependency-injection/):
@@ -172,9 +168,9 @@ Or [instance per unit of work](https://docs.particular.net/nservicebus/dependenc
 <!-- snippet: FluentValidation_Scoped -->
 <a id='snippet-fluentvalidation_scoped'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Scoped);
+endpointConfiguration.UseFluentValidation(ServiceLifetime.Scoped);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L39-L43' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_scoped' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L35-L39' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_scoped' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The default lifetime is Singleton.
@@ -189,13 +185,13 @@ These exception scenarios can be excluded using the following:
 <!-- snippet: FluentValidation_IgnoreValidatorConventions -->
 <a id='snippet-fluentvalidation_ignorevalidatorconventions'></a>
 ```cs
-endpointConfiguration.UseFluentValidation(serviceCollection);
+endpointConfiguration.UseFluentValidation();
 serviceCollection.AddValidatorsFromAssembly(
     assembly,
     throwForNonPublicValidators: false,
     throwForNoValidatorsFound: false);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L60-L68' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L56-L64' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
