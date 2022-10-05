@@ -53,22 +53,9 @@ public class FluentValidationConfig
 
     public void AddValidators(IEnumerable<Result> results)
     {
-        switch (lifetime)
+        foreach (var result in results)
         {
-            case ServiceLifetime.Singleton:
-                foreach (var result in results)
-                {
-                    services.AddSingleton(result.InterfaceType, result.ValidatorType);
-                }
-
-                break;
-            case ServiceLifetime.Scoped:
-                foreach (var result in results)
-                {
-                    services.AddScoped(result.InterfaceType, result.ValidatorType);
-                }
-
-                break;
+            services.Add(new(result.InterfaceType, result.ValidatorType, lifetime));
         }
     }
 
