@@ -48,22 +48,13 @@ public class FluentValidationConfig
         bool throwForNoValidatorsFound = true)
     {
         var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
-        AddValidators(results);
+        services.AddValidators(lifetime, results);
     }
-
-    public void AddValidators(IEnumerable<Result> results)
-    {
-        foreach (var result in results)
-        {
-            services.Add(new(result.InterfaceType, result.ValidatorType, lifetime));
-        }
-    }
-
     /// <summary>
     /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
     /// </summary>
     public void AddValidatorsFromMessagesSuffixedAssemblies(
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
+        services.AddValidators(lifetime, ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
 }

@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus.Extensibility;
+using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus;
 
@@ -13,4 +15,12 @@ public static class FluentValidationExtensions
 
     public static ContextBag ContextBag(this IValidationContext context) =>
         (ContextBag)context.RootContextData["ContextBag"];
+
+    public static void AddValidators(this IServiceCollection services, ServiceLifetime lifetime, IEnumerable<Result> results)
+    {
+        foreach (var result in results)
+        {
+            services.Add(new(result.InterfaceType, result.ValidatorType, lifetime));
+        }
+    }
 }
