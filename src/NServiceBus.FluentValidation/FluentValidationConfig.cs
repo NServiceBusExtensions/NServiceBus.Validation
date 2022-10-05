@@ -32,28 +32,38 @@ public class FluentValidationConfig
         return new UnitOfWorkValidatorTypeCache(fallback).TryGetValidators;
     }
 
-    public void AddValidatorsFromAssemblyContaining<T>(
+    public static void AddValidatorsFromAssemblyContaining<T>(
+        IServiceCollection services,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidatorsFromAssemblyContaining(typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
+        AddValidatorsFromAssemblyContaining(services, typeof(T),lifetime,  throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public void AddValidatorsFromAssemblyContaining(
-        Type type, bool throwForNonPublicValidators = true,
+    public static void AddValidatorsFromAssemblyContaining(
+        IServiceCollection services,
+        Type type,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidatorsFromAssembly(type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
+        AddValidatorsFromAssembly(services,  type.Assembly, lifetime, throwForNonPublicValidators, throwForNoValidatorsFound);
 
-    public void AddValidatorsFromAssembly(
+    public static void AddValidatorsFromAssembly(
+        IServiceCollection services,
         Assembly assembly,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true)
     {
         var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
         services.AddValidators(results, lifetime);
     }
+
     /// <summary>
     /// Register all assemblies matching *.Messages.dll that exist in AppDomain.CurrentDomain.BaseDirectory.
     /// </summary>
-    public void AddValidatorsFromMessagesSuffixedAssemblies(
+    public static void AddValidatorsFromMessagesSuffixedAssemblies(
+        IServiceCollection services,
+        ServiceLifetime lifetime,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
         services.AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound), lifetime);

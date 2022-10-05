@@ -49,8 +49,8 @@ FluentValidation message validation can be enabled using the following:
 <!-- snippet: FluentValidation -->
 <a id='snippet-fluentvalidation'></a>
 ```cs
-var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-validationConfig.AddValidatorsFromAssemblyContaining<TheMessage>();
+endpointConfiguration.UseFluentValidation(serviceCollection);
+FluentValidationConfig.AddValidatorsFromAssemblyContaining<TheMessage>(serviceCollection);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L8-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
@@ -149,10 +149,10 @@ Validators are registered and resolved using [dependency injection](https://docs
 <!-- snippet: FluentValidation_AddValidators -->
 <a id='snippet-fluentvalidation_addvalidators'></a>
 ```cs
-var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-validationConfig.AddValidatorsFromAssemblyContaining<MyMessage>();
-validationConfig.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
-validationConfig.AddValidatorsFromAssembly(assembly);
+endpointConfiguration.UseFluentValidation(serviceCollection);
+FluentValidationConfig.AddValidatorsFromAssemblyContaining<MyMessage>(serviceCollection);
+FluentValidationConfig.AddValidatorsFromAssemblyContaining(serviceCollection,typeof(SomeOtherMessage));
+FluentValidationConfig.AddValidatorsFromAssembly(serviceCollection, assembly);
 ```
 <sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L48-L55' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_addvalidators' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
@@ -189,12 +189,14 @@ These exception scenarios can be excluded using the following:
 <!-- snippet: FluentValidation_IgnoreValidatorConventions -->
 <a id='snippet-fluentvalidation_ignorevalidatorconventions'></a>
 ```cs
-var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-validationConfig.AddValidatorsFromAssembly(assembly,
+endpointConfiguration.UseFluentValidation(serviceCollection);
+FluentValidationConfig.AddValidatorsFromAssembly(
+    serviceCollection,
+    assembly,
     throwForNonPublicValidators: false,
     throwForNoValidatorsFound: false);
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L60-L67' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/Usage.cs#L60-L69' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_ignorevalidatorconventions' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
