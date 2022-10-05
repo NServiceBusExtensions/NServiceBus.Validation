@@ -16,7 +16,7 @@ public static class FluentValidationExtensions
     public static ContextBag ContextBag(this IValidationContext context) =>
         (ContextBag)context.RootContextData["ContextBag"];
 
-    public static void AddValidators(this IServiceCollection services, ServiceLifetime lifetime, IEnumerable<Result> results)
+    public static void AddValidators(this IServiceCollection services, IEnumerable<Result> results, ServiceLifetime lifetime)
     {
         foreach (var result in results)
         {
