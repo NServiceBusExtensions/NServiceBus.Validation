@@ -44,5 +44,6 @@ public class OutgoingTests
         await using var provider = services.BuildServiceProvider();
         var endpoint = await endpointProvider.Start(provider);
         await endpoint.SendLocal(message);
+        await endpoint.Stop();
     }
 }
