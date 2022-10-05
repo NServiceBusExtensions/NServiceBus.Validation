@@ -45,5 +45,7 @@ public class MessageValidationException :
         }
     }
 
+    public override string? StackTrace => null;
+
     public IReadOnlyList<TypeValidationFailure> Errors { get; }
 }
