@@ -8,23 +8,23 @@ namespace NServiceBus;
 public class FluentValidationConfig
 {
     IServiceCollection services;
-    ValidatorLifecycle lifecycle;
+    ServiceLifetime lifetime;
     internal MessageValidator MessageValidator;
 
     internal FluentValidationConfig(
         IServiceCollection services,
-        ValidatorLifecycle lifecycle,
+        ServiceLifetime lifetime,
         Func<Type, IValidator?>? fallback)
     {
         this.services = services;
-        this.lifecycle = lifecycle;
+        this.lifetime = lifetime;
 
         MessageValidator = new(GetValidatorCache(fallback));
     }
 
     TryGetValidators GetValidatorCache(Func<Type, IValidator?>? fallback)
     {
-        if (lifecycle == ValidatorLifecycle.Endpoint)
+        if (lifetime == ServiceLifetime.Singleton)
         {
             return new EndpointValidatorTypeCache(fallback).TryGetValidators;
         }
@@ -53,16 +53,16 @@ public class FluentValidationConfig
 
     public void AddValidators(IEnumerable<Result> results)
     {
-        switch (lifecycle)
+        switch (lifetime)
         {
-            case ValidatorLifecycle.Endpoint:
+            case ServiceLifetime.Singleton:
                 foreach (var result in results)
                 {
                     services.AddSingleton(result.InterfaceType, result.ValidatorType);
                 }
 
                 break;
-            case ValidatorLifecycle.UnitOfWork:
+            case ServiceLifetime.Scoped:
                 foreach (var result in results)
                 {
                     services.AddScoped(result.InterfaceType, result.ValidatorType);

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
-using NServiceBus.FluentValidation;
 
 public class Usage
 {
@@ -31,15 +30,15 @@ public class Usage
 
         // ReSharper disable once RedundantArgumentDefaultValue
 
-        #region FluentValidation_EndpointLifecycle
+        #region FluentValidation_Singleton
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.Endpoint);
+        endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Singleton);
 
         #endregion
 
-        #region FluentValidation_UnitOfWorkLifecycle
+        #region FluentValidation_Scoped
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.UnitOfWork);
+        endpointConfiguration.UseFluentValidation(serviceCollection, ServiceLifetime.Scoped);
 
         #endregion
     }
