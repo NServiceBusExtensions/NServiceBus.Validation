@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
-using NServiceBus.FluentValidation;
 
 public class Usage
 {
@@ -8,38 +7,34 @@ public class Usage
     {
         #region FluentValidation
 
-        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-        validationConfig.AddValidatorsFromAssemblyContaining<TheMessage>();
+        endpointConfiguration.UseFluentValidation();
+        serviceCollection.AddValidatorsFromAssemblyContaining<TheMessage>();
 
         #endregion
 
         #region FluentValidation_disableincoming
 
-        endpointConfiguration.UseFluentValidation(
-            serviceCollection,
-            incoming: false);
+        endpointConfiguration.UseFluentValidation(incoming: false);
 
         #endregion
 
         #region FluentValidation_disableoutgoing
 
-        endpointConfiguration.UseFluentValidation(
-            serviceCollection,
-            outgoing: false);
+        endpointConfiguration.UseFluentValidation(outgoing: false);
 
         #endregion
 
         // ReSharper disable once RedundantArgumentDefaultValue
 
-        #region FluentValidation_EndpointLifecycle
+        #region FluentValidation_Singleton
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.Endpoint);
+        endpointConfiguration.UseFluentValidation(ServiceLifetime.Singleton);
 
         #endregion
 
-        #region FluentValidation_UnitOfWorkLifecycle
+        #region FluentValidation_Scoped
 
-        endpointConfiguration.UseFluentValidation(serviceCollection, ValidatorLifecycle.UnitOfWork);
+        endpointConfiguration.UseFluentValidation(ServiceLifetime.Scoped);
 
         #endregion
     }
@@ -48,10 +43,10 @@ public class Usage
     {
         #region FluentValidation_AddValidators
 
-        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-        validationConfig.AddValidatorsFromAssemblyContaining<MyMessage>();
-        validationConfig.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
-        validationConfig.AddValidatorsFromAssembly(assembly);
+        endpointConfiguration.UseFluentValidation();
+        serviceCollection.AddValidatorsFromAssemblyContaining<MyMessage>();
+        serviceCollection.AddValidatorsFromAssemblyContaining(typeof(SomeOtherMessage));
+        serviceCollection.AddValidatorsFromAssembly(assembly);
 
         #endregion
     }
@@ -60,8 +55,9 @@ public class Usage
     {
         #region FluentValidation_IgnoreValidatorConventions
 
-        var validationConfig = endpointConfiguration.UseFluentValidation(serviceCollection);
-        validationConfig.AddValidatorsFromAssembly(assembly,
+        endpointConfiguration.UseFluentValidation();
+        serviceCollection.AddValidatorsFromAssembly(
+            assembly,
             throwForNonPublicValidators: false,
             throwForNoValidatorsFound: false);
 

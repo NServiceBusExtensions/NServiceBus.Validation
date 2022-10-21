@@ -18,8 +18,8 @@ class TestingValidatorTypeCache
             {
                 var messageValidatorType = validatorType.MakeGenericType(type);
                 var all = validatorScanResults
-                    .Where(x => x.InterfaceType.IsAssignableFrom(messageValidatorType))
-                    .Select(x => Activator.CreateInstance(x.ValidatorType))
+                    .Where(_ => _.InterfaceType.IsAssignableFrom(messageValidatorType))
+                    .Select(_ => Activator.CreateInstance(_.ValidatorType))
                     .Cast<IValidator>()
                     .ToList();
                 return new(

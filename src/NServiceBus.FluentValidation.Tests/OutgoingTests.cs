@@ -41,7 +41,7 @@ public class OutgoingTests
     public Task With_uow_validator()
     {
         var message = new MessageWithValidator();
-        return ThrowsTask(() => Send(message, ValidatorLifecycle.UnitOfWork));
+        return ThrowsTask(() => Send(message, ServiceLifetime.Scoped));
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class OutgoingTests
 
     static async Task Send(
         object message,
-        ValidatorLifecycle lifecycle = ValidatorLifecycle.Endpoint,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
@@ -81,8 +81,8 @@ public class OutgoingTests
         configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
-        var validation = configuration.UseFluentValidation(services, lifecycle, incoming: false, fallback: fallback);
-        validation.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
+        configuration.UseFluentValidation(lifetime, incoming: false, fallback: fallback);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators: false);
 
         var endpointProvider = EndpointWithExternallyManagedServiceProvider
             .Create(configuration, services);
