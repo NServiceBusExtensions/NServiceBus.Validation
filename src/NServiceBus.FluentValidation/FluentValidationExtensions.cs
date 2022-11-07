@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
+using NServiceBus.Pipeline;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus;
@@ -16,6 +18,18 @@ public static class FluentValidationExtensions
 
     public static ContextBag ContextBag(this IValidationContext context) =>
         (ContextBag)context.RootContextData["ContextBag"];
+
+    internal static IServiceProvider GetServiceProvider(this IBehaviorContext context)
+    {
+        var builder = context.Builder;
+        var httpServices = builder.BuildAll<IHttpContextAccessor>().SingleOrDefault()?.HttpContext?.RequestServices;
+        if (httpServices != null)
+        {
+            return httpServices;
+        }
+
+        return builder.Build<IServiceProvider>();
+    }
 
     public static void UseFluentValidation(
         this EndpointConfiguration endpoint,

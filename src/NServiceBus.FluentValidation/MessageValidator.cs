@@ -15,7 +15,8 @@ class MessageValidator
     public Task ValidateWithTypeRedirect(Type messageType, IServiceProvider provider, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
     {
         var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
-        return (Task) genericMethod.Invoke(this,
+        return (Task) genericMethod.Invoke(
+            this,
             new[]
             {
                 messageType,

@@ -1,4 +1,5 @@
-﻿using NServiceBus.Pipeline;
+﻿using NServiceBus;
+using NServiceBus.Pipeline;
 
 class IncomingValidationBehavior :
     Behavior<IIncomingLogicalMessageContext>
@@ -11,7 +12,8 @@ class IncomingValidationBehavior :
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
         var message = context.Message;
-        await validator.ValidateWithTypeRedirect(message.MessageType, context.Builder.Build<IServiceProvider>(), message.Instance, context.Headers, context.Extensions);
+
+        await validator.ValidateWithTypeRedirect(message.MessageType, context.GetServiceProvider(), message.Instance, context.Headers, context.Extensions);
         await next();
     }
 }

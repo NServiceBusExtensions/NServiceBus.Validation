@@ -1,4 +1,5 @@
-﻿using NServiceBus.Pipeline;
+﻿using NServiceBus;
+using NServiceBus.Pipeline;
 
 class OutgoingValidationBehavior :
     Behavior<IOutgoingLogicalMessageContext>
@@ -13,7 +14,7 @@ class OutgoingValidationBehavior :
         var message = context.Message;
         await validator.ValidateWithTypeRedirect(
             message.MessageType,
-            context.Builder.Build<IServiceProvider>(),
+            context.GetServiceProvider(),
             message.Instance,
             context.Headers,
             context.Extensions);
