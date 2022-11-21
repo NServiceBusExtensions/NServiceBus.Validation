@@ -29,10 +29,13 @@ public static class ValidationFinder
                 .GetTypes()
                 .Where(
                     type =>
-                        !type.IsPublic &&
-                        !type.IsNestedPublic &&
-                        !type.IsAbstract &&
-                        !type.IsGenericTypeDefinition &&
+                        type is
+                        {
+                            IsPublic: false,
+                            IsNestedPublic: false,
+                            IsAbstract: false,
+                            IsGenericTypeDefinition: false
+                        } &&
                         type.GetInterfaces()
                             .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
                 )
