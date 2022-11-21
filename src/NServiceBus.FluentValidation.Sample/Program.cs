@@ -8,7 +8,7 @@ configuration.UseTransport<LearningTransport>();
 configuration.UseFluentValidation(outgoing: false);
 services.AddValidatorsFromAssemblyContaining<MyMessage>();
 
-var endpointProvider = EndpointWithExternallyManagedServiceProvider
+var endpointProvider = EndpointWithExternallyManagedContainer
     .Create(configuration, services);
 await using var provider = services.BuildServiceProvider();
 var endpoint = await endpointProvider.Start(provider);

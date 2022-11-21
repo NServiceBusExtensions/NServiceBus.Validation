@@ -78,18 +78,17 @@ public class OutgoingTests
         var configuration = new EndpointConfiguration("FluentValidationOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
-        configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
         configuration.UseFluentValidation(lifetime, incoming: false, fallback: fallback);
         services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators: false);
 
-        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+        var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);
 
         await using var provider = services.BuildServiceProvider();
         var endpoint = await endpointProvider.Start(provider);
-        await endpoint.Stop();
         await endpoint.SendLocal(message);
+        await endpoint.Stop();
     }
 }

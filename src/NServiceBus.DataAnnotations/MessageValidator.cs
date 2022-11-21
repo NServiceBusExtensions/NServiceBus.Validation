@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using NServiceBus.DataAnnotations;
 using NServiceBus.Extensibility;
-using NServiceBus.ObjectBuilder;
 
 static class MessageValidator
 {
-    public static void Validate(object message, IBuilder builder, Dictionary<string, string> headers, ContextBag contextBag)
+    public static void Validate(object message, IServiceProvider builder, Dictionary<string, string> headers, ContextBag contextBag)
     {
         var validationContext = new ValidationContext(
             message,
-            new BuilderWrapper(builder),
+            builder,
             items: new Dictionary<object, object?>
         {
             {
