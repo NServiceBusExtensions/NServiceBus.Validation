@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.DataAnnotations;
-using NServiceBus.Features;
 
 public class IncomingTests
 {
@@ -36,10 +35,9 @@ public class IncomingTests
         var configuration = new EndpointConfiguration("DataAnnotationsIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
-        configuration.DisableFeature<TimeoutManager>();
 
         using var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(_ => _.RegisterSingleton(resetEvent));
+        configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
@@ -51,7 +49,7 @@ public class IncomingTests
             });
         configuration.UseDataAnnotationsValidation(outgoing: false);
 
-        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+        var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);
 
         await using var provider = services.BuildServiceProvider();

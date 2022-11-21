@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.DataAnnotations;
-using NServiceBus.Features;
 
 public class OutgoingTests
 {
@@ -35,11 +34,10 @@ public class OutgoingTests
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
-        configuration.DisableFeature<TimeoutManager>();
 
         configuration.UseDataAnnotationsValidation(incoming: false);
 
-        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+        var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);
         await using var provider = services.BuildServiceProvider();
         var endpoint = await endpointProvider.Start(provider);

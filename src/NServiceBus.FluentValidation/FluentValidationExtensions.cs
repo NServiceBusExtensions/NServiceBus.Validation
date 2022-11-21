@@ -21,14 +21,14 @@ public static class FluentValidationExtensions
 
     internal static IServiceProvider GetServiceProvider(this IBehaviorContext context)
     {
-        var builder = context.Builder;
-        var httpServices = builder.BuildAll<IHttpContextAccessor>().SingleOrDefault()?.HttpContext?.RequestServices;
-        if (httpServices != null)
+        var provider = context.Builder;
+        var httpServices = provider.GetService<IHttpContextAccessor>()?.HttpContext?.RequestServices;
+        if (httpServices == null)
         {
-            return httpServices;
+            return provider;
         }
 
-        return builder.Build<IServiceProvider>();
+        return httpServices;
     }
 
     public static void UseFluentValidation(

@@ -7,7 +7,7 @@ configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseDataAnnotationsValidation(outgoing:false);
 
-var endpointProvider = EndpointWithExternallyManagedServiceProvider
+var endpointProvider = EndpointWithExternallyManagedContainer
     .Create(configuration, services);
 await using var provider = services.BuildServiceProvider();
 var endpoint = await endpointProvider.Start(provider);

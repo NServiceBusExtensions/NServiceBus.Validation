@@ -26,6 +26,7 @@ Validation failed for message 'MessageWithValidator'.
   ],
   Data: {
     Message ID: Guid_1,
-    Transport message ID: Guid_2
+    Transport message ID: Guid_2,
+    Pipeline canceled: false
   }
 }

@@ -86,11 +86,10 @@ public class IncomingTests
         var configuration = new EndpointConfiguration("FluentValidationIncoming" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
-        configuration.DisableFeature<TimeoutManager>();
         configuration.DisableFeature<Sagas>();
 
         var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(components => components.RegisterSingleton(resetEvent));
+        configuration.RegisterComponents(components => components.AddSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
@@ -103,7 +102,7 @@ public class IncomingTests
         configuration.UseFluentValidation(lifetime, outgoing: false, fallback: fallback);
         services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators:false);
 
-        var endpointProvider = EndpointWithExternallyManagedServiceProvider
+        var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);
 
         await using var provider = services.BuildServiceProvider();
