@@ -89,7 +89,7 @@ public class IncomingTests
         configuration.DisableFeature<Sagas>();
 
         var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(components => components.AddSingleton(resetEvent));
+        configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
