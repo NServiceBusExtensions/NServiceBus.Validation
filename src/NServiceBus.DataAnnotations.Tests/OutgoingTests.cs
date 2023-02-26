@@ -4,14 +4,14 @@ using NServiceBus.DataAnnotations;
 
 public class OutgoingTests
 {
-    [Fact]
+    [Test]
     public Task With_no_validator()
     {
         var message = new MessageWithNoValidator();
         return Send(message);
     }
 
-    [Fact]
+    [Test]
     public Task With_validator_valid()
     {
         var message = new MessageWithValidator
@@ -21,11 +21,11 @@ public class OutgoingTests
         return Send(message);
     }
 
-    [Fact]
-    public Task With_validator_invalid()
+    [Test]
+    public void With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        return Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
+        Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(object message, [CallerMemberName] string key = "")

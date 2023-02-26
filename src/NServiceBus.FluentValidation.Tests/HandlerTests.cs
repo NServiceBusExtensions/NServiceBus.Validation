@@ -2,27 +2,26 @@
 using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 
-[UsesVerify]
 public class HandlerTests
 {
     IServiceProvider provider = new FakeServiceProvider();
 
-    [Fact]
-    public Task Validate_TestableMessageHandlerContext()
+    [Test]
+    public void Validate_TestableMessageHandlerContext()
     {
         var handlerContext = new TestableMessageHandlerContext();
 
         var message = new MyMessage();
-        return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message, new FakeServiceProvider()));
+        Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message, new FakeServiceProvider()));
     }
 
-    [Fact]
-    public Task Validate_ValidatingHandlerContext()
+    [Test]
+    public void Validate_ValidatingHandlerContext()
     {
         var message = new MyMessage();
         var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new MyHandler();
-        return Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
+        Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
 
     class SimpleMessage :
@@ -37,22 +36,22 @@ public class HandlerTests
             context.SendLocal(new SimpleMessage());
     }
 
-    [Fact]
+    [Test]
     public async Task Should_throw_for_handle()
     {
         var message = new SimpleMessage();
         var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new HandlerThatSends();
-        var exception = await Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext));
+        var exception = Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext))!;
         await Verify(exception.Message);
     }
 
-    [Fact]
-    public Task Validate_ValidatingHandlerContext_Static_Run()
+    [Test]
+    public void Validate_ValidatingHandlerContext_Static_Run()
     {
         var message = new MyMessage();
         var handler = new MyHandler();
-        return Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message, provider));
+        Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message, provider));
     }
 }
 

@@ -2,7 +2,7 @@
 
 public class SagaTests
 {
-    [Fact]
+    [Test]
     public async Task Ensure_saga_data_is_added_to_context()
     {
         var message = new MyMessage
@@ -17,6 +17,6 @@ public class SagaTests
             Data = sagaData
         };
         await handlerContext.Run(saga);
-        Assert.Equal(handlerContext.SagaData, sagaData);
+        Assert.AreEqual(handlerContext.SagaData, sagaData);
     }
 }

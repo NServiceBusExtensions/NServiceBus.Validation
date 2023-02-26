@@ -4,17 +4,16 @@ using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
 
-[UsesVerify]
 public class IncomingTests
 {
-    [Fact]
+    [Test]
     public async Task With_no_validator()
     {
         var message = new MessageWithNoValidator();
         Assert.Null(await Send(message));
     }
 
-    [Fact]
+    [Test]
     public async Task With_no_validator_Fallback()
     {
         var message = new MessageWithNoValidator();
@@ -27,7 +26,7 @@ public class IncomingTests
             RuleFor(_ => _.Content).NotEmpty();
     }
 
-    [Fact]
+    [Test]
     public async Task With_validator_valid()
     {
         var message = new MessageWithValidator
@@ -37,21 +36,21 @@ public class IncomingTests
         Assert.Null(await Send(message));
     }
 
-    [Fact]
+    [Test]
     public async Task With_uow_validator()
     {
         var message = new MessageWithValidator();
         Assert.NotNull(await Send(message, ServiceLifetime.Scoped));
     }
 
-    [Fact]
+    [Test]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
         Assert.NotNull(await Send(message));
     }
 
-    [Fact]
+    [Test]
     public async Task With_async_validator_valid()
     {
         var message = new MessageWithAsyncValidator
@@ -61,14 +60,14 @@ public class IncomingTests
         Assert.Null(await Send(message));
     }
 
-    [Fact]
+    [Test]
     public async Task With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
         Assert.NotNull(await Send(message));
     }
 
-    [Fact]
+    [Test]
     public async Task Exception_message_and_errors()
     {
         var message = new MessageWithValidator();
