@@ -6,4 +6,8 @@
     <NoWarn>CS1591</NoWarn>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <Using Include="NServiceBus.IMessageHandlerContext"
+           Alias="HandlerContext" />
+  </ItemGroup>
 </Project>
