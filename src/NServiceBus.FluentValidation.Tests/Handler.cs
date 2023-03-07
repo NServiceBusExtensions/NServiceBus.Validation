@@ -10,19 +10,19 @@ class Handler :
     public Handler(ManualResetEvent resetEvent) =>
         this.resetEvent = resetEvent;
 
-    public Task Handle(MessageWithNoValidator message, IMessageHandlerContext context)
+    public Task Handle(MessageWithNoValidator message, HandlerContext context)
     {
         resetEvent.Set();
         return Task.CompletedTask;
     }
 
-    public Task Handle(MessageWithAsyncValidator message, IMessageHandlerContext context)
+    public Task Handle(MessageWithAsyncValidator message, HandlerContext context)
     {
         resetEvent.Set();
         return Task.CompletedTask;
     }
 
-    public Task Handle(MessageWithValidator message, IMessageHandlerContext context)
+    public Task Handle(MessageWithValidator message, HandlerContext context)
     {
         resetEvent.Set();
         return Task.CompletedTask;

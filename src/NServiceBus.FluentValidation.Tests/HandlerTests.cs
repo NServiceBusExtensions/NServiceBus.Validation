@@ -32,7 +32,7 @@ public class HandlerTests
     class HandlerThatSends :
         IHandleMessages<SimpleMessage>
     {
-        public Task Handle(SimpleMessage message, IMessageHandlerContext context) =>
+        public Task Handle(SimpleMessage message, HandlerContext context) =>
             context.SendLocal(new SimpleMessage());
     }
 
