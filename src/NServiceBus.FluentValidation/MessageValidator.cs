@@ -28,7 +28,7 @@ class MessageValidator
     }
 
     public async Task Validate<TMessage>(Type messageType, IServiceProvider provider, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
-        where TMessage : class
+        where TMessage : notnull
     {
         if (typeof(TMessage) == typeof(object))
         {
