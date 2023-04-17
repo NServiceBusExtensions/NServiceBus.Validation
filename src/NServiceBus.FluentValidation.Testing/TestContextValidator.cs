@@ -46,7 +46,7 @@ public static class TestContextValidator
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
 
     public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider provider)
-        where TMessage : class
+        where TMessage : notnull
     {
         List<Task> tasks = new()
         {
