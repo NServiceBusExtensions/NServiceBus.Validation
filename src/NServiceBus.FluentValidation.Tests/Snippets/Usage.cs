@@ -23,20 +23,6 @@ public class Usage
         endpointConfiguration.UseFluentValidation(outgoing: false);
 
         #endregion
-
-        // ReSharper disable once RedundantArgumentDefaultValue
-
-        #region FluentValidation_Singleton
-
-        endpointConfiguration.UseFluentValidation(ServiceLifetime.Singleton);
-
-        #endregion
-
-        #region FluentValidation_Scoped
-
-        endpointConfiguration.UseFluentValidation(ServiceLifetime.Scoped);
-
-        #endregion
     }
 
     void AddValidators(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
