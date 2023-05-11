@@ -13,7 +13,7 @@ class OutgoingValidationBehavior :
         var message = context.Message;
         await validator.ValidateWithTypeRedirect(
             message.MessageType,
-            context.GetServiceProvider(),
+            context.Builder,
             message.Instance,
             context.Headers,
             context.Extensions);
