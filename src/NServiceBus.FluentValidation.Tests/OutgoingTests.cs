@@ -37,13 +37,6 @@ public class OutgoingTests
     }
 
     [Test]
-    public Task With_uow_validator()
-    {
-        var message = new MessageWithValidator();
-        return ThrowsTask(() => Send(message, ServiceLifetime.Scoped));
-    }
-
-    [Test]
     public Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
@@ -69,7 +62,6 @@ public class OutgoingTests
 
     static async Task Send(
         object message,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
@@ -79,8 +71,8 @@ public class OutgoingTests
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<Sagas>();
 
-        configuration.UseFluentValidation(lifetime, incoming: false, fallback: fallback);
-        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators: false);
+        configuration.UseFluentValidation(incoming: false, fallback: fallback);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
 
         var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);

@@ -37,13 +37,6 @@ public class IncomingTests
     }
 
     [Test]
-    public async Task With_uow_validator()
-    {
-        var message = new MessageWithValidator();
-        Assert.NotNull(await Send(message, ServiceLifetime.Scoped));
-    }
-
-    [Test]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
@@ -77,7 +70,6 @@ public class IncomingTests
 
     static async Task<MessageValidationException> Send(
         object message,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         [CallerMemberName] string key = "",
         Func<Type, IValidator>? fallback = null)
     {
@@ -98,8 +90,8 @@ public class IncomingTests
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
-        configuration.UseFluentValidation(lifetime, outgoing: false, fallback: fallback);
-        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(lifetime, throwForNonPublicValidators:false);
+        configuration.UseFluentValidation(outgoing: false, fallback: fallback);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators:false);
 
         var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);
