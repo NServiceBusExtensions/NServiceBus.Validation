@@ -83,7 +83,6 @@ public static class FluentValidationExtensions
     /// </summary>
     public static void AddValidatorsFromMessagesSuffixedAssemblies(
         this IServiceCollection services,
-        ServiceLifetime lifetime,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
         services.AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
