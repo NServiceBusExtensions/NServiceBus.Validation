@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus.Extensibility;
 using NServiceBus.FluentValidation;
-using NServiceBus.Pipeline;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus;
@@ -19,21 +17,8 @@ public static class FluentValidationExtensions
     public static ContextBag ContextBag(this IValidationContext context) =>
         (ContextBag)context.RootContextData["ContextBag"];
 
-    internal static IServiceProvider GetServiceProvider(this IBehaviorContext context)
-    {
-        var provider = context.Builder;
-        var httpServices = provider.GetService<IHttpContextAccessor>()?.HttpContext?.RequestServices;
-        if (httpServices == null)
-        {
-            return provider;
-        }
-
-        return httpServices;
-    }
-
     public static void UseFluentValidation(
         this EndpointConfiguration endpoint,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool incoming = true,
         bool outgoing = true,
         Func<Type, IValidator?>? fallback = null)
@@ -43,7 +28,7 @@ public static class FluentValidationExtensions
 
         var pipeline = endpoint.Pipeline;
 
-        var messageValidator = GetMessageValidator(lifetime, fallback);
+        var messageValidator = GetMessageValidator(fallback);
         if (incoming)
         {
             pipeline.Register(new IncomingValidationStep(messageValidator));
@@ -55,53 +40,42 @@ public static class FluentValidationExtensions
         }
     }
 
-    static MessageValidator GetMessageValidator(ServiceLifetime lifetime, Func<Type, IValidator?>? fallback)
+    static MessageValidator GetMessageValidator(Func<Type, IValidator?>? fallback)
     {
-        TryGetValidators tryGetValidators;
-        if (lifetime == ServiceLifetime.Singleton)
-        {
-            tryGetValidators = new EndpointValidatorTypeCache(fallback).TryGetValidators;
-        }
-        else
-        {
-            tryGetValidators = new UnitOfWorkValidatorTypeCache(fallback).TryGetValidators;
-        }
+        TryGetValidators tryGetValidators = new EndpointValidatorTypeCache(fallback).TryGetValidators;
 
         return new(tryGetValidators);
     }
 
-    public static void AddValidators(this IServiceCollection services, IEnumerable<Result> results, ServiceLifetime lifetime)
+    public static void AddValidators(this IServiceCollection services, IEnumerable<Result> results)
     {
         foreach (var result in results)
         {
-            services.Add(new(result.InterfaceType, result.ValidatorType, lifetime));
+            services.AddSingleton(result.InterfaceType, result.ValidatorType);
         }
     }
 
     public static void AddValidatorsFromAssemblyContaining<T>(
         this IServiceCollection services,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidatorsFromAssemblyContaining(services, typeof(T), lifetime, throwForNonPublicValidators, throwForNoValidatorsFound);
+        AddValidatorsFromAssemblyContaining(services, typeof(T), throwForNonPublicValidators, throwForNoValidatorsFound);
 
     public static void AddValidatorsFromAssemblyContaining(
         this IServiceCollection services,
         Type type,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidatorsFromAssembly(services,  type.Assembly, lifetime, throwForNonPublicValidators, throwForNoValidatorsFound);
+        AddValidatorsFromAssembly(services,  type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
 
     public static void AddValidatorsFromAssembly(
         this IServiceCollection services,
         Assembly assembly,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true)
     {
         var results = ValidationFinder.FindValidatorsInAssembly(assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
-        services.AddValidators(results, lifetime);
+        services.AddValidators(results);
     }
 
     /// <summary>
@@ -109,8 +83,7 @@ public static class FluentValidationExtensions
     /// </summary>
     public static void AddValidatorsFromMessagesSuffixedAssemblies(
         this IServiceCollection services,
-        ServiceLifetime lifetime,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        services.AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound), lifetime);
+        services.AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies(throwForNonPublicValidators, throwForNoValidatorsFound));
 }
