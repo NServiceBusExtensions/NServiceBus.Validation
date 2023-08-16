@@ -19,6 +19,7 @@ Validation failed for message 'MessageWithValidator'.
         ErrorCode: NotEmptyValidator,
         FormattedMessagePlaceholderValues: {
           PropertyName: Content,
+          PropertyPath: Content,
           PropertyValue: null
         }
       }
