@@ -12,6 +12,6 @@
     <PackageReference Include="MarkdownSnippets.MsBuild" Version="25.1.0" PrivateAssets="all" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <ProjectReference Include="..\NServiceBus.DataAnnotations\NServiceBus.DataAnnotations.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.91" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.93" PrivateAssets="all" />
   </ItemGroup>
 </Project>
