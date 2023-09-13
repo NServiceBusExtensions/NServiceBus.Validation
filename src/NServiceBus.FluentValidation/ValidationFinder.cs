@@ -37,7 +37,7 @@ public static class ValidationFinder
                             IsGenericTypeDefinition: false
                         } &&
                         type.GetInterfaces()
-                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
+                            .Any(_ => _.IsGenericType && i.GetGenericTypeDefinition() == openGenericType)
                 )
                 .ToList();
             if (nonPublicValidators.Any())
