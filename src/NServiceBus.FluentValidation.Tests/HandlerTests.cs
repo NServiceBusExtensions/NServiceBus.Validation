@@ -25,9 +25,7 @@ public class HandlerTests
     }
 
     class SimpleMessage :
-        IMessage
-    {
-    }
+        IMessage;
 
     class HandlerThatSends :
         IHandleMessages<SimpleMessage>
