@@ -6,6 +6,8 @@
 
 Message validation using [DataAnnotations](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.aspx) and [FluentValidation](https://github.com/JeremySkinner/FluentValidation).
 
+**See [Milestones](../../milestones?state=closed) for release notes.**
+
 <!--- StartOpenCollectiveBackers -->
 
 [Already a Patron? skip past this section](#endofbacking)
