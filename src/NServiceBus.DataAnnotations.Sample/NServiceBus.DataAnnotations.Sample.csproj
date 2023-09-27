@@ -8,6 +8,6 @@
     <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <ProjectReference Include="..\NServiceBus.DataAnnotations\NServiceBus.DataAnnotations.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.98" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.99" PrivateAssets="all" />
   </ItemGroup>
 </Project>

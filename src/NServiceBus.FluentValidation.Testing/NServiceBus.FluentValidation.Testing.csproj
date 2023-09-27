@@ -9,7 +9,7 @@
     <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="NServiceBus.Testing" Version="8.1.0" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.98" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.99" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Condition="$(Configuration) == 'Release'" />
   </ItemGroup>
 </Project>
