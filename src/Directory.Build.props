@@ -6,6 +6,7 @@
     <NoWarn>CS1591</NoWarn>
     <LangVersion>preview</LangVersion>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
+    <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="NServiceBus.IMessageHandlerContext"
