@@ -1,5 +1,4 @@
-﻿using NServiceBus;
-using NServiceBus.FluentValidation;
+﻿using NServiceBus.FluentValidation;
 using NServiceBus.Testing;
 
 public class HandlerTests

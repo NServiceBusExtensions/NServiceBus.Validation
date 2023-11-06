@@ -1,14 +1,9 @@
-﻿using FluentValidation;
-using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
+﻿using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
-class TestingValidatorTypeCache
+class TestingValidatorTypeCache(List<Result> scanResults)
 {
-    List<Result> validatorScanResults;
     static Type validatorType = typeof(IValidator<>);
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
-
-    public TestingValidatorTypeCache(List<Result> validatorScanResults) =>
-        this.validatorScanResults = validatorScanResults;
 
     public bool TryGetValidators(Type messageType, IServiceProvider builder, out IEnumerable<IValidator> validators)
     {
@@ -17,7 +12,7 @@ class TestingValidatorTypeCache
             type =>
             {
                 var messageValidatorType = validatorType.MakeGenericType(type);
-                var all = validatorScanResults
+                var all = scanResults
                     .Where(_ => _.InterfaceType.IsAssignableFrom(messageValidatorType))
                     .Select(_ => Activator.CreateInstance(_.ValidatorType))
                     .Cast<IValidator>()

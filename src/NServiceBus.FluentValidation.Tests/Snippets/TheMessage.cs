@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using NServiceBus;
 
 #region FluentValidation_message
 public class TheMessage :

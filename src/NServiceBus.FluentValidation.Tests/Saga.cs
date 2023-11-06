@@ -1,6 +1,4 @@
-﻿using NServiceBus;
-
-class MySaga :
+﻿class MySaga :
     Saga<MySaga.MySagaData>,
     IHandleMessages<MyMessage>
 {

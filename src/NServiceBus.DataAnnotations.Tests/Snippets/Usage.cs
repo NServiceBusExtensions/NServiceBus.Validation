@@ -1,6 +1,4 @@
-﻿using NServiceBus;
-
-public class Usage
+﻿public class Usage
 {
     Usage(EndpointConfiguration configuration)
     {

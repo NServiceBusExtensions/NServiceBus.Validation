@@ -2,18 +2,11 @@
 
 namespace NServiceBus.DataAnnotations;
 
-public class MessageValidationException :
+public class MessageValidationException(object target, IReadOnlyList<ValidationResult> errors) :
     Exception
 {
-    public object Target { get; }
-    public Type MessageType { get; }
-
-    public MessageValidationException(object target, IReadOnlyList<ValidationResult> errors)
-    {
-        MessageType = target.GetType();
-        Errors = errors;
-        Target = target;
-    }
+    public object Target { get; } = target;
+    public Type MessageType { get; } = target.GetType();
 
     public override string Message
     {
@@ -32,5 +25,5 @@ public class MessageValidationException :
 
     public override string? StackTrace => null;
 
-    public IReadOnlyList<ValidationResult> Errors { get; }
+    public IReadOnlyList<ValidationResult> Errors { get; } = errors;
 }

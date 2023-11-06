@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
 using NServiceBus.DataAnnotations;
 
 public class OutgoingTests

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.FluentValidation;
 

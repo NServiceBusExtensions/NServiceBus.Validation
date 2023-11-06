@@ -1,17 +1,10 @@
 ﻿namespace NServiceBus.FluentValidation;
 
-public class MessageValidationException :
+public class MessageValidationException(object target, IReadOnlyList<TypeValidationFailure> errors) :
     Exception
 {
-    public object Target { get; }
-    public Type MessageType { get; }
-
-    public MessageValidationException(object target, IReadOnlyList<TypeValidationFailure> errors)
-    {
-        MessageType = target.GetType();
-        Target = target;
-        Errors = errors;
-    }
+    public object Target { get; } = target;
+    public Type MessageType { get; } = target.GetType();
 
     public string UserMessage
     {
@@ -47,5 +40,5 @@ public class MessageValidationException :
 
     public override string? StackTrace => null;
 
-    public IReadOnlyList<TypeValidationFailure> Errors { get; }
+    public IReadOnlyList<TypeValidationFailure> Errors { get; } = errors;
 }

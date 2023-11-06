@@ -1,6 +1,4 @@
-﻿using NServiceBus;
-
-public class MessageWithValidator :
+﻿public class MessageWithValidator :
     IMessage
 {
     public string? Content { get; set; }

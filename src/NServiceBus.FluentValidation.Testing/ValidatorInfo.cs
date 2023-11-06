@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-class ValidatorInfo
+﻿class ValidatorInfo
 {
     public bool HasValidators { get; }
     public List<IValidator> Validators { get; }

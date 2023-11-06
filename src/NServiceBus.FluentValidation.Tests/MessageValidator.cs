@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using NServiceBus;
 
 public class SyncMessageValidator :
     AbstractValidator<MessageWithValidator>
