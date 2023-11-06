@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-class EndpointValidatorTypeCache
+class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
 {
-    Func<Type, IValidator?>? fallback;
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
 
     static Type validatorType = typeof(IValidator<>);
-
-    public EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback) =>
-        this.fallback = fallback;
 
     public bool TryGetValidators(Type messageType, IServiceProvider provider, out IEnumerable<IValidator> validators)
     {
@@ -39,15 +35,9 @@ class EndpointValidatorTypeCache
         return validatorInfo.HasValidators;
     }
 
-    class ValidatorInfo
+    class ValidatorInfo(List<IValidator> validators, bool hasValidators)
     {
-        public bool HasValidators { get; }
-        public List<IValidator> Validators { get; }
-
-        public ValidatorInfo(List<IValidator> validators, bool hasValidators)
-        {
-            Validators = validators;
-            HasValidators = hasValidators;
-        }
+        public bool HasValidators { get; } = hasValidators;
+        public List<IValidator> Validators { get; } = validators;
     }
 }
