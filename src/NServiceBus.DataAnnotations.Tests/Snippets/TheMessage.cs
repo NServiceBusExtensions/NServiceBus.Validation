@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-#region DataAnnotations_message
+﻿#region DataAnnotations_message
 public class TheMessage :
     IMessage
 {

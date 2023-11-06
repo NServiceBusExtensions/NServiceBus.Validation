@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NServiceBus.DataAnnotations;
-
-public class OutgoingTests
+﻿public class OutgoingTests
 {
     [Test]
     public Task With_no_validator()

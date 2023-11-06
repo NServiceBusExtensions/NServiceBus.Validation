@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using NServiceBus.Extensibility;
-
-namespace NServiceBus;
+﻿namespace NServiceBus;
 
 /// <summary>
 /// Extensions to DataAnnotations.

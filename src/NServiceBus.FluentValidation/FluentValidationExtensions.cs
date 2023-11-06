@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
-using NServiceBus.Extensibility;
-using NServiceBus.FluentValidation;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus;

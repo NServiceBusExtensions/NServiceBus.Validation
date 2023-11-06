@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
-
-var services = new ServiceCollection();
+﻿var services = new ServiceCollection();
 var configuration = new EndpointConfiguration("FluentValidationSample");
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();

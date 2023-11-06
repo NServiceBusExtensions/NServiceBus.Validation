@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using NServiceBus.DataAnnotations;
-using NServiceBus.Extensibility;
-
-static class MessageValidator
+﻿static class MessageValidator
 {
     public static void Validate(object message, IServiceProvider builder, Dictionary<string, string> headers, ContextBag contextBag)
     {

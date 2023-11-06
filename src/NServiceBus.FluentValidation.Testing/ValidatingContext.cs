@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace NServiceBus.Testing;
+﻿namespace NServiceBus.Testing;
 
 public class ValidatingContext<TMessage> :
     TestableMessageHandlerContext

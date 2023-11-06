@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
+﻿using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus.FluentValidation;
 

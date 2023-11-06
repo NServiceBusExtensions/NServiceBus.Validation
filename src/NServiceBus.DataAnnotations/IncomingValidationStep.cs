@@ -1,6 +1,4 @@
-﻿using NServiceBus.Pipeline;
-
-class IncomingValidationStep :
+﻿class IncomingValidationStep :
     RegisterStep
 {
     public IncomingValidationStep() :

@@ -1,9 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
-using NServiceBus.Features;
-using NServiceBus.FluentValidation;
-
-public class OutgoingTests
+﻿public class OutgoingTests
 {
     [Test]
     public Task With_no_validator()

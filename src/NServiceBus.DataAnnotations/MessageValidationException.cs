@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace NServiceBus.DataAnnotations;
+﻿namespace NServiceBus.DataAnnotations;
 
 public class MessageValidationException(object target, IReadOnlyList<ValidationResult> errors) :
     Exception

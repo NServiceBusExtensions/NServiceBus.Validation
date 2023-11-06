@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-public class Usage
+﻿public class Usage
 {
     Usage(EndpointConfiguration endpointConfiguration, IServiceCollection serviceCollection)
     {

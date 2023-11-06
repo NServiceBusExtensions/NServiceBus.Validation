@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-public class MessageWithValidator :
+﻿public class MessageWithValidator :
     IMessage
 {
     [Required]

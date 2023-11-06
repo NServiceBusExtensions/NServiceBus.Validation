@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-#region FluentValidation_message
+﻿#region FluentValidation_message
 public class TheMessage :
     IMessage
 {

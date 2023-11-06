@@ -1,6 +1,4 @@
-﻿using NServiceBus.Pipeline;
-
-class OutgoingValidationStep : RegisterStep
+﻿class OutgoingValidationStep : RegisterStep
 {
     public OutgoingValidationStep(MessageValidator validator) :
         base(

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using NServiceBus;
-
-public class MyMessage :
+﻿public class MyMessage :
     IMessage
 {
     [Required]

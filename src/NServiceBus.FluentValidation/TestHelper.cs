@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace NServiceBus.FluentValidation;
+﻿namespace NServiceBus.FluentValidation;
 
 public static class TestHelper
 {

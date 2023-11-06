@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 
 public class SyncMessageValidator :
     AbstractValidator<MessageWithValidator>

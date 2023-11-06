@@ -1,6 +1,4 @@
-﻿using NServiceBus.Pipeline;
-
-class IncomingValidationBehavior(MessageValidator validator) :
+﻿class IncomingValidationBehavior(MessageValidator validator) :
     Behavior<IIncomingLogicalMessageContext>
 {
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-public class AsyncMessageValidator :
+﻿public class AsyncMessageValidator :
     AbstractValidator<MessageWithAsyncValidator>
 {
     public AsyncMessageValidator() =>

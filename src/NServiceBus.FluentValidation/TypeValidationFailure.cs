@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-
-namespace NServiceBus.FluentValidation;
+﻿namespace NServiceBus.FluentValidation;
 
 public class TypeValidationFailure(Type validatorType, ValidationFailure failure)
 {

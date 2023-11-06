@@ -1,15 +1,5 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using NServiceBus.Extensibility;
-using NServiceBus.FluentValidation;
-
-class MessageValidator
+﻿class MessageValidator(TryGetValidators getValidators)
 {
-    TryGetValidators tryGetValidators;
-
-    public MessageValidator(TryGetValidators tryGetValidators) =>
-        this.tryGetValidators = tryGetValidators;
-
     static MethodInfo innerValidateMethod = typeof(MessageValidator).GetMethod(nameof(Validate))!;
 
     public Task ValidateWithTypeRedirect(Type messageType, IServiceProvider provider, object instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)
@@ -35,7 +25,7 @@ class MessageValidator
             throw new("TMessage must not be object");
         }
 
-        if (!tryGetValidators(messageType, provider, out var validators))
+        if (!getValidators(messageType, provider, out var validators))
         {
             return;
         }

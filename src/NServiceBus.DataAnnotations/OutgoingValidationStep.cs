@@ -1,6 +1,4 @@
-﻿using NServiceBus.Pipeline;
-
-class OutgoingValidationStep :
+﻿class OutgoingValidationStep :
     RegisterStep
 {
     public OutgoingValidationStep() :

@@ -1,6 +1,4 @@
-﻿using NServiceBus.Pipeline;
-
-class IncomingValidationStep(MessageValidator validator) :
+﻿class IncomingValidationStep(MessageValidator validator) :
     RegisterStep(
         stepId: "IncomingFluentValidation",
         behavior: typeof(IncomingValidationBehavior),
