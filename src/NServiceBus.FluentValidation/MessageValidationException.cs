@@ -38,7 +38,5 @@ public class MessageValidationException(object target, IReadOnlyList<TypeValidat
         }
     }
 
-    public override string? StackTrace => null;
-
     public IReadOnlyList<TypeValidationFailure> Errors { get; } = errors;
 }

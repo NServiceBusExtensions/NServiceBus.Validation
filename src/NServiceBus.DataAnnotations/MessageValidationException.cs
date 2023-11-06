@@ -21,7 +21,5 @@ public class MessageValidationException(object target, IReadOnlyList<ValidationR
         }
     }
 
-    public override string? StackTrace => null;
-
     public IReadOnlyList<ValidationResult> Errors { get; } = errors;
 }
