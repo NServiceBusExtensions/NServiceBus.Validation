@@ -6,14 +6,14 @@
             message,
             builder,
             items: new Dictionary<object, object?>
-        {
             {
-                "Headers", headers
-            },
-            {
-                "ContextBag", contextBag
-            },
-        });
+                {
+                    "Headers", headers
+                },
+                {
+                    "ContextBag", contextBag
+                },
+            });
 
         var results = new List<ValidationResult>();
 
