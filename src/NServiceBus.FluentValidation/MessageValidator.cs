@@ -7,14 +7,13 @@
         var genericMethod = innerValidateMethod.MakeGenericMethod(instance.GetType());
         return (Task) genericMethod.Invoke(
             this,
-            new[]
-            {
+            [
                 messageType,
                 provider,
                 instance,
                 headers,
                 contextBag
-            })!;
+            ])!;
     }
 
     public async Task Validate<TMessage>(Type messageType, IServiceProvider provider, TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag)

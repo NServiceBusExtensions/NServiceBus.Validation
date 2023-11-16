@@ -48,7 +48,7 @@ public static class TestContextValidator
     public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider provider)
         where TMessage : notnull
     {
-        List<Task> tasks = new()
+        var tasks = new List<Task>
         {
             validator.Validate(message.GetType(), provider, message, context.Headers, context.Extensions)
         };
