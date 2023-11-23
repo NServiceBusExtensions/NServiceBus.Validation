@@ -3,7 +3,7 @@
 class TestingValidatorTypeCache(List<Result> scanResults)
 {
     static Type validatorType = typeof(IValidator<>);
-    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
+    ConcurrentDictionary<Type, ValidatorInfo> typeCache = [];
 
     public bool TryGetValidators(Type messageType, IServiceProvider builder, out IEnumerable<IValidator> validators)
     {
