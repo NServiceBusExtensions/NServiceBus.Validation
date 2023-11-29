@@ -1,6 +1,4 @@
-﻿using NUnit.Framework.Legacy;
-
-public class IncomingTests
+﻿public class IncomingTests
 {
     [Test]
     public async Task With_no_validator()
