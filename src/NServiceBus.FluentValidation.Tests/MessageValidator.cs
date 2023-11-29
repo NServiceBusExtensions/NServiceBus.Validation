@@ -8,8 +8,8 @@ public class SyncMessageValidator :
 
     public override ValidationResult Validate(ValidationContext<MessageWithValidator> context)
     {
-        Assert.NotNull(context.Headers());
-        Assert.NotNull(context.ContextBag());
+        NotNull(context.Headers());
+        NotNull(context.ContextBag());
         return base.Validate(context);
     }
 }

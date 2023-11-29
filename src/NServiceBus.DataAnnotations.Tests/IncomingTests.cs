@@ -1,10 +1,12 @@
-﻿public class IncomingTests
+﻿using NUnit.Framework.Legacy;
+
+public class IncomingTests
 {
     [Test]
     public async Task With_no_validator()
     {
         var message = new MessageWithNoValidator();
-        Assert.Null(await Send(message));
+        Null(await Send(message));
     }
 
     [Test]
@@ -14,14 +16,14 @@
         {
             Content = "content"
         };
-        Assert.Null(await Send(message));
+        Null(await Send(message));
     }
 
     [Test]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        Assert.NotNull(await Send(message));
+        NotNull(await Send(message));
     }
 
     static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")

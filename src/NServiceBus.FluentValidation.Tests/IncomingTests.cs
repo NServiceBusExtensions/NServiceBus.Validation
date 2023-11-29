@@ -4,14 +4,14 @@
     public async Task With_no_validator()
     {
         var message = new MessageWithNoValidator();
-        Assert.Null(await Send(message));
+        Null(await Send(message));
     }
 
     [Test]
     public async Task With_no_validator_Fallback()
     {
         var message = new MessageWithNoValidator();
-        Assert.NotNull(await Send(message, fallback: _ => new FallbackValidator()));
+        NotNull(await Send(message, fallback: _ => new FallbackValidator()));
     }
 
     class FallbackValidator : AbstractValidator<MessageWithNoValidator>
@@ -27,14 +27,14 @@
         {
             Content = "content"
         };
-        Assert.Null(await Send(message));
+        Null(await Send(message));
     }
 
     [Test]
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        Assert.NotNull(await Send(message));
+        NotNull(await Send(message));
     }
 
     [Test]
@@ -44,14 +44,14 @@
         {
             Content = "content"
         };
-        Assert.Null(await Send(message));
+        Null(await Send(message));
     }
 
     [Test]
     public async Task With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
-        Assert.NotNull(await Send(message));
+        NotNull(await Send(message));
     }
 
     [Test]

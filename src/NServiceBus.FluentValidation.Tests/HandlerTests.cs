@@ -10,7 +10,7 @@ public class HandlerTests
         var handlerContext = new TestableMessageHandlerContext();
 
         var message = new MyMessage();
-        Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message, new FakeServiceProvider()));
+        ThrowsAsync<MessageValidationException>(() => handlerContext.Validate(message, new FakeServiceProvider()));
     }
 
     [Test]
@@ -19,7 +19,7 @@ public class HandlerTests
         var message = new MyMessage();
         var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new MyHandler();
-        Assert.ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
+        ThrowsAsync<MessageValidationException>(() => handlerContext.Run(handler));
     }
 
     class SimpleMessage :
@@ -38,7 +38,7 @@ public class HandlerTests
         var message = new SimpleMessage();
         var handlerContext = ValidatingContext.Build(message, provider);
         var handler = new HandlerThatSends();
-        var exception = Assert.ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext))!;
+        var exception = ThrowsAsync<Exception>(() => handler.Handle(message, handlerContext))!;
         await Verify(exception.Message);
     }
 
@@ -47,7 +47,7 @@ public class HandlerTests
     {
         var message = new MyMessage();
         var handler = new MyHandler();
-        Assert.ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message, provider));
+        ThrowsAsync<MessageValidationException>(() => ValidatingContext.Run(handler, message, provider));
     }
 }
 

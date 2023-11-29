@@ -51,7 +51,7 @@
     public void With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
-        Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
+        ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(

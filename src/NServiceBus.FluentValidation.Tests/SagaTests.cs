@@ -17,6 +17,6 @@ public class SagaTests
             Data = sagaData
         };
         await handlerContext.Run(saga);
-        Assert.AreEqual(handlerContext.SagaData, sagaData);
+        AreEqual(handlerContext.SagaData, sagaData);
     }
 }
