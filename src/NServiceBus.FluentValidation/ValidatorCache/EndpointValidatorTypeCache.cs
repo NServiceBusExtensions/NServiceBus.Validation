@@ -2,7 +2,7 @@
 
 class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
 {
-    ConcurrentDictionary<Type, ValidatorInfo> typeCache = new();
+    ConcurrentDictionary<Type, ValidatorInfo> typeCache = [];
 
     static Type validatorType = typeof(IValidator<>);
 
