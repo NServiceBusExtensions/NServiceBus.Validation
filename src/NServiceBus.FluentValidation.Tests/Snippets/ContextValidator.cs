@@ -1,8 +1,7 @@
-﻿
-
-// ReSharper disable UnusedVariable
+﻿// ReSharper disable UnusedVariable
 
 #region FluentValidation_ContextValidator
+
 public class ContextValidator :
     AbstractValidator<TheMessage>
 {
@@ -17,7 +16,9 @@ public class ContextValidator :
                 {
                     return;
                 }
+
                 validationContext.AddFailure("Expected Auth header to exist");
             });
 }
+
 #endregion

@@ -9,7 +9,8 @@ public static class TestHelper
         Assembly messageAssemblies,
         bool throwForNonPublicValidators = true)
     {
-        var messageTypes = messageAssemblies.GetTypes()
+        var messageTypes = messageAssemblies
+            .GetTypes()
             .Where(_ => _.IsMessage())
             .ToList();
 
@@ -19,7 +20,8 @@ public static class TestHelper
         {
             // if a validator handles an IMessage remove that message type from the messageTypes list
             var interfaces = validator.GetInterfaces();
-            var args = interfaces.Select(_ => _.GenericTypeArguments)
+            var args = interfaces
+                .Select(_ => _.GenericTypeArguments)
                 .SelectMany(_ => _)
                 .ToList();
             var messageType = args.FirstOrDefault(_ => _.IsMessage());
@@ -79,7 +81,8 @@ public static class TestHelper
     }
 
     static IEnumerable<Type> AllGenericArgs(Type[] interfaces) =>
-        interfaces.Select(_ => _.GenericTypeArguments)
+        interfaces
+            .Select(_ => _.GenericTypeArguments)
             .SelectMany(_ => _);
 
     static IEnumerable<Type> GetClasses(this Assembly handlerAssembly) =>
@@ -97,6 +100,7 @@ public static class TestHelper
                 throw new($"Found a non-public IMessage Validator - {type}");
             }
         }
+
         return isValidator;
     }
 

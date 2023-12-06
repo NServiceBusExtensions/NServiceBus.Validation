@@ -102,7 +102,7 @@ public class MyMessageValidator :
             .NotEmpty();
 }
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/TheMessage.cs#L1-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_message' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/TheMessage.cs#L1-L17' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_message' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -132,11 +132,12 @@ public class ContextValidator :
                 {
                     return;
                 }
+
                 validationContext.AddFailure("Expected Auth header to exist");
             });
 }
 ```
-<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/ContextValidator.cs#L5-L23' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_contextvalidator' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.FluentValidation.Tests/Snippets/ContextValidator.cs#L3-L24' title='Snippet source file'>snippet source</a> | <a href='#snippet-fluentvalidation_contextvalidator' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -237,7 +238,7 @@ public class TheMessage :
     public string Content { get; set; } = null!;
 }
 ```
-<sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/TheMessage.cs#L1-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-dataannotations_message' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.DataAnnotations.Tests/Snippets/TheMessage.cs#L1-L10' title='Snippet source file'>snippet source</a> | <a href='#snippet-dataannotations_message' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

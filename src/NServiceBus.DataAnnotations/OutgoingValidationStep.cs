@@ -1,7 +1,8 @@
 ﻿class OutgoingValidationStep :
     RegisterStep
 {
-    public OutgoingValidationStep() :
+    public OutgoingValidationStep()
+        :
         base("OutgoingDataAnnotations",
             typeof(OutgoingValidationBehavior),
             "Validates outgoing messages using DataAnnotations",

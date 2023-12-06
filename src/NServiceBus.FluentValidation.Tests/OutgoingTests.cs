@@ -17,7 +17,8 @@
     class FallbackValidator : AbstractValidator<MessageWithNoValidator>
     {
         public FallbackValidator() =>
-            RuleFor(_ => _.Content).NotEmpty();
+            RuleFor(_ => _.Content)
+                .NotEmpty();
     }
 
     [Test]

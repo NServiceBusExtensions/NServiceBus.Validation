@@ -13,7 +13,8 @@ class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
             type =>
             {
                 var genericType = validatorType.MakeGenericType(type);
-                var all = provider.GetServices(genericType)
+                var all = provider
+                    .GetServices(genericType)
                     .Cast<IValidator>()
                     .ToList();
                 if (fallback != null && !all.Any())

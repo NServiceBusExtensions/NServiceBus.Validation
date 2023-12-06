@@ -20,7 +20,8 @@ public static class ValidationFinder
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true)
     {
-        var assemblyName = assembly.GetName().Name;
+        var assemblyName = assembly.GetName()
+            .Name;
         if (throwForNonPublicValidators)
         {
             var openGenericType = typeof(IValidator<>);
@@ -35,7 +36,8 @@ public static class ValidationFinder
                             IsAbstract: false,
                             IsGenericTypeDefinition: false
                         } &&
-                        type.GetInterfaces()
+                        type
+                            .GetInterfaces()
                             .Any(_ => _.IsGenericType &&
                                       _.GetGenericTypeDefinition() == openGenericType)
                 )
@@ -46,7 +48,9 @@ public static class ValidationFinder
             }
         }
 
-        var results = AssemblyScanner.FindValidatorsInAssembly(assembly).ToList();
+        var results = AssemblyScanner
+            .FindValidatorsInAssembly(assembly)
+            .ToList();
         if (throwForNoValidatorsFound && !results.Any())
         {
             throw new($"No validators were found in {assemblyName}.");
@@ -64,10 +68,13 @@ public static class ValidationFinder
         bool throwForNoValidatorsFound = true)
     {
         var directory = AppDomain.CurrentDomain.BaseDirectory;
-        var assemblies = Directory.EnumerateFiles(directory, "*.Messages.dll")
+        var assemblies = Directory
+            .EnumerateFiles(directory, "*.Messages.dll")
             .Where(file =>
             {
-                var fileName = Path.GetFileName(file).ToLowerInvariant();
+                var fileName = Path
+                    .GetFileName(file)
+                    .ToLowerInvariant();
                 return !fileName.StartsWith("microsoft.") &&
                        !fileName.StartsWith("system.");
             })

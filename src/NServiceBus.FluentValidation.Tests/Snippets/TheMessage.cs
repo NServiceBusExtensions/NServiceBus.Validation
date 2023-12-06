@@ -1,4 +1,5 @@
 ﻿#region FluentValidation_message
+
 public class TheMessage :
     IMessage
 {
@@ -12,4 +13,5 @@ public class MyMessageValidator :
         RuleFor(_ => _.Content)
             .NotEmpty();
 }
+
 #endregion

@@ -17,7 +17,8 @@
     class FallbackValidator : AbstractValidator<MessageWithNoValidator>
     {
         public FallbackValidator() =>
-            RuleFor(_ => _.Content).NotEmpty();
+            RuleFor(_ => _.Content)
+                .NotEmpty();
     }
 
     [Test]
@@ -80,12 +81,12 @@
         recoverability.CustomPolicy(
             (_, context) =>
             {
-                exception = (MessageValidationException)context.Exception;
+                exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
                 return RecoverabilityAction.MoveToError("error");
             });
         configuration.UseFluentValidation(outgoing: false, fallback: fallback);
-        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators:false);
+        services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
 
         var endpointProvider = EndpointWithExternallyManagedContainer
             .Create(configuration, services);

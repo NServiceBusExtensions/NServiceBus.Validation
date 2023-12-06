@@ -21,7 +21,7 @@
     public void With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        Assert.ThrowsAsync<MessageValidationException>(() => Send(message));
+        ThrowsAsync<MessageValidationException>(() => Send(message));
     }
 
     static async Task Send(object message, [CallerMemberName] string key = "")

@@ -1,7 +1,8 @@
 ﻿class IncomingValidationStep :
     RegisterStep
 {
-    public IncomingValidationStep() :
+    public IncomingValidationStep()
+        :
         base(
             "IncomingDataAnnotations",
             typeof(IncomingValidationBehavior),

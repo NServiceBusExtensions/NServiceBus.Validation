@@ -9,10 +9,10 @@ namespace NServiceBus;
 public static class FluentValidationExtensions
 {
     public static IReadOnlyDictionary<string, string> Headers(this IValidationContext context) =>
-        (IReadOnlyDictionary<string, string>)context.RootContextData["Headers"];
+        (IReadOnlyDictionary<string, string>) context.RootContextData["Headers"];
 
     public static ContextBag ContextBag(this IValidationContext context) =>
-        (ContextBag)context.RootContextData["ContextBag"];
+        (ContextBag) context.RootContextData["ContextBag"];
 
     public static void UseFluentValidation(
         this EndpointConfiguration endpoint,
@@ -63,7 +63,7 @@ public static class FluentValidationExtensions
         Type type,
         bool throwForNonPublicValidators = true,
         bool throwForNoValidatorsFound = true) =>
-        AddValidatorsFromAssembly(services,  type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
+        AddValidatorsFromAssembly(services, type.Assembly, throwForNonPublicValidators, throwForNoValidatorsFound);
 
     public static void AddValidatorsFromAssembly(
         this IServiceCollection services,

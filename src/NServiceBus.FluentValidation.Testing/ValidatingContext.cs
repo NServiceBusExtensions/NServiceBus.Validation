@@ -12,7 +12,9 @@ public class ValidatingContext<TMessage> :
     {
         this.message = message;
         this.provider = provider;
-        var value = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
+        var value = DateTime
+            .UtcNow.ToUniversalTime()
+            .ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
         MessageHeaders.Add(NServiceBus.Headers.TimeSent, value);
         Headers.Add(NServiceBus.Headers.TimeSent, value);
     }

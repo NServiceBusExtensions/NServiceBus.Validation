@@ -55,6 +55,7 @@
         {
             throw new("No Set received.");
         }
+
         await endpoint.Stop();
 
         return exception;

@@ -12,7 +12,7 @@
                 },
                 {
                     "ContextBag", contextBag
-                },
+                }
             });
 
         var results = new List<ValidationResult>();
