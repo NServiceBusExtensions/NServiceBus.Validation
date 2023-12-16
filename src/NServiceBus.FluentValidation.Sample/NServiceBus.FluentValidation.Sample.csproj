@@ -9,6 +9,6 @@
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
     <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.107" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" Version="1.0.108" PrivateAssets="all" />
   </ItemGroup>
 </Project>
