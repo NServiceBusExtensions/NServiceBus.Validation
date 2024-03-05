@@ -27,10 +27,7 @@ public static class TestHelper
             var messageType = args.FirstOrDefault(_ => _.IsMessage());
             if (messageType is not null)
             {
-                if (messageTypes.Contains(messageType))
-                {
-                    messageTypes.Remove(messageType);
-                }
+                messageTypes.Remove(messageType);
             }
         }
 

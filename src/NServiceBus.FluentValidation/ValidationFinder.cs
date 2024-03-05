@@ -42,7 +42,7 @@ public static class ValidationFinder
                                       _.GetGenericTypeDefinition() == openGenericType)
                 )
                 .ToList();
-            if (nonPublicValidators.Any())
+            if (nonPublicValidators.Count != 0)
             {
                 throw new($"Found some non public validators were found in {assemblyName}:{Environment.NewLine}{string.Join(Environment.NewLine, nonPublicValidators.Select(_ => _.FullName))}.");
             }
@@ -51,7 +51,7 @@ public static class ValidationFinder
         var results = AssemblyScanner
             .FindValidatorsInAssembly(assembly)
             .ToList();
-        if (throwForNoValidatorsFound && !results.Any())
+        if (throwForNoValidatorsFound && results.Count == 0)
         {
             throw new($"No validators were found in {assemblyName}.");
         }
@@ -79,7 +79,7 @@ public static class ValidationFinder
                        !fileName.StartsWith("system.");
             })
             .ToList();
-        if (!assemblies.Any())
+        if (assemblies.Count == 0)
         {
             throw new($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
         }

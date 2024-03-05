@@ -17,7 +17,7 @@ class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
                     .GetServices(genericType)
                     .Cast<IValidator>()
                     .ToList();
-                if (fallback != null && !all.Any())
+                if (fallback != null && all.Count == 0)
                 {
                     var fallbackValidator = fallback(messageType);
                     if (fallbackValidator != null)
@@ -28,7 +28,7 @@ class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
 
                 return new(
                     validators: all,
-                    hasValidators: all.Any()
+                    hasValidators: all.Count != 0
                 );
             });
 

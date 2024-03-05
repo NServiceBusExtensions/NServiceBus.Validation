@@ -39,7 +39,7 @@
             AddResults(results, result, validator);
         }
 
-        if (results.Any())
+        if (results.Count != 0)
         {
             throw new MessageValidationException(instance, results);
         }
