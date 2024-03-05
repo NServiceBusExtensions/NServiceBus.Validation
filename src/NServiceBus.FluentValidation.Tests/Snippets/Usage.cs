@@ -22,7 +22,7 @@
         #endregion
     }
 
-    void AddValidators(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
+    static void AddValidators(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
     {
         #region FluentValidation_AddValidators
 
@@ -34,7 +34,7 @@
         #endregion
     }
 
-    void IgnoreValidatorConventions(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
+    static void IgnoreValidatorConventions(EndpointConfiguration endpointConfiguration, Assembly assembly, IServiceCollection serviceCollection)
     {
         #region FluentValidation_IgnoreValidatorConventions
 

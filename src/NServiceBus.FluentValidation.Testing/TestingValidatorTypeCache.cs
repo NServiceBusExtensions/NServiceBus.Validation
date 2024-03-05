@@ -19,7 +19,7 @@ class TestingValidatorTypeCache(List<Result> scanResults)
                     .ToList();
                 return new(
                     validators: all,
-                    hasValidators: all.Any()
+                    hasValidators: all.Count != 0
                 );
             });
 
