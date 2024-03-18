@@ -7,6 +7,8 @@
     <LangVersion>preview</LangVersion>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="NServiceBus.IMessageHandlerContext"
