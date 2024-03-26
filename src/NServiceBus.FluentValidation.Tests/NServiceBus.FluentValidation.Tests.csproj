@@ -10,7 +10,7 @@
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="NServiceBus.Testing" Version="8.1.0" />
-    <PackageReference Include="MarkdownSnippets.MsBuild" Version="27.0.0" PrivateAssets="all" />
+    <PackageReference Include="MarkdownSnippets.MsBuild" Version="27.0.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Sample\NServiceBus.FluentValidation.Sample.csproj" />
     <ProjectReference Include="..\NServiceBus.FluentValidation.Testing\NServiceBus.FluentValidation.Testing.csproj" />
