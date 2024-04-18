@@ -3,6 +3,7 @@ var configuration = new EndpointConfiguration("FluentValidationSample");
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseFluentValidation(outgoing: false);
+configuration.UseSerialization<SystemJsonSerializer>();
 services.AddValidatorsFromAssemblyContaining<MyMessage>();
 
 var endpointProvider = EndpointWithExternallyManagedContainer

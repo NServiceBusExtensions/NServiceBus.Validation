@@ -65,6 +65,9 @@
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<Sagas>();
+        configuration.AssemblyScanner()
+            .ExcludeAssemblies("xunit.runner.utility.netcoreapp10.dll");
+        configuration.UseSerialization<SystemJsonSerializer>();
 
         configuration.UseFluentValidation(incoming: false, fallback: fallback);
         services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);

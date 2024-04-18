@@ -6,7 +6,6 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="NServiceBus" Version="9.0.0" />
-    <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="NServiceBus.Testing" Version="9.0.0" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
     <PackageReference Include="ProjectDefaults" Version="1.0.126" PrivateAssets="all" />

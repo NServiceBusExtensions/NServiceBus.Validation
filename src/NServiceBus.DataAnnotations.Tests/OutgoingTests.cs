@@ -30,6 +30,9 @@
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
+        configuration.AssemblyScanner()
+            .ExcludeAssemblies("xunit.runner.utility.netcoreapp10.dll");
+        configuration.UseSerialization<SystemJsonSerializer>();
 
         configuration.UseDataAnnotationsValidation(incoming: false);
 

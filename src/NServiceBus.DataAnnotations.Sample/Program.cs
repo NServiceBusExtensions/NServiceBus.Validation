@@ -3,6 +3,7 @@ var configuration = new EndpointConfiguration("DataAnnotationsValidationSample")
 configuration.UsePersistence<LearningPersistence>();
 configuration.UseTransport<LearningTransport>();
 configuration.UseDataAnnotationsValidation(outgoing: false);
+configuration.UseSerialization<SystemJsonSerializer>();
 
 var endpointProvider = EndpointWithExternallyManagedContainer
     .Create(configuration, services);
