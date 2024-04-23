@@ -89,7 +89,7 @@ public static class TestHelper
 
     static bool IsValidator(this Type type, bool throwForNonPublicValidators)
     {
-        var isValidator = typeof(IValidator).IsAssignableFrom(type);
+        var isValidator = type.IsAssignableTo<IValidator>();
         if (isValidator)
         {
             if (throwForNonPublicValidators && !type.IsPublic)
@@ -102,7 +102,7 @@ public static class TestHelper
     }
 
     static bool IsMessage(this Type type) =>
-        typeof(IMessage).IsAssignableFrom(type) ||
-        typeof(ICommand).IsAssignableFrom(type) ||
-        typeof(IEvent).IsAssignableFrom(type);
+        type.IsAssignableTo<IMessage>() ||
+        type.IsAssignableTo<ICommand>() ||
+        type.IsAssignableTo<IEvent>();
 }
