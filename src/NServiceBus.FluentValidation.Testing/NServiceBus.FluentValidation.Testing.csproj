@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.9.1" />
-    <PackageReference Include="NServiceBus" Version="9.0.0" />
-    <PackageReference Include="NServiceBus.Testing" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="NServiceBus" />
+    <PackageReference Include="NServiceBus.Testing" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
-    <PackageReference Include="ProjectDefaults" Version="1.0.127" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
   </ItemGroup>
 </Project>
