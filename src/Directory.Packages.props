@@ -16,6 +16,6 @@
     <PackageVersion Include="Polyfill" Version="5.3.0" />
     <PackageVersion Include="ProjectDefaults" Version="1.0.127" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageVersion Include="Verify.Nunit" Version="24.2.0" />
+    <PackageVersion Include="Verify.Nunit" Version="25.0.0" />
   </ItemGroup>
 </Project>
