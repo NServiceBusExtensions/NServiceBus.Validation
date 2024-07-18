@@ -17,6 +17,6 @@
     <PackageVersion Include="ProjectDefaults" Version="1.0.131" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Formats.Asn1" Version="8.0.1" />
-    <PackageVersion Include="Verify.Nunit" Version="25.3.1" />
+    <PackageVersion Include="Verify.Nunit" Version="25.3.2" />
   </ItemGroup>
 </Project>
