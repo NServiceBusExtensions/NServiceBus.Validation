@@ -10,7 +10,5 @@
     <PackageReference Include="ConfigureAwait.Fody" PrivateAssets="All" />
     <PackageReference Include="Fody" PrivateAssets="all" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
-    <!-- explciti to avoid cve -->
-    <PackageReference Include="System.Formats.Asn1" />
   </ItemGroup>
 </Project>
