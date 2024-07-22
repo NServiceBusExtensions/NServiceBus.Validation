@@ -53,9 +53,9 @@ public static class TestContextValidator
             validator.Validate(message.GetType(), provider, message, context.Headers, context.Extensions)
         };
 
-        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider builder)
+        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider provider)
             where TOptions : ExtendableOptions =>
-            ValidateWithTypeRedirect(message.Message, message.Options, builder);
+            ValidateWithTypeRedirect(message.Message, message.Options, provider);
 
         tasks.AddRange(context.PublishedMessages.Select(_ => Validate(_, provider)));
         tasks.AddRange(context.SentMessages.Select(_ => Validate(_, provider)));
@@ -65,11 +65,11 @@ public static class TestContextValidator
         return Task.WhenAll(tasks);
     }
 
-    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IServiceProvider builder)
+    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IServiceProvider provider)
         where TOptions : ExtendableOptions =>
-        validator.ValidateWithTypeRedirect(instance.GetType(), builder, instance, options.GetHeaders(), options.GetExtensions());
+        validator.ValidateWithTypeRedirect(instance.GetType(), provider, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider builder)
+    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider provider)
         where TMessage : class
-        => validator.Validate(instance.GetType(), builder, instance, headers, contextBag);
+        => validator.Validate(instance.GetType(), provider, instance, headers, contextBag);
 }
