@@ -1,0 +1,28 @@
+﻿{
+  Type: MessageValidationException,
+  Target: {},
+  MessageType: MyMessage,
+  UserMessage:
+Validation failed for 'MyMessage'.
+ * 'Content' must not be empty.
+,
+  Message:
+Validation failed for message 'MyMessage'.
+ * 'Content' must not be empty. (Validator: MyMessageValidator)
+,
+  Errors: [
+    {
+      ValidatorType: MyMessageValidator,
+      Failure: {
+        PropertyName: Content,
+        ErrorMessage: 'Content' must not be empty.,
+        ErrorCode: NotEmptyValidator,
+        FormattedMessagePlaceholderValues: {
+          PropertyName: Content,
+          PropertyPath: Content,
+          PropertyValue: null
+        }
+      }
+    }
+  ]
+}

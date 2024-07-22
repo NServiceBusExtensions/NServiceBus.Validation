@@ -1,1 +1,4 @@
-﻿ValidatingContext should be executed via `validatingContext.Run(handler)`, not `handler.Handle(message, handlerContext)`.
+﻿{
+  Type: Exception,
+  Message: ValidatingContext should be executed via `validatingContext.Run(handler)`, not `handler.Handle(message, handlerContext)`.
+}
