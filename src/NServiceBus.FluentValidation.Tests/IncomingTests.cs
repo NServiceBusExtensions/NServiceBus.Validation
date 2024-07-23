@@ -73,8 +73,6 @@
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);
         configuration.DisableFeature<Sagas>();
-        configuration.AssemblyScanner()
-            .ExcludeAssemblies("xunit.runner.utility.netcoreapp10.dll");
         configuration.UseSerialization<SystemJsonSerializer>();
 
         var resetEvent = new ManualResetEvent(false);
