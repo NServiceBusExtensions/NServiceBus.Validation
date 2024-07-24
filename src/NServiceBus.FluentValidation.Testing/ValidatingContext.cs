@@ -1,28 +1,21 @@
-﻿namespace NServiceBus.Testing;
+﻿using VerifyTests.NServiceBus;
 
-public class ValidatingContext<TMessage> :
-    TestableMessageHandlerContext
+namespace NServiceBus.FluentValidation.Testing;
+
+public class ValidatingContext<TMessage>(
+    TMessage message,
+    IEnumerable<KeyValuePair<string, string>>? headers = null,
+    IServiceProvider? provider = null)
+    :
+        RecordingHandlerContext(headers)
     where TMessage : class
 {
-    TMessage message;
-    IServiceProvider? provider;
     bool hasRun;
-
-    public ValidatingContext(TMessage message, IServiceProvider? provider = null)
-    {
-        this.message = message;
-        this.provider = provider;
-        var value = DateTime
-            .UtcNow.ToUniversalTime()
-            .ToString("yyyy-MM-dd HH:mm:ss:ffffff Z", CultureInfo.InvariantCulture);
-        MessageHeaders.Add(NServiceBus.Headers.TimeSent, value);
-        Headers.Add(NServiceBus.Headers.TimeSent, value);
-    }
 
     public async Task Run(IHandleMessages<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, Headers, Extensions, provider);
+        await TestContextValidator.InnerValidate(message, MessageHeaders, Extensions, provider);
         await handler.Handle(message, this);
         AddDataIfSaga(handler);
     }
@@ -30,7 +23,7 @@ public class ValidatingContext<TMessage> :
     public async Task Run(IHandleTimeouts<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, Headers, Extensions, provider);
+        await TestContextValidator.InnerValidate(message, MessageHeaders, Extensions, provider);
         await handler.Timeout(message, this);
         AddDataIfSaga(handler);
     }
@@ -44,6 +37,8 @@ public class ValidatingContext<TMessage> :
     }
 
     public IContainSagaData? SagaData { get; private set; }
+
+
 
     public override async Task Send(object message, SendOptions options)
     {

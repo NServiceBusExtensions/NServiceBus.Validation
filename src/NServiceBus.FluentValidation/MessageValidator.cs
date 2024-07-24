@@ -30,12 +30,12 @@
         }
 
         var results = new List<TypeValidationFailure>();
-        var validationContext = new ValidationContext<TMessage>(instance);
-        validationContext.RootContextData.Add("Headers", headers);
-        validationContext.RootContextData.Add("ContextBag", contextBag);
+        var context = new ValidationContext<TMessage>(instance);
+        context.RootContextData.Add("Headers", headers);
+        context.RootContextData.Add("ContextBag", contextBag);
         foreach (var validator in validators)
         {
-            var result = await validator.ValidateAsync(validationContext);
+            var result = await validator.ValidateAsync(context);
             AddResults(results, result, validator);
         }
 

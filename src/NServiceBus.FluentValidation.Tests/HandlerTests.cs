@@ -1,4 +1,5 @@
-﻿using NServiceBus.Testing;
+﻿using NServiceBus.FluentValidation.Testing;
+using VerifyTests.NServiceBus;
 
 [TestFixture]
 public class HandlerTests
@@ -6,7 +7,7 @@ public class HandlerTests
     [Test]
     public async Task Validate_TestableMessageHandlerContext()
     {
-        var context = new TestableMessageHandlerContext();
+        var context = new RecordingHandlerContext();
 
         var message = new MyMessage();
         await ThrowsTask(() => context.Validate(message));

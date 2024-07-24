@@ -1,8 +1,8 @@
 ﻿using NServiceBus.Extensibility;
-using NServiceBus.FluentValidation;
+using VerifyTests.NServiceBus;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
-namespace NServiceBus.Testing;
+namespace NServiceBus.FluentValidation.Testing;
 
 public static class TestContextValidator
 {
@@ -11,7 +11,7 @@ public static class TestContextValidator
 
     static TestContextValidator()
     {
-        validatorScanResults = new();
+        validatorScanResults = [];
         TestingValidatorTypeCache typeCache = new(validatorScanResults);
         validator = new(typeCache.TryGetValidators);
     }
@@ -45,22 +45,17 @@ public static class TestContextValidator
     public static void AddValidatorsFromMessagesSuffixedAssemblies() =>
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
 
-    public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider? provider = null)
+    public static Task Validate<TMessage>(this RecordingHandlerContext context, TMessage message, IServiceProvider? provider = null)
         where TMessage : notnull
     {
         var tasks = new List<Task>
         {
-            validator.Validate(message.GetType(), provider, message, context.Headers, context.Extensions)
+            validator.Validate(message.GetType(), provider, message, context.MessageHeaders, context.Extensions)
         };
 
-        static Task Inner<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider? provider)
-            where TOptions : ExtendableOptions =>
-            ValidateWithTypeRedirect(message.Message, message.Options, provider);
-
-        tasks.AddRange(context.PublishedMessages.Select(_ => Inner(_, provider)));
-        tasks.AddRange(context.SentMessages.Select(_ => Inner(_, provider)));
-        tasks.AddRange(context.RepliedMessages.Select(_ => Inner(_, provider)));
-        tasks.AddRange(context.TimeoutMessages.Select(_ => Inner(_, provider)));
+        tasks.AddRange(context.Published.Select(_ => ValidateWithTypeRedirect(_.Message, _.Options, provider)));
+        tasks.AddRange(context.Sent.Select(_ => ValidateWithTypeRedirect(_.Message, _.Options, provider)));
+        tasks.AddRange(context.Replied.Select(_ => ValidateWithTypeRedirect(_.Message, _.Options, provider)));
 
         return Task.WhenAll(tasks);
     }

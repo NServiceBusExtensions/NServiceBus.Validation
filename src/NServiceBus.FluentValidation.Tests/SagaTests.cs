@@ -1,4 +1,4 @@
-﻿using NServiceBus.Testing;
+﻿using NServiceBus.FluentValidation.Testing;
 
 [TestFixture]
 public class SagaTests
