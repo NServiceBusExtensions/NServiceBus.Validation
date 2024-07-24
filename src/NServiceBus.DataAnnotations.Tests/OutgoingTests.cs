@@ -19,13 +19,14 @@ public class OutgoingTests
     }
 
     [Test]
-    public async Task With_validator_invalid()
+    public Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        await Verify(Send(message)).IgnoreStackTrace();
+        return ThrowsTask(() => Send(message))
+            .IgnoreStackTrace();
     }
 
-    static async Task<Exception> Send(object message, [CallerMemberName] string key = "")
+    static async Task Send(object message, [CallerMemberName] string key = "")
     {
         var services = new ServiceCollection();
         var resetEvent = new ManualResetEvent(false);
@@ -45,13 +46,9 @@ public class OutgoingTests
         {
             await endpoint.SendLocal(message);
         }
-        catch (Exception exception)
+        finally
         {
-            return exception;
+            await endpoint.Stop();
         }
-
-        await endpoint.Stop();
-
-        throw new("No exception was thrown.");
     }
 }

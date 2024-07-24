@@ -50,10 +50,11 @@ public class OutgoingTests
     }
 
     [Test]
-    public void With_async_validator_invalid()
+    public Task With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
-        ThrowsAsync<MessageValidationException>(() => Send(message));
+        return ThrowsTask(() => Send(message))
+            .IgnoreStackTrace();
     }
 
     static async Task Send(
@@ -76,7 +77,13 @@ public class OutgoingTests
 
         await using var provider = services.BuildServiceProvider();
         var endpoint = await endpointProvider.Start(provider);
-        await endpoint.SendLocal(message);
-        await endpoint.Stop();
+        try
+        {
+            await endpoint.SendLocal(message);
+        }
+        finally
+        {
+            await endpoint.Stop();
+        }
     }
 }

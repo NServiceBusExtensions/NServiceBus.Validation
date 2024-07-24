@@ -1,0 +1,28 @@
+﻿{
+  Type: MessageValidationException,
+  Target: {},
+  MessageType: MessageWithAsyncValidator,
+  UserMessage:
+Validation failed for 'MessageWithAsyncValidator'.
+ * The specified condition was not met for 'Content'.
+,
+  Message:
+Validation failed for message 'MessageWithAsyncValidator'.
+ * The specified condition was not met for 'Content'. (Validator: AsyncMessageValidator)
+,
+  Errors: [
+    {
+      ValidatorType: AsyncMessageValidator,
+      Failure: {
+        PropertyName: Content,
+        ErrorMessage: The specified condition was not met for 'Content'.,
+        ErrorCode: AsyncPredicateValidator,
+        FormattedMessagePlaceholderValues: {
+          PropertyName: Content,
+          PropertyPath: Content,
+          PropertyValue: null
+        }
+      }
+    }
+  ]
+}
