@@ -1,0 +1,17 @@
+﻿{
+  Type: MessageValidationException,
+  Target: {},
+  MessageType: MessageWithValidator,
+  Message:
+Validation failed for message 'MessageWithValidator'.
+ * The Content field is required.
+,
+  Errors: [
+    {
+      MemberNames: [
+        Content
+      ],
+      ErrorMessage: The Content field is required.
+    }
+  ]
+}
