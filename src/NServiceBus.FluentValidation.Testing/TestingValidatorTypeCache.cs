@@ -5,7 +5,7 @@ class TestingValidatorTypeCache(List<Result> scanResults)
     static Type validatorType = typeof(IValidator<>);
     ConcurrentDictionary<Type, ValidatorInfo> typeCache = [];
 
-    public bool TryGetValidators(Type messageType, IServiceProvider builder, out IEnumerable<IValidator> validators)
+    public bool TryGetValidators(Type messageType, IServiceProvider? builder, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,

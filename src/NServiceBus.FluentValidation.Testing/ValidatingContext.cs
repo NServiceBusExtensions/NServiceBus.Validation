@@ -5,10 +5,10 @@ public class ValidatingContext<TMessage> :
     where TMessage : class
 {
     TMessage message;
-    IServiceProvider provider;
+    IServiceProvider? provider;
     bool hasRun;
 
-    public ValidatingContext(TMessage message, IServiceProvider provider)
+    public ValidatingContext(TMessage message, IServiceProvider? provider = null)
     {
         this.message = message;
         this.provider = provider;
