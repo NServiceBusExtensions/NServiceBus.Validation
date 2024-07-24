@@ -45,7 +45,7 @@ public static class TestContextValidator
     public static void AddValidatorsFromMessagesSuffixedAssemblies() =>
         AddValidators(ValidationFinder.FindValidatorsInMessagesSuffixedAssemblies());
 
-    public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider provider)
+    public static Task Validate<TMessage>(this TestableMessageHandlerContext context, TMessage message, IServiceProvider? provider = null)
         where TMessage : notnull
     {
         var tasks = new List<Task>
@@ -53,23 +53,23 @@ public static class TestContextValidator
             validator.Validate(message.GetType(), provider, message, context.Headers, context.Extensions)
         };
 
-        static Task Validate<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider provider)
+        static Task Inner<TOptions>(OutgoingMessage<object, TOptions> message, IServiceProvider? provider)
             where TOptions : ExtendableOptions =>
             ValidateWithTypeRedirect(message.Message, message.Options, provider);
 
-        tasks.AddRange(context.PublishedMessages.Select(_ => Validate(_, provider)));
-        tasks.AddRange(context.SentMessages.Select(_ => Validate(_, provider)));
-        tasks.AddRange(context.RepliedMessages.Select(_ => Validate(_, provider)));
-        tasks.AddRange(context.TimeoutMessages.Select(_ => Validate(_, provider)));
+        tasks.AddRange(context.PublishedMessages.Select(_ => Inner(_, provider)));
+        tasks.AddRange(context.SentMessages.Select(_ => Inner(_, provider)));
+        tasks.AddRange(context.RepliedMessages.Select(_ => Inner(_, provider)));
+        tasks.AddRange(context.TimeoutMessages.Select(_ => Inner(_, provider)));
 
         return Task.WhenAll(tasks);
     }
 
-    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IServiceProvider provider)
+    internal static Task ValidateWithTypeRedirect<TOptions>(object instance, TOptions options, IServiceProvider? provider)
         where TOptions : ExtendableOptions =>
         validator.ValidateWithTypeRedirect(instance.GetType(), provider, instance, options.GetHeaders(), options.GetExtensions());
 
-    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider provider)
+    internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider? provider)
         where TMessage : class
         => validator.Validate(instance.GetType(), provider, instance, headers, contextBag);
 }

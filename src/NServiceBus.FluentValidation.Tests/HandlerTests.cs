@@ -2,22 +2,20 @@
 
 public class HandlerTests
 {
-    IServiceProvider provider = new FakeServiceProvider();
-
     [Test]
     public async Task Validate_TestableMessageHandlerContext()
     {
         var context = new TestableMessageHandlerContext();
 
         var message = new MyMessage();
-        await ThrowsTask(() => context.Validate(message, new FakeServiceProvider()));
+        await ThrowsTask(() => context.Validate(message));
     }
 
     [Test]
     public async Task Validate_ValidatingHandlerContext()
     {
         var message = new MyMessage();
-        var context = ValidatingContext.Build(message, provider);
+        var context = ValidatingContext.Build(message);
         var handler = new MyHandler();
         await ThrowsTask(() => context.Run(handler));
     }
@@ -29,7 +27,7 @@ public class HandlerTests
         {
             Content = "value"
         };
-        var context = ValidatingContext.Build(message, provider);
+        var context = ValidatingContext.Build(message);
         var handler = new MyHandler();
         return context.Run(handler);
     }
@@ -48,7 +46,7 @@ public class HandlerTests
     public async Task Should_throw_for_handle()
     {
         var message = new SimpleMessage();
-        var context = ValidatingContext.Build(message, provider);
+        var context = ValidatingContext.Build(message);
         var handler = new HandlerThatSends();
         await ThrowsTask(() => handler.Handle(message, context));
     }
@@ -58,12 +56,6 @@ public class HandlerTests
     {
         var message = new MyMessage();
         var handler = new MyHandler();
-        await ThrowsTask(() => ValidatingContext.Run(handler, message, provider));
+        await ThrowsTask(() => ValidatingContext.Run(handler, message));
     }
-}
-
-class FakeServiceProvider : IServiceProvider
-{
-    public object? GetService(Type serviceType) =>
-        null;
 }

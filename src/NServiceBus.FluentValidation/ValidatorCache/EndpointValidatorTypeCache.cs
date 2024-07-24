@@ -6,29 +6,49 @@ class EndpointValidatorTypeCache(Func<Type, IValidator?>? fallback)
 
     static Type validatorType = typeof(IValidator<>);
 
-    public bool TryGetValidators(Type messageType, IServiceProvider provider, out IEnumerable<IValidator> validators)
+    public bool TryGetValidators(Type messageType, IServiceProvider? provider, out IEnumerable<IValidator> validators)
     {
         var validatorInfo = typeCache.GetOrAdd(
             messageType,
             type =>
             {
                 var genericType = validatorType.MakeGenericType(type);
-                var all = provider
-                    .GetServices(genericType)
-                    .Cast<IValidator>()
-                    .ToList();
-                if (fallback != null && all.Count == 0)
+                if (provider != null)
                 {
-                    var fallbackValidator = fallback(messageType);
-                    if (fallbackValidator != null)
+                    var all = provider
+                        .GetServices(genericType)
+                        .Cast<IValidator>()
+                        .ToList();
+                    if (all.Count == 0 && fallback != null)
                     {
-                        all.Add(fallbackValidator);
+                        var validator = fallback(messageType);
+                        if (validator != null)
+                        {
+                            all.Add(validator);
+                        }
+                    }
+
+                    return new(
+                        validators: all,
+                        hasValidators: all.Count != 0
+                    );
+                }
+
+                if (fallback != null)
+                {
+                    var validator = fallback(messageType);
+                    if (validator != null)
+                    {
+                        return new(
+                            validators: [validator],
+                            hasValidators: true
+                        );
                     }
                 }
 
                 return new(
-                    validators: all,
-                    hasValidators: all.Count != 0
+                    validators: [],
+                    hasValidators: false
                 );
             });
 
