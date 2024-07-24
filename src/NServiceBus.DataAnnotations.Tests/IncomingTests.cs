@@ -35,6 +35,7 @@
 
         using var resetEvent = new ManualResetEvent(false);
         configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
+        services.AddSingleton(resetEvent);
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();
         recoverability.CustomPolicy(
