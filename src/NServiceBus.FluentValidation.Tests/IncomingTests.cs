@@ -1,4 +1,5 @@
-﻿public class IncomingTests
+﻿[TestFixture]
+public class IncomingTests
 {
     [Test]
     public async Task With_no_validator()
@@ -77,7 +78,6 @@
         configuration.UseSerialization<SystemJsonSerializer>();
 
         var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
         services.AddSingleton(resetEvent);
         MessageValidationException exception = null!;
         var recoverability = configuration.Recoverability();

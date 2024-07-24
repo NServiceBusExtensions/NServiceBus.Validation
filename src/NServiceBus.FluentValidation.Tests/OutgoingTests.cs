@@ -1,4 +1,5 @@
-﻿public class OutgoingTests
+﻿[TestFixture]
+public class OutgoingTests
 {
     [Test]
     public Task With_no_validator()

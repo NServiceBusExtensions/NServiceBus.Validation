@@ -1,4 +1,5 @@
-﻿public class TestHelperTests
+﻿[TestFixture]
+public class TestHelperTests
 {
     [Test]
     public Task FindHandledMessagesWithoutValidator()

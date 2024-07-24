@@ -1,4 +1,5 @@
-﻿public class OutgoingTests
+﻿[TestFixture]
+public class OutgoingTests
 {
     [Test]
     public Task With_no_validator()
@@ -27,6 +28,8 @@
     static async Task Send(object message, [CallerMemberName] string key = "")
     {
         var services = new ServiceCollection();
+        var resetEvent = new ManualResetEvent(false);
+        services.AddSingleton(resetEvent);
         var configuration = new EndpointConfiguration("DataAnnotationsOutgoing" + key);
         configuration.UseTransport<LearningTransport>();
         configuration.PurgeOnStartup(true);

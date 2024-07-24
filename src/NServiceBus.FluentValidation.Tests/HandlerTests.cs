@@ -1,5 +1,6 @@
 ﻿using NServiceBus.Testing;
 
+[TestFixture]
 public class HandlerTests
 {
     [Test]
