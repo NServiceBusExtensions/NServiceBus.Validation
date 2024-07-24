@@ -6,7 +6,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="NServiceBus" />
-    <PackageReference Include="NServiceBus.Testing" />
+    <PackageReference Include="Verify.NServiceBus" />
     <ProjectReference Include="..\NServiceBus.FluentValidation\NServiceBus.FluentValidation.csproj" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
   </ItemGroup>

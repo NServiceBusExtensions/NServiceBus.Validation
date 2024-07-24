@@ -1,23 +1,33 @@
-﻿namespace NServiceBus.Testing;
+﻿namespace NServiceBus.FluentValidation.Testing;
 
 public static class ValidatingContext
 {
-    public static ValidatingContext<TMessage> Build<TMessage>(TMessage message, IServiceProvider? provider = null)
+    public static ValidatingContext<TMessage> Build<TMessage>(
+        TMessage message,
+        IEnumerable<KeyValuePair<string, string>>? headers = null,
+        IServiceProvider? provider = null)
         where TMessage : class =>
-        new(message, provider);
+        new(message, headers, provider);
 
-    public static async Task<ValidatingContext<TMessage>> Run<TMessage>(IHandleMessages<TMessage> handler, TMessage message, IServiceProvider? provider = null)
+    public static async Task<ValidatingContext<TMessage>> Run<TMessage>(
+        IHandleMessages<TMessage> handler,
+        TMessage message,
+        IEnumerable<KeyValuePair<string, string>>? headers = null,
+        IServiceProvider? provider = null)
         where TMessage : class
     {
-        var context = Build(message, provider);
+        var context = Build(message, headers, provider);
         await context.Run(handler);
         return context;
     }
 
-    public static async Task<ValidatingContext<TMessage>> Run<TMessage>(IHandleTimeouts<TMessage> handler, TMessage message, IServiceProvider? provider = null)
+    public static async Task<ValidatingContext<TMessage>> Run<TMessage>(
+        IHandleTimeouts<TMessage> handler, TMessage message,
+        IEnumerable<KeyValuePair<string, string>>? headers = null,
+        IServiceProvider? provider = null)
         where TMessage : class
     {
-        var context = Build(message, provider);
+        var context = Build(message, headers, provider);
         await context.Run(handler);
         return context;
     }
