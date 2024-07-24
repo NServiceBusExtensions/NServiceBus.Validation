@@ -21,7 +21,7 @@
     public async Task With_validator_invalid()
     {
         var message = new MessageWithValidator();
-        NotNull(await Send(message));
+        await Verify(await Send(message));
     }
 
     static async Task<MessageValidationException> Send(object message, [CallerMemberName] string key = "")
@@ -43,7 +43,7 @@
             {
                 exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
-                return RecoverabilityAction.MoveToError("error");
+                return RecoverabilityAction.Discard("error");
             });
         configuration.UseDataAnnotationsValidation(outgoing: false);
 
@@ -55,7 +55,10 @@
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {
-            throw new("No Set received.");
+            if (exception == null)
+            {
+                throw new("No Set or exception received.");
+            }
         }
 
         await endpoint.Stop();

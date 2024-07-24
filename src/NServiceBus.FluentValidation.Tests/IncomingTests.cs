@@ -52,7 +52,8 @@
     public async Task With_async_validator_invalid()
     {
         var message = new MessageWithAsyncValidator();
-        NotNull(await Send(message));
+        var exception = await Send(message);
+        await Verify(exception);
     }
 
     [Test]
@@ -85,7 +86,7 @@
             {
                 exception = (MessageValidationException) context.Exception;
                 resetEvent.Set();
-                return RecoverabilityAction.MoveToError("error");
+                return RecoverabilityAction.Discard("error");
             });
         configuration.UseFluentValidation(outgoing: false, fallback: fallback);
         services.AddValidatorsFromAssemblyContaining<MessageWithNoValidator>(throwForNonPublicValidators: false);
@@ -98,7 +99,10 @@
         await endpoint.SendLocal(message);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {
-            throw new("No Set received.");
+            if (exception == null)
+            {
+                throw new("No Set or exception received.");
+            }
         }
 
         await endpoint.Stop();
