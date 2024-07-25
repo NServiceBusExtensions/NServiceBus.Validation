@@ -8,7 +8,7 @@ public class ValidatingContext<TMessage>(
     IServiceProvider? provider = null)
     :
         RecordingHandlerContext(headers)
-    where TMessage : class
+    where TMessage : notnull
 {
     bool hasRun;
 

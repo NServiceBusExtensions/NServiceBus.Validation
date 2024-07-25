@@ -6,7 +6,7 @@ public static class ValidatingContext
         TMessage message,
         IEnumerable<KeyValuePair<string, string>>? headers = null,
         IServiceProvider? provider = null)
-        where TMessage : class =>
+        where TMessage : notnull =>
         new(message, headers, provider);
 
     public static async Task<ValidatingContext<TMessage>> Run<TMessage>(
@@ -14,7 +14,7 @@ public static class ValidatingContext
         TMessage message,
         IEnumerable<KeyValuePair<string, string>>? headers = null,
         IServiceProvider? provider = null)
-        where TMessage : class
+        where TMessage : notnull
     {
         var context = Build(message, headers, provider);
         await context.Run(handler);
@@ -25,7 +25,7 @@ public static class ValidatingContext
         IHandleTimeouts<TMessage> handler, TMessage message,
         IEnumerable<KeyValuePair<string, string>>? headers = null,
         IServiceProvider? provider = null)
-        where TMessage : class
+        where TMessage : notnull
     {
         var context = Build(message, headers, provider);
         await context.Run(handler);

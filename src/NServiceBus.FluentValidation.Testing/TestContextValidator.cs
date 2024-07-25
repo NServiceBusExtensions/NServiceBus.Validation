@@ -65,6 +65,6 @@ public static class TestContextValidator
         validator.ValidateWithTypeRedirect(instance.GetType(), provider, instance, options.GetHeaders(), options.GetExtensions());
 
     internal static Task InnerValidate<TMessage>(TMessage instance, IReadOnlyDictionary<string, string> headers, ContextBag contextBag, IServiceProvider? provider)
-        where TMessage : class
+        where TMessage : notnull
         => validator.Validate(instance.GetType(), provider, instance, headers, contextBag);
 }
