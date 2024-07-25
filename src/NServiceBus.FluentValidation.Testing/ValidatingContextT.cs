@@ -1,16 +1,14 @@
 ﻿namespace NServiceBus.FluentValidation.Testing;
 
-public class ValidatingContext<TMessage> :
-        ValidatingContext
+public class ValidatingContext<TMessage>(
+    TMessage message,
+    IEnumerable<KeyValuePair<string, string>>? headers = null,
+    IServiceProvider? provider = null)
+    :
+        ValidatingContext(headers, provider)
     where TMessage : notnull
 {
     bool hasRun;
-    TMessage message;
-
-    public ValidatingContext(TMessage message,
-        IEnumerable<KeyValuePair<string, string>>? headers = null,
-        IServiceProvider? provider = null)
-        : base(headers, provider) => this.message = message;
 
     public async Task Run(IHandleMessages<TMessage> handler)
     {
