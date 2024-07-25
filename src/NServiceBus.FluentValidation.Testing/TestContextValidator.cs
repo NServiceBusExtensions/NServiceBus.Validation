@@ -1,5 +1,4 @@
 ﻿using NServiceBus.Extensibility;
-using VerifyTests.NServiceBus;
 using Result = FluentValidation.AssemblyScanner.AssemblyScanResult;
 
 namespace NServiceBus.FluentValidation.Testing;

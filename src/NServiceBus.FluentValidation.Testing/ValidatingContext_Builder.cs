@@ -1,7 +1,12 @@
 ﻿namespace NServiceBus.FluentValidation.Testing;
 
-public static class ValidatingContext
+public partial class ValidatingContext
 {
+    public static ValidatingContext Build(
+        IEnumerable<KeyValuePair<string, string>>? headers = null,
+        IServiceProvider? provider = null) =>
+        new(headers, provider);
+
     public static ValidatingContext<TMessage> Build<TMessage>(
         TMessage message,
         IEnumerable<KeyValuePair<string, string>>? headers = null,
