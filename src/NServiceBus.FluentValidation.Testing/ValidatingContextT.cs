@@ -13,7 +13,7 @@ public class ValidatingContext<TMessage>(
     public async Task Run(IHandleMessages<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, MessageHeaders, Extensions, Provider);
+        await TestContextValidator.InnerValidate(message, ((IMessageProcessingContext)this).MessageHeaders, Extensions, Provider);
         await handler.Handle(message, this);
         AddDataIfSaga(handler);
     }
@@ -21,7 +21,7 @@ public class ValidatingContext<TMessage>(
     public async Task Run(IHandleTimeouts<TMessage> handler)
     {
         hasRun = true;
-        await TestContextValidator.InnerValidate(message, MessageHeaders, Extensions, Provider);
+        await TestContextValidator.InnerValidate(message, ((IMessageProcessingContext)this).MessageHeaders, Extensions, Provider);
         await handler.Timeout(message, this);
         AddDataIfSaga(handler);
     }

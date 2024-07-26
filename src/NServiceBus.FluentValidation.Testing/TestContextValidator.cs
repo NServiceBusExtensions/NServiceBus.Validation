@@ -49,7 +49,7 @@ public static class TestContextValidator
     {
         var tasks = new List<Task>
         {
-            validator.Validate(message.GetType(), provider, message, context.MessageHeaders, context.Extensions)
+            validator.Validate(message.GetType(), provider, message, ((IMessageProcessingContext)context).MessageHeaders, context.Extensions)
         };
 
         tasks.AddRange(context.Published.Select(_ => ValidateWithTypeRedirect(_.Message, _.Options, provider)));
