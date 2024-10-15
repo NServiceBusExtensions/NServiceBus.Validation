@@ -7,10 +7,9 @@
     <LangVersion>preview</LangVersion>
     <PackageTags>NServiceBus, Validation, DataAnnotations, FluentValidation</PackageTags>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
-    <NuGetAuditMode>all</NuGetAuditMode>
-    <NuGetAuditLevel>low</NuGetAuditLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="NServiceBus.IMessageHandlerContext"
