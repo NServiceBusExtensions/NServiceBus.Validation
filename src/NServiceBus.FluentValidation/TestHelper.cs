@@ -90,15 +90,14 @@ public static class TestHelper
     static bool IsValidator(this Type type, bool throwForNonPublicValidators)
     {
         var isValidator = type.IsAssignableTo<IValidator>();
-        if (isValidator)
+        if (!isValidator ||
+            !throwForNonPublicValidators ||
+            type.IsPublic)
         {
-            if (throwForNonPublicValidators && !type.IsPublic)
-            {
-                throw new($"Found a non-public IMessage Validator - {type}");
-            }
+            return isValidator;
         }
 
-        return isValidator;
+        throw new($"Found a non-public IMessage Validator - {type}");
     }
 
     static bool IsMessage(this Type type) =>
