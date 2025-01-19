@@ -16,6 +16,6 @@
     <PackageVersion Include="ProjectDefaults" Version="1.0.147" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="Verify.NServiceBus" Version="10.3.4" />
-    <PackageVersion Include="Verify.NUnit" Version="28.9.0" />
+    <PackageVersion Include="Verify.NUnit" Version="29.0.0" />
   </ItemGroup>
 </Project>
