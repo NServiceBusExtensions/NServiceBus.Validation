@@ -9,7 +9,7 @@
     <PackageVersion Include="Fody" Version="6.9.1" />
     <PackageVersion Include="MarkdownSnippets.MsBuild" Version="27.0.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageVersion Include="NServiceBus" Version="9.2.5" />
+    <PackageVersion Include="NServiceBus" Version="9.2.6" />
     <PackageVersion Include="NUnit" Version="4.3.2" />
     <PackageVersion Include="NUnit3TestAdapter" Version="5.0.0" />
     <PackageVersion Include="Polyfill" Version="7.16.1" />
