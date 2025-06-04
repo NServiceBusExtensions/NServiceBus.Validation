@@ -1,4 +1,5 @@
-﻿namespace NServiceBus.FluentValidation.Testing;
+﻿// ReSharper disable ParameterHidesPrimaryConstructorParameter
+namespace NServiceBus.FluentValidation.Testing;
 
 public class ValidatingContext<TMessage>(
     TMessage message,
