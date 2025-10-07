@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../readme.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="mdsnippets.json" />
+  </Folder>
+  <Project Path="NServiceBus.DataAnnotations.Sample/NServiceBus.DataAnnotations.Sample.csproj" />
+  <Project Path="NServiceBus.DataAnnotations.Tests/NServiceBus.DataAnnotations.Tests.csproj" />
+  <Project Path="NServiceBus.DataAnnotations/NServiceBus.DataAnnotations.csproj" />
+  <Project Path="NServiceBus.FluentValidation.Sample/NServiceBus.FluentValidation.Sample.csproj" />
+  <Project Path="NServiceBus.FluentValidation.Testing/NServiceBus.FluentValidation.Testing.csproj" />
+  <Project Path="NServiceBus.FluentValidation.Tests/NServiceBus.FluentValidation.Tests.csproj" />
+  <Project Path="NServiceBus.FluentValidation/NServiceBus.FluentValidation.csproj" />
+</Solution>
