@@ -84,10 +84,16 @@ public static class ValidationFinder
             throw new($"Could not find any assemblies matching *.Messages.dll. Directory: {directory}");
         }
 
-        return assemblies.SelectMany(file =>
-            FindValidatorsInAssembly(
-                Assembly.LoadFrom(file),
-                throwForNonPublicValidators,
-                throwForNoValidatorsFound));
+        return assemblies.SelectMany(file => FindValidatorsInAssembly(
+            loadContext.LoadFromAssemblyPath(file),
+            throwForNonPublicValidators,
+            throwForNoValidatorsFound));
     }
+
+    static AssemblyLoadContext loadContext;
+
+    static ValidationFinder() =>
+        //More nunit friendly than Assembly.LoadFrom
+        loadContext = AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) ??
+                      AssemblyLoadContext.Default;
 }
