@@ -23,7 +23,6 @@ Validation failed for message 'MessageWithValidator'.
 at MessageValidator.Validate(Object message, IServiceProvider builder, Dictionary`2 headers, ContextBag contextBag)
 at IncomingValidationBehavior.Validate(IIncomingLogicalMessageContext context)
 at IncomingValidationBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next)
-at NServiceBus.Pipeline.Behavior`1.Invoke(TContext context, Func`2 next)
 at NServiceBus.MutateIncomingMessageBehavior.InvokeIncomingMessageMutators(IIncomingLogicalMessageContext context, Func`2 next)
 at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage)
 at NServiceBus.MutateIncomingTransportMessageBehavior.InvokeIncomingTransportMessagesMutators(IIncomingPhysicalMessageContext context, Func`2 next)
